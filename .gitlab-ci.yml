@@ -1,0 +1,25 @@
+image: registry.gitlab.com/pages/hugo/hugo_extended:latest
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+test:
+  before_script:
+    - apk add --update nodejs npm
+  script:
+    - npm install
+    - hugo
+  except:
+    - main
+
+pages:
+  before_script:
+    - apk add --update nodejs npm
+  script:
+    - npm install
+    - hugo
+  artifacts:
+    paths:
+      - public
+  only:
+    - main

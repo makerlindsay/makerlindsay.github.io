@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    {{- with resources.Get "scss/resume.scss" | toCSS | postCSS | fingerprint
+    "sha512" -}}
+    <link
+      rel="stylesheet"
+      href="{{ .RelPermalink }}"
+      integrity="{{ .Data.Integrity }}"
+    />
+    {{- end -}}
+  </head>
+  <body>
+    <section class="page">
+      <div class="container">
+        <aside>
+          <h1>Lindsay<br />Balfour</h1>
+          <section id="summary">
+            {{/* 2-5 sentences */}}
+            <p>
+              Maker, educator, and artist with 10+ years of experience in
+              creating personal learning experiences for children through
+              meaningful making.
+            </p>
+          </section>
+          <section id="social">
+            <ul>
+              <li class="h-stack">
+                <img src="/svg/earth.svg" width="14" height="14" alt="" />
+                <a href="https://lindsaybalfour.com">lindsaybalfour.com</a>
+              </li>
+              <li class="h-stack">
+                <img src="/svg/linkedin.svg" width="14" height="14" alt="" />
+                <a href="https://linkedin.com/in/lbalfour">
+                  linkedin.com/in/lbalfour
+                </a>
+              </li>
+              <li class="h-stack">
+                <img src="/svg/map-pin.svg" width="14" height="14" alt="" />
+                Stockholm, Sweden
+              </li>
+            </ul>
+          </section>
+          <section id="additional-skills">
+            <h2>Additional Skills</h2>
+
+            <h3>Product Development</h3>
+            <ul>
+              <li>Designing for retail</li>
+              <li>Strategic partnerships</li>
+              <li>Product packaging</li>
+            </ul>
+
+            <h3>Education</h3>
+            <ul>
+              <li>Curriculum Development</li>
+              <li>Instructional Design</li>
+              <li>STEAM Education</li>
+              <li>Workshop Facilitation</li>
+            </ul>
+
+            <h3>Media Production</h3>
+            <ul>
+              <li>Creative Direction</li>
+              <li>Video Production</li>
+              <li>Product Photography</li>
+              <li>Book Publishing</li>
+              <li>Paper Engineering</li>
+            </ul>
+
+            <h3>Graphic Design</h3>
+            <ul>
+              <li>Science & Medical Illustration</li>
+              <li>Digital Illustration with Adobe Creative Suite</li>
+              <li>Drawing</li>
+            </ul>
+          </section>
+        </aside>
+        <main>
+          <section>
+            <h2>Work Experience</h2>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Head of Education</h3>
+                  <p class="organization">
+                    <a href="https://strawbees.com">Strawbees</a>, Remote
+                  </p>
+                </div>
+                <p class="time-period">Jan 2019—Aug 2023</p>
+              </header>
+              <ul>
+                <li>
+                  Responsible for crafting the strategic vision based on
+                  creative learning pedagogy for the development of curriculum
+                  for Strawbees Classroom, a learning platform with resources
+                  for teachers and students in preschool to secondary levels.
+                </li>
+                <li>
+                  Authored 100+ resources from guided lessons, activity
+                  instructions, teacher articles, product packaging copy,
+                  posters, catalogs, and marketing material.
+                </li>
+                <li>
+                  Guided the creative direction of media production through
+                  graphic visuals of science illustrations, lifestyle
+                  photographs and video media, voiceovers, step-by-step building
+                  instructions, and children's storybooks for crafting high
+                  quality visual and kinesthetic student resources in Strawbees
+                  Classroom.
+                </li>
+                <li>
+                  Led the research and design of educational materials of all
+                  produced instructional methods for lessons, activities,
+                  articles, and professional learning materials to be published
+                  on Strawbees Classroom to ensure it reaches the strategic
+                  vision.
+                </li>
+                <li>
+                  Taught new teachers through professional development teaching
+                  workshops in-person and online webinars.
+                </li>
+                <li>
+                  Managed the co-creation of product development for
+                  partnerships: micro:bit Educational Foundation, Sam Labs, and
+                  Marusys Co.
+                </li>
+              </ul>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Content and Community Manager</h3>
+                  <p class="organization">
+                    <a href="https://strawbees.com">Strawbees</a>, Gothenburg
+                  </p>
+                </div>
+                <p class="time-period">Sep 2022—Aug 2023</p>
+              </header>
+              <ul>
+                <li>
+                  Managed educational and instructional content for the
+                  Strawbees Learning Platform. Created lesson plans,
+                  photography, and film media for educators to use.
+                </li>
+                <li>
+                  Work with partners globally to translate lesson plans and
+                  reproduction of products as part of the curriculum in formal
+                  and informal education settings paired with national standards
+                  in other countries. Collaborated with partners for developing
+                  new educational products, events, workshops, and teacher
+                  training.
+                </li>
+                <li>
+                  Built the collective vision for the Ambassador program to grow
+                  strong relationships and provide support to an online
+                  community.
+                </li>
+                <li>
+                  Supported product development with writing, copyediting, and
+                  planning media for retail and educational products.
+                </li>
+              </ul>
+            </article>
+          </section>
+        </main>
+      </div>
+    </section>
+    <section class="page">
+      <div class="container">
+        <aside>
+          <section>
+            <h2>Projects & Accomplishments</h2>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>
+                    <a
+                      href="https://www.amazon.com/Scrappy-Circuits-Michael-Carroll/dp/0999477692"
+                      >Scrappy Circuits</a
+                    >
+                  </h3>
+                  <p class="time-period">2021</p>
+                </div>
+              </header>
+              <p>
+                Illustrated and did typesetting for the book Scrappy Circuits.
+              </p>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Fencing Club President and Captain of Women's Epee</h3>
+                  <p class="organization">
+                    University of Michigan Fencing Club
+                  </p>
+                  <p class="time-period">2010–2012</p>
+                </div>
+              </header>
+            </article>
+          </section>
+          <section id="education">
+            <h2>Education</h2>
+            <article class="position">
+              <header>
+                <div>
+                  <h3></h3>
+                  <p class="organization">University of Michigan</p>
+                  <p class="time-period">2018—2012</p>
+                </div>
+              </header>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Python Bootcamp</h3>
+                  <p class="organization">Hackbright Academy</p>
+                  <p class="time-period">2016</p>
+                </div>
+              </header>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Bachelor of Fine Arts</h3>
+                  <p class="organization">Studio Art Center International</p>
+                  <p class="time-period">2010</p>
+                </div>
+              </header>
+            </article>
+          </section>
+        </aside>
+        <main>
+          <section>
+            <h2>Previous Work Experience</h2>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Educator, Innovation and Tech Specialist</h3>
+                  <p class="organization">
+                    <a href="https://creativity.org/"
+                      >Children's Creativity Museum</a
+                    >, San Francisco
+                  </p>
+                </div>
+                <p class="time-period">Jul 2014—May 2017</p>
+              </header>
+              <ul>
+                <li>
+                  Serving as the educational technology expert on the team
+                  taking the lead in developing the curriculum and facilitation
+                  guides to train interns and staff to facilitate all 1 and 2
+                  hour Coding field trips for school groups.
+                </li>
+                <li>
+                  Lead additional 1 and 2 hour field trips such as creating
+                  stopmotion animations, incorporating Garageband for sound
+                  effects, and building a prototype to solve for a design
+                  challenge.
+                </li>
+                <li>
+                  Lead weekly professional development sessions and training for
+                  Education Interns and Maker Corps Members to maintain exhibit
+                  spaces and facilitate experiences to school groups and general
+                  admission while embodying the museum's mission and vision.
+                </li>
+                <li>
+                  As the Innovation Specialist networked and partnered with
+                  makers, educational technology startups, artists, and
+                  educators to design and facilitate a workshop series each
+                  month.
+                </li>
+                <li>
+                  Ran the InnovatED weekend workshops with unique challenges to
+                  make with educational technologies such as the MaKey MaKey for
+                  children to creatively express themselves with technology.
+                </li>
+              </ul>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Maker Corps Mentor</h3>
+                  <p class="organization">
+                    Maker Education Initiative, San Francisco
+                  </p>
+                </div>
+                <p class="time-period">Sep 2013–Apr 2017</p>
+              </header>
+              <ul>
+                <li>
+                  Serving as an inspiration for incoming Maker Corps Members
+                  through providing resources, project ideas, documentation
+                  advice, and sharing experiences with students. Working on
+                  sharing documentation and research with educators for
+                  inspiring making in their own space.
+                </li>
+                <li>
+                  Connected with other educators and makers as Maker Corps
+                  representative of the Maker Education Initiative at public
+                  events, such as Maker Faire and the Making Possibilities
+                  Workshop, to share stories and reflections to encourage
+                  educators to promote making in the classroom, library,
+                  museums, and other spaces.
+                </li>
+              </ul>
+            </article>
+          </section>
+        </main>
+      </div>
+    </section>
+  </body>
+</html>

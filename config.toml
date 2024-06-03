@@ -1,0 +1,7 @@
+baseURL = "https://lindsaybalfour.com"
+languageCode = "en-US"
+title = "Lindsay Balfour"
+
+[params]
+  twitter = "MaKeyLindsay"
+  linkedin = "lbalfour"

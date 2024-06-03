@@ -1,0 +1,18 @@
+{{ define "main" }}
+<section>
+  <h1>Art</h1>
+  <div class="grid grid-cols-3 gap-8">
+    {{ range .Pages }}
+    <div class="gallery-item mb-32">
+      {{ with .Resources }} {{ with .GetMatch "{cover.*,*.jpg,*.png,*.jpeg}" }}
+      {{ $cover := .Resize "600x" }} {{ with $cover }}
+      <img src="{{ .RelPermalink }}" />
+      {{ end }} {{ end }} {{ end }}
+      <a href="{{ .RelPermalink }}">
+        <div class="gallery-item__overlay">{{ .Title }}</div>
+      </a>
+    </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

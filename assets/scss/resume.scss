@@ -1,0 +1,247 @@
+:root {
+  --space-lg: 3rem;
+  --space-md: 2rem;
+  --space-sm: 1rem;
+  --space-xs: 0.5rem;
+
+  --primary-color: rgb(85, 190, 240);
+  --secondary-color: rgb(255, 45, 85);
+}
+@page {
+  margin: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-size: 10pt;
+}
+
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans",
+    Helvetica,
+    Arial,
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji";
+
+  margin: 0;
+  line-height: 1.5;
+}
+
+.page {
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  page-break-after: always;
+
+  // A4
+  width: 210mm;
+  height: 297mm;
+  padding: 10mm;
+}
+
+/** For screen preview **/
+@media screen {
+  body {
+    background-image: url("/images/pattern.webp");
+    background-color: rgb(251, 250, 249);
+    background-size: 1%;
+  }
+
+  .page {
+    background: white;
+    margin: 5mm auto;
+    box-shadow:
+      rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  }
+
+  h1 {
+    color: var(--primary-color);
+  }
+  h2 {
+    color: var(--secondary-color);
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+  gap: var(--space-lg);
+}
+
+ul,
+ol {
+  padding-left: 1em;
+}
+
+section {
+  margin-bottom: var(--space-md);
+}
+
+.position {
+  margin-bottom: var(--space-md);
+
+  header {
+    margin-bottom: var(--space-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    h3 {
+      margin-block: 0.2em;
+      font-weight: 600;
+    }
+  }
+
+  & > p {
+    margin-bottom: var(--space-xs);
+  }
+}
+
+.project {
+  margin-bottom: var(--space-md);
+
+  header {
+    h3 {
+      margin-bottom: var(--space-xs);
+      font-weight: 500;
+    }
+  }
+
+  footer {
+    margin-top: var(--space-xs);
+  }
+}
+
+#additional-skills {
+  ul {
+    li {
+      list-style-type: "→ ";
+    }
+  }
+}
+
+#social {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+}
+
+#education {
+  .degree {
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+}
+
+/**
+   * Typography
+   */
+
+h1 {
+  font-weight: 900;
+  line-height: 1;
+}
+
+h2,
+h3 {
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+h2 {
+  font-weight: 800;
+}
+
+h1,
+h2 {
+  font-family: "Inter";
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 1.2em;
+  margin-bottom: 0.66em;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+h1 {
+  font-size: 3.5rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+}
+
+h2 {
+}
+
+/**
+   * Utility classes
+   */
+
+.h-stack {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.organization {
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+  color: hsl(0, 0%, 40%);
+}
+
+.time-period {
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+  color: hsl(0, 0%, 40%);
+}
+
+/**
+   * Make links look clickable in screen preview.
+   */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media screen {
+  a {
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+}
