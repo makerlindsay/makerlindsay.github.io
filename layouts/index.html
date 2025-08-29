@@ -4,7 +4,7 @@
     <title>{{ if .IsPage }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
 
     {{ $scssOptions := (dict "outputStyle" "compressed")}} {{ $scss :=
-    resources.Get "scss/main.scss" | resources.ToCSS $scssOptions | fingerprint
+    resources.Get "scss/main.scss" | css.Sass $scssOptions | fingerprint
     "sha512" }}
     <link
       rel="stylesheet"
