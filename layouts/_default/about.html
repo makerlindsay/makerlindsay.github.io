@@ -133,7 +133,7 @@
     .hero-heading em { font-style: italic; color: var(--rose-gold); }
     .hero-sub {
       font-size: 1rem; font-weight: 300; line-height: 1.85;
-      color: rgba(237,230,216,0.6); max-width: 44ch; position: relative; margin-bottom: 2.5rem;
+      color: rgba(237,230,216,0.85); max-width: 44ch; position: relative; margin-bottom: 2.5rem;
     }
     .hero-tagline {
       font-family: var(--font-display); font-size: 1.15rem; font-style: italic;
@@ -155,17 +155,17 @@
       padding: 4rem 3rem;
     }
     .hero-identity-top { display: flex; flex-direction: column; gap: 0.4rem; }
-    .hero-identity-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(237,230,216,0.5); margin-bottom: 0.75rem; }
+    .hero-identity-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(237,230,216,0.75); margin-bottom: 0.75rem; }
     .hero-identity-line { font-family: var(--font-display); font-size: 1.25rem; font-weight: 300; font-style: italic; color: var(--bone); opacity: 0.9; line-height: 1.2; }
     .hero-location-badge { display: inline-flex; align-items: center; gap: 0.75rem; }
     .loc-dot { width: 6px; height: 6px; background: var(--rose-gold); border-radius: 50%; }
-    .loc-text { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(237,230,216,0.6); }
+    .loc-text { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(237,230,216,0.85); }
     .hero-qualities { display: flex; flex-direction: column; gap: 0; }
     .hero-quality { padding: 0.85rem 0; border-bottom: 1px solid rgba(237,230,216,0.12); display: flex; gap: 1rem; align-items: flex-start; }
     .hero-quality:last-child { border-bottom: none; }
-    .quality-bullet { color: var(--rose-gold); font-size: 0.6rem; margin-top: 0.3rem; flex-shrink: 0; }
-    .quality-text { font-size: 0.78rem; font-weight: 300; color: rgba(237,230,216,0.7); line-height: 1.5; }
-    .quality-text strong { font-weight: 500; color: var(--bone); display: block; font-size: 0.72rem; letter-spacing: 0.05em; margin-bottom: 0.1rem; }
+    .quality-bullet { color: var(--rose-gold); font-size: 0.75rem; margin-top: 0.3rem; flex-shrink: 0; }
+    .quality-text { font-size: 1rem; font-weight: 300; color: rgba(237,230,216,0.88); line-height: 1.6; }
+    .quality-text strong { font-weight: 500; color: var(--bone); display: block; font-size: 0.95rem; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
 
     /* ── INTRO BAND ── */
     .intro-band { background: var(--maroon); padding: 1.8rem 4rem; display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
@@ -203,7 +203,7 @@
     .city-sthlm::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 25% 75%, rgba(107,45,45,0.4) 0%, transparent 55%); }
     .city-card-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 0.4rem; }
     .city-card-name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 300; color: var(--bone); margin-bottom: 0.4rem; line-height: 1.05; }
-    .city-card-desc { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.6); line-height: 1.7; }
+    .city-card-desc { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.85); line-height: 1.7; }
     .city-card-concept { font-family: var(--font-display); font-size: 0.88rem; font-style: italic; font-weight: 300; color: var(--rose-gold); margin-top: 0.6rem; }
 
     /* ── PROFESSIONAL QUALITIES ── */
@@ -211,7 +211,7 @@
     .qualities::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 8% 60%, rgba(107,45,45,0.25) 0%, transparent 50%), radial-gradient(ellipse at 92% 20%, rgba(104,40,96,0.18) 0%, transparent 45%); }
     .qualities-header { max-width: 1200px; margin: 0 auto 4rem; position: relative; }
     .qualities-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--bone); margin-bottom: 1rem; line-height: 1.1; }
-    .qualities-sub { font-size: 0.95rem; font-weight: 300; color: rgba(237,230,216,0.55); max-width: 52ch; line-height: 1.8; }
+    .qualities-sub { font-size: 0.95rem; font-weight: 300; color: rgba(237,230,216,0.82); max-width: 52ch; line-height: 1.8; }
     .qualities-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(237,230,216,0.08); position: relative; }
     .quality-card { background: var(--midnight-plum); padding: 3rem; transition: background 0.35s; }
     .quality-card:hover { background: rgba(237,230,216,0.04); }
@@ -219,8 +219,8 @@
     .quality-card:hover .quality-card-icon { color: rgba(196,154,108,0.7); }
     .quality-card-title { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bone); margin-bottom: 0.5rem; }
     .quality-card-focus { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 1rem; }
-    .quality-card-body { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.55); line-height: 1.75; }
-    .quality-card-body strong { color: rgba(237,230,216,0.85); font-weight: 400; }
+    .quality-card-body { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.82); line-height: 1.75; }
+    .quality-card-body strong { color: var(--bone); font-weight: 400; }
     .quality-card-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
 
     /* ── PILLARS DEEP DIVE ── */
@@ -246,20 +246,20 @@
     .career { background: var(--warm-taupe); }
     .career-header { margin-bottom: 4rem; }
     .career-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bone); margin-bottom: 1rem; }
-    .career-sub { font-size: 0.95rem; color: rgba(237,230,216,0.65); max-width: 50ch; line-height: 1.8; }
+    .career-sub { font-size: 0.95rem; color: rgba(237,230,216,0.85); max-width: 50ch; line-height: 1.8; }
     .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
     .timeline::before { content: ''; position: absolute; left: 9.5rem; top: 0; bottom: 0; width: 1px; background: rgba(237,230,216,0.15); }
     .timeline-item { display: grid; grid-template-columns: 9.5rem 1fr; gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid rgba(237,230,216,0.1); position: relative; }
     .timeline-item::before { content: ''; position: absolute; left: 9.5rem; top: 2.9rem; width: 9px; height: 9px; border-radius: 50%; background: var(--rose-gold); transform: translateX(-4px); z-index: 1; }
-    .timeline-date { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(237,230,216,0.4); padding-top: 0.2rem; text-align: right; padding-right: 2rem; line-height: 1.5; }
+    .timeline-date { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(237,230,216,0.7); padding-top: 0.2rem; text-align: right; padding-right: 2rem; line-height: 1.5; }
     .timeline-role { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; color: var(--bone); margin-bottom: 0.25rem; line-height: 1.2; }
     .timeline-org { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 0.75rem; }
-    .timeline-body { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.6); line-height: 1.75; max-width: 55ch; }
+    .timeline-body { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.85); line-height: 1.75; max-width: 55ch; }
     .timeline-bullets { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.3rem; }
-    .timeline-bullet { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.55); display: flex; gap: 0.75rem; }
+    .timeline-bullet { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.82); display: flex; gap: 0.75rem; }
     .timeline-bullet::before { content: '—'; color: var(--rose-gold); flex-shrink: 0; }
     .timeline-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
-    .timeline-tag { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.28rem 0.7rem; border: 1px solid rgba(237,230,216,0.2); color: rgba(237,230,216,0.4); }
+    .timeline-tag { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.28rem 0.7rem; border: 1px solid rgba(237,230,216,0.35); color: rgba(237,230,216,0.7); }
 
     /* ── GLOBAL REACH ── */
     .global { background: var(--midnight-plum); position: relative; overflow: hidden; }
@@ -267,7 +267,7 @@
     .global-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: center; position: relative; }
     .global-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--bone); margin-bottom: 1.5rem; line-height: 1.1; }
     .global-heading em { font-style: italic; color: var(--rose-gold); }
-    .global-body { font-size: 0.95rem; font-weight: 300; line-height: 1.85; color: rgba(237,230,216,0.6); max-width: 48ch; margin-bottom: 2.5rem; }
+    .global-body { font-size: 0.95rem; font-weight: 300; line-height: 1.85; color: rgba(237,230,216,0.85); max-width: 48ch; margin-bottom: 2.5rem; }
     .global-partners { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(237,230,216,0.08); }
     .global-partner { background: var(--midnight-plum); padding: 1.75rem; transition: background 0.3s; }
     .global-partner:hover { background: rgba(237,230,216,0.04); }
@@ -281,7 +281,7 @@
     .personal-bg-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 7rem; align-items: start; }
     .personal-bg-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--bone); line-height: 1.05; margin-top: 1rem; }
     .personal-bg-heading em { font-style: italic; color: var(--lilac-mist); }
-    .personal-bg-body { font-size: 1rem; font-weight: 300; color: rgba(234,224,213,0.65); line-height: 1.95; margin-bottom: 1.5rem; max-width: 58ch; }
+    .personal-bg-body { font-size: 1rem; font-weight: 300; color: rgba(234,224,213,0.88); line-height: 1.95; margin-bottom: 1.5rem; max-width: 58ch; }
     .personal-bg-body em { font-style: italic; color: rgba(234,224,213,0.9); }
     .personal-bg-pull { font-family: var(--font-display); font-size: 1.25rem; font-weight: 300; font-style: italic; color: var(--bone); line-height: 1.55; padding: 2rem 2.5rem; border-left: 3px solid var(--rose-gold); background: rgba(196,154,108,0.07); margin-top: 2.5rem; max-width: 52ch; }
     .personal-bg-pull em { color: var(--lilac-mist); font-style: italic; }
@@ -293,7 +293,7 @@
     .philosophy-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-gold); display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
     .philosophy-label::before, .philosophy-label::after { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
     .philosophy-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; font-style: italic; color: var(--bone); margin-bottom: 2.5rem; line-height: 1.15; }
-    .philosophy-body { font-size: 1rem; font-weight: 300; line-height: 1.95; color: rgba(237,230,216,0.7); margin-bottom: 1.5rem; }
+    .philosophy-body { font-size: 1rem; font-weight: 300; line-height: 1.95; color: rgba(237,230,216,0.9); margin-bottom: 1.5rem; }
     .philosophy-body strong { font-weight: 500; color: var(--bone); }
     .philosophy-divider { width: 3rem; height: 1px; background: var(--rose-gold); margin: 2.5rem auto; }
     .philosophy-closing { font-family: var(--font-display); font-size: 1.4rem; font-weight: 300; font-style: italic; color: var(--rose-gold); line-height: 1.5; }
@@ -306,7 +306,7 @@
     .cta-label::before, .cta-label::after { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
     .cta-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bone); margin-bottom: 1.25rem; }
     .cta-heading em { font-style: italic; color: var(--rose-gold); }
-    .cta-body { font-size: 0.95rem; color: rgba(237,230,216,0.6); margin-bottom: 3rem; max-width: 44ch; margin-left: auto; margin-right: auto; line-height: 1.8; }
+    .cta-body { font-size: 0.95rem; color: rgba(237,230,216,0.85); margin-bottom: 3rem; max-width: 44ch; margin-left: auto; margin-right: auto; line-height: 1.8; }
     .cta-buttons { display: flex; gap: 1rem; justify-content: center; }
 
     /* ── FOOTER ── */
@@ -314,9 +314,9 @@
     .footer-logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 300; color: var(--bone); }
     .footer-logo span { display: block; font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rose-gold); margin-top: 0.2rem; }
     .footer-links { display: flex; gap: 2.5rem; list-style: none; }
-    .footer-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(237,230,216,0.45); transition: color 0.2s; }
+    .footer-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(237,230,216,0.7); transition: color 0.2s; }
     .footer-links a:hover { color: var(--bone); }
-    .footer-copy { font-size: 0.7rem; color: rgba(237,230,216,0.25); letter-spacing: 0.05em; }
+    .footer-copy { font-size: 0.7rem; color: rgba(237,230,216,0.55); letter-spacing: 0.05em; }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
