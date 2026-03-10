@@ -1,137 +1,1223 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
-  <head>
-    <title>{{ if .IsPage }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ .Site.Title }} — Gathering with Presence</title>
 
-    {{ $scssOptions := (dict "outputStyle" "compressed")}} {{ $scss :=
-    resources.Get "scss/main.scss" | css.Sass $scssOptions | fingerprint
-    "sha512" }}
-    <link
-      rel="stylesheet"
-      href="{{ $scss.RelPermalink }}"
-      integrity="{{ $scss.Data.Integrity }}"
-    />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="author" content="{{ .Site.Params.author}}" />
-    <meta
-      name="description"
-      content="{{ if .IsPage }}{{ .Summary }}{{ else }}{{ .Site.Params.description }}{{ end }}"
-    />
-    <meta name="twitter:card" content="summary" />
-    <meta name="og:type" content="{{ if eq .Section "writing" }}article{{ else
-    }}website{{ end }}">
-    <meta
-      name="og:title"
-      content="{{ if .IsPage }}{{ .Title }} | {{ end }}{{ .Site.Title }}"
-    />
-    <meta
-      name="og:description"
-      content="{{ if .IsPage }}{{ .Summary }}{{ else }}{{ .Site.Params.description }}{{ end }}"
-    />
-    <meta name="og:url" content="{{ .Permalink }}" />
-    {{ $avatar := resources.Get "images/avatar.jpg" }} {{ with $avatar.Resize
-    "512x512" }}
-    <meta name="og:image" content="{{ .Permalink }}" />
-    {{ end }} {{ if .Params.noindex }}
-    <meta name="robots" content="noindex" />
-    {{ end }} {{ with $avatar.Resize "32x32" }}
-    <link
-      rel="icon"
-      sizes="{{ .Width }}x{{ .Height }}"
-      type="image/png"
-      href="{{ .RelPermalink }}"
-    />
-    {{ end }} {{ with $avatar.Resize "180x180" }}
-    <link
-      rel="apple-touch-icon"
-      sizes="{{ .Width }}x{{ .Height }}"
-      type="image/png"
-      href="{{ .RelPermalink }}"
-    />
-    {{ end }}
+  {{ $scssOptions := (dict "outputStyle" "compressed")}}
+  {{ $scss := resources.Get "scss/main.scss" | css.Sass $scssOptions | fingerprint "sha512" }}
 
-    <link
-      rel="“canonical”"
-      href="{{ if and .IsPage .Params.external_url }}{{ .Params.external_url }}{{ else }}{{ .Permalink }}{{ end }}"
-    />
+  <meta name="author" content="{{ .Site.Params.author }}" />
+  <meta name="description" content="{{ .Site.Params.description }}" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:type" content="website" />
+  <meta name="og:title" content="{{ .Site.Title }}" />
+  <meta name="og:description" content="{{ .Site.Params.description }}" />
+  <meta name="og:url" content="{{ .Permalink }}" />
+  {{ $avatar := resources.Get "images/avatar.jpg" }}
+  {{ with $avatar.Resize "512x512" }}
+  <meta name="og:image" content="{{ .Permalink }}" />
+  {{ end }}
+  {{ with $avatar.Resize "32x32" }}
+  <link rel="icon" sizes="{{ .Width }}x{{ .Height }}" type="image/png" href="{{ .RelPermalink }}" />
+  {{ end }}
+  {{ with $avatar.Resize "180x180" }}
+  <link rel="apple-touch-icon" sizes="{{ .Width }}x{{ .Height }}" type="image/png" href="{{ .RelPermalink }}" />
+  {{ end }}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap"
-      rel="stylesheet"
-    />
+  <link rel="canonical" href="{{ .Permalink }}" />
 
-    <script
-      defer
-      data-domain="lindsaybalfour.com"
-      src="https://plausible.io/js/plausible.js"
-    ></script>
-  </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="container">
-      <main style="color: var(--text-color-primary)">
-        <div class="foobar">
-          <img
-            src="/images/profile.jpg"
-            style="
-              width: 256px;
-              border-radius: 9999px;
-              border: 4px solid #ff6b6c;
-            "
-          />
-          <h1 style="font-family: Mansalva; color: #ff6b6c; margin: 0">
-            Lindsay Balfour
-          </h1>
-          <section>
-            <p
-              class="text--disabled"
-              style="text-align: center; font-family: Mansalva; color: #208aae"
-            >
-              Artist &centerdot; Educator &centerdot; Learning Designer
-            </p>
-          </section>
-          <footer>
-            <div class="social">
-              <a rel="me" href="https://mastodon.education/@MakeyLindsay" style="display: none">Mastodon</a>
-              <a
-                class="social__icon"
-                href="https://twitter.com/{{ .Site.Params.twitter }}"
-                aria-label="Twitter"
-              >
-                <svg
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <title>Twitter icon</title>
-                  <path
-                    d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
-                  />
-                </svg>
-              </a>
-              <a
-                class="social__icon"
-                href="https://linkedin.com/in/{{ .Site.Params.linkedin }}"
-                aria-label="LinkedIn"
-              >
-                <svg
-                  role="img"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>LinkedIn icon</title>
-                  <path
-                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
-                  />
-                </svg>
-              </a>
-            </div>
-          </footer>
-        </div>
-      </main>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <script defer data-domain="lindsaybalfour.com" src="https://plausible.io/js/plausible.js"></script>
+
+  {{ $scssOptions := (dict "outputStyle" "compressed") }}
+  {{ $brand := resources.Get "scss/brand.scss" | css.Sass $scssOptions | fingerprint "sha512" }}
+  <link rel="stylesheet" href="{{ $brand.RelPermalink }}" integrity="{{ $brand.Data.Integrity }}" />
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--charcoal-espresso);
+      color: var(--bone);
+      padding: 0.6rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 9999;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 1rem; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bone);
+      color: var(--charcoal-espresso);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ============================================================
+       TYPOGRAPHY SYSTEM
+       ============================================================ */
+    .display-xl {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+    .display-lg {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.15;
+    }
+    .display-md {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    .label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .body-lg {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+    .body-sm {
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ============================================================
+       BUTTON SYSTEM
+       ============================================================ */
+    .btn {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.85rem 2.2rem;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--maroon);
+      color: var(--bone);
+    }
+    .btn-primary:hover {
+      background: var(--midnight-plum);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--charcoal-espresso);
+      border: 1px solid var(--warm-taupe);
+    }
+    .btn-secondary:hover {
+      border-color: var(--maroon);
+      color: var(--maroon);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--bone);
+      border: 1px solid rgba(237,230,216,0.4);
+    }
+    .btn-ghost:hover {
+      background: rgba(237,230,216,0.1);
+      border-color: var(--bone);
+    }
+
+    /* ============================================================
+       NAVIGATION
+       ============================================================ */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(242,235,224,0.93);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(158,136,120,0.2);
+      transition: all 0.3s ease;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--charcoal-espresso);
+    }
+    .nav-logo span {
+      display: block;
+      font-size: 0.6rem;
+      font-family: var(--font-body);
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--warm-taupe);
+      margin-top: 0.1rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--charcoal-espresso);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--palatinate); }
+    .nav-cta {
+      background: var(--maroon);
+      color: var(--bone) !important;
+      padding: 0.55rem 1.4rem;
+      transition: background 0.3s ease !important;
+    }
+    .nav-cta:hover { background: var(--midnight-plum); color: var(--bone) !important; }
+
+    /* ============================================================
+       HERO SECTION
+       ============================================================ */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      background: var(--midnight-plum);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 8rem 4rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 60%, rgba(107,45,45,0.35) 0%, transparent 65%),
+                  radial-gradient(ellipse at 80% 20%, rgba(104,40,96,0.2) 0%, transparent 55%);
+    }
+    .hero-eyebrow {
+      color: var(--rose-gold);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2.5rem;
+      height: 1px;
+      background: var(--rose-gold);
+    }
+    .hero-heading {
+      color: var(--bone);
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .hero-heading em {
+      font-style: italic;
+      color: var(--rose-gold);
+    }
+    .hero-sub {
+      color: rgba(237,230,216,0.65);
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.8;
+      max-width: 36ch;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      position: relative;
+    }
+    .hero-ornament {
+      position: absolute;
+      top: 4rem;
+      right: 3rem;
+      font-family: var(--font-display);
+      font-size: 12rem;
+      font-weight: 300;
+      color: rgba(237,230,216,0.04);
+      line-height: 1;
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero-right {
+      background: var(--warm-taupe);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-right-inner {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 60% 40%, rgba(196,154,108,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(107,45,45,0.25) 0%, transparent 50%),
+        linear-gradient(160deg, var(--warm-taupe) 0%, var(--clay-beige) 40%, var(--earthy-rose) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 6rem 3rem;
+    }
+    .hero-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.9rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bone);
+      text-align: center;
+      line-height: 1.5;
+      max-width: 28ch;
+      margin-bottom: 3rem;
+      opacity: 0.95;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .hero-tag {
+      background: rgba(237,230,216,0.15);
+      color: var(--bone);
+      border: 1px solid rgba(237,230,216,0.3);
+      padding: 0.4rem 1.1rem;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: rgba(237,230,216,0.5);
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 2.5rem;
+      background: linear-gradient(to bottom, rgba(237,230,216,0.5), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.5; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* ============================================================
+       INTRO BAND
+       ============================================================ */
+    .intro-band {
+      background: var(--maroon);
+      padding: 2rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      overflow: hidden;
+    }
+    .intro-band-text {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bone);
+      opacity: 0.9;
+      white-space: nowrap;
+    }
+    .intro-band-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--rose-gold);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       PRESENCE SECTION
+       ============================================================ */
+    .section {
+      padding: 7rem 4rem;
+    }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .presence {
+      background: var(--bone);
+    }
+    .presence-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .section-label {
+      color: var(--rose-gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--rose-gold);
+    }
+    .presence-heading {
+      margin-bottom: 1.5rem;
+      color: var(--charcoal-espresso);
+    }
+    .presence-body {
+      color: var(--warm-taupe);
+      margin-bottom: 2.5rem;
+      max-width: 48ch;
+    }
+    .presence-signature {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--dusty-plum);
+      letter-spacing: 0.05em;
+    }
+
+    .presence-right {
+      position: relative;
+    }
+    .presence-card {
+      background: var(--midnight-plum);
+      padding: 3.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .presence-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(107,45,45,0.4) 0%, transparent 60%);
+    }
+    .presence-card-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--bone);
+      line-height: 1.4;
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .presence-card-quote::before {
+      content: '"';
+      display: block;
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--rose-gold);
+      opacity: 0.4;
+      margin-bottom: 1rem;
+    }
+    .presence-card-accent {
+      width: 3rem;
+      height: 2px;
+      background: var(--rose-gold);
+      position: relative;
+    }
+
+    /* ============================================================
+       PILLARS / OFFERINGS PREVIEW
+       ============================================================ */
+    .pillars {
+      background: var(--midnight-plum);
+      position: relative;
+      overflow: hidden;
+    }
+    .pillars::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 10% 50%, rgba(107,45,45,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 20%, rgba(104,40,96,0.15) 0%, transparent 45%);
+    }
+    .pillars-header {
+      text-align: center;
+      margin-bottom: 5rem;
+      position: relative;
+    }
+    .pillars-label {
+      color: var(--rose-gold);
+      margin-bottom: 1.5rem;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .pillars-label::before, .pillars-label::after {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--rose-gold);
+    }
+    .pillars-heading {
+      color: var(--bone);
+      margin-bottom: 1.5rem;
+    }
+    .pillars-sub {
+      color: rgba(237,230,216,0.55);
+      max-width: 50ch;
+      margin: 0 auto;
+      font-size: 0.95rem;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .pillar {
+      padding: 3rem 2rem;
+      border-left: 1px solid rgba(237,230,216,0.08);
+      position: relative;
+      transition: background 0.4s ease;
+      cursor: default;
+    }
+    .pillar:last-child {
+      border-right: 1px solid rgba(237,230,216,0.08);
+    }
+    .pillar:hover {
+      background: rgba(237,230,216,0.04);
+    }
+    .pillar-number {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: rgba(196,154,108,0.2);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color 0.4s;
+    }
+    .pillar:hover .pillar-number {
+      color: rgba(196,154,108,0.5);
+    }
+    .pillar-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--bone);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .pillar-subtitle {
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rose-gold);
+      margin-bottom: 1rem;
+    }
+    .pillar-body {
+      font-size: 0.9rem;
+      color: rgba(237,230,216,0.5);
+      line-height: 1.7;
+    }
+    .pillar-line {
+      width: 2rem;
+      height: 1px;
+      background: var(--maroon);
+      margin-bottom: 1.5rem;
+      transition: width 0.4s, background 0.4s;
+    }
+    .pillar:hover .pillar-line {
+      width: 3.5rem;
+      background: var(--rose-gold);
+    }
+
+    /* ============================================================
+       MEANING SECTION
+       ============================================================ */
+    .meaning {
+      background: var(--bone);
+    }
+    .meaning-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .meaning-heading {
+      margin-bottom: 2rem;
+      color: var(--charcoal-espresso);
+    }
+    .meaning-body {
+      color: var(--warm-taupe);
+      margin-bottom: 1.5rem;
+      max-width: 50ch;
+    }
+    .meaning-list {
+      list-style: none;
+      margin: 2rem 0 3rem;
+    }
+    .meaning-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(158,136,120,0.2);
+      font-size: 0.9rem;
+      color: var(--charcoal-espresso);
+    }
+    .meaning-list li::before {
+      content: '—';
+      color: var(--rose-gold);
+      flex-shrink: 0;
+      font-family: var(--font-display);
+    }
+
+    .meaning-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding-top: 2rem;
+    }
+    .meaning-stat {
+      padding: 2rem;
+      border-left: 3px solid var(--maroon);
+      background: rgba(107,45,45,0.04);
+    }
+    .meaning-stat-number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--maroon);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .meaning-stat-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--warm-taupe);
+    }
+
+    /* ============================================================
+       FEEL SECTION
+       ============================================================ */
+    .feel {
+      background: var(--dusty-plum);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .feel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(74,26,68,0.6) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 30%, rgba(107,45,45,0.3) 0%, transparent 50%);
+    }
+    .feel-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .feel-label {
+      color: var(--rose-gold);
+      margin-bottom: 2rem;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .feel-label::before, .feel-label::after {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--rose-gold);
+    }
+    .feel-heading {
+      color: var(--bone);
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .feel-body {
+      color: rgba(237,230,216,0.7);
+      font-size: 1rem;
+      line-height: 1.9;
+      margin-bottom: 3rem;
+    }
+    .feel-words {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .feel-word {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--rose-gold);
+      opacity: 0.9;
+    }
+
+    /* ============================================================
+       WHO THIS IS FOR
+       ============================================================ */
+    .who {
+      background: var(--warm-taupe);
+    }
+    .who-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .who-heading {
+      color: var(--bone);
+      margin-bottom: 1.5rem;
+    }
+    .who-body {
+      color: rgba(237,230,216,0.7);
+      font-size: 0.95rem;
+    }
+    .who-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(237,230,216,0.15);
+    }
+    .who-card {
+      background: var(--warm-taupe);
+      padding: 2.5rem;
+      transition: background 0.3s;
+    }
+    .who-card:hover {
+      background: rgba(30,21,32,0.15);
+    }
+    .who-card-icon {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--rose-gold);
+      margin-bottom: 0.75rem;
+      line-height: 1;
+    }
+    .who-card-title {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bone);
+      margin-bottom: 0.5rem;
+    }
+    .who-card-body {
+      font-size: 0.9rem;
+      color: rgba(237,230,216,0.6);
+      line-height: 1.6;
+    }
+
+    /* ============================================================
+       CTA SECTION
+       ============================================================ */
+    .cta-section {
+      background: var(--midnight-plum);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(104,40,96,0.35) 0%, transparent 65%);
+    }
+    .cta-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .cta-label {
+      color: var(--rose-gold);
+      margin-bottom: 2rem;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .cta-label::before, .cta-label::after {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--rose-gold);
+    }
+    .cta-heading {
+      color: var(--bone);
+      margin-bottom: 1.5rem;
+    }
+    .cta-body {
+      color: rgba(237,230,216,0.6);
+      font-size: 0.95rem;
+      margin-bottom: 3rem;
+      max-width: 45ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      background: var(--black-brown);
+      padding: 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: var(--bone);
+    }
+    .footer-logo span {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--rose-gold);
+      margin-top: 0.2rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(237,230,216,0.45);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--bone); }
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(237,230,216,0.25);
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================================
+       ANIMATIONS
+       ============================================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      animation: fadeUp 0.8s ease forwards;
+    }
+    .fade-up-delay-1 { animation-delay: 0.15s; opacity: 0; animation-fill-mode: forwards; }
+    .fade-up-delay-2 { animation-delay: 0.3s;  opacity: 0; animation-fill-mode: forwards; }
+    .fade-up-delay-3 { animation-delay: 0.45s; opacity: 0; animation-fill-mode: forwards; }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem;
+      color: var(--charcoal-espresso);
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-hamburger { display: block; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(242,235,224,0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(158,136,120,0.2);
+        padding: 1.5rem 2rem;
+        gap: 1.25rem;
+        align-items: flex-start;
+      }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 50vh; }
+      .hero-left { padding: 8rem 2rem 4rem; }
+      .section { padding: 4rem 2rem; }
+      .presence-grid,
+      .meaning-grid,
+      .who-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .pillars-grid { grid-template-columns: 1fr 1fr; }
+      .intro-band { padding: 1.5rem 2rem; flex-wrap: wrap; gap: 1.5rem; }
+      .intro-band-text { white-space: normal; text-align: center; }
+      footer { padding: 3rem 2rem; flex-direction: column; align-items: flex-start; }
+      .who-right { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-logo">
+      Lindsay Balfour
+      <span>Community Leader · Facilitator</span>
     </div>
-  </body>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/work">Work</a></li>
+      <li><a href="#contact" class="nav-cta">Work With Me</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+  </nav>
+  <script>
+    (function() {
+      var btn = document.querySelector('.nav-hamburger');
+      var links = document.querySelector('.nav-links');
+      btn.addEventListener('click', function() {
+        var open = links.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+        btn.innerHTML = open ? '&#10005;' : '&#9776;';
+      });
+    })();
+  </script>
+
+  <!-- HERO -->
+  <section id="main" class="hero">
+    <div class="hero-left">
+      <div class="hero-ornament">L</div>
+      <div class="hero-eyebrow label fade-up">San Francisco · Stockholm</div>
+      <h1 class="display-xl hero-heading fade-up fade-up-delay-1">
+        Gathering<br>with <em>presence.</em><br>Creating<br>meaning<br>together.
+      </h1>
+      <p class="hero-sub fade-up fade-up-delay-2">
+        Community leadership, ceremonial facilitation, and co-created experiences rooted in grounded presence.
+      </p>
+      <div class="hero-buttons fade-up fade-up-delay-3">
+        <a href="#contact" class="btn btn-primary">Work With Me</a>
+        <a href="#" class="btn btn-ghost">See Gatherings I've Led</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-right-inner">
+        <p class="hero-quote">
+          "Soft presence.<br>Strong spaces."
+        </p>
+        <div class="hero-tags">
+          <span class="hero-tag">Community Leadership</span>
+          <span class="hero-tag">Space Holding</span>
+          <span class="hero-tag">Ceremony & Ritual</span>
+          <span class="hero-tag">Co-Creation</span>
+          <span class="hero-tag">Meaning-Making</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE BAND -->
+  <div class="intro-band">
+    <span class="intro-band-text">Community leadership</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Space holding</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Ceremony & ritual</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Meaningful co-creation</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Grounded presence</span>
+  </div>
+
+  <!-- WHERE PRESENCE BECOMES LEADERSHIP -->
+  <section class="section presence">
+    <div class="section-inner">
+      <div class="presence-grid">
+        <div class="presence-left">
+          <div class="section-label label">Philosophy</div>
+          <h2 class="display-lg presence-heading">Where presence<br>becomes <em style="font-style:italic;color:var(--maroon);">leadership</em></h2>
+          <p class="body-lg presence-body">
+            I lead with steadiness rather than force. With structure that creates safety, and openness that invites participation.
+          </p>
+          <p class="body-lg presence-body">
+            My role is to set the tone and hold the container, so individuals can show up fully and the group can move together with trust and coherence. When presence is grounded, leadership becomes felt rather than performed.
+          </p>
+          <p class="presence-signature">— Lindsay Balfour</p>
+        </div>
+        <div class="presence-right">
+          <div class="presence-card">
+            <p class="presence-card-quote">
+              I don't create for people. I create with them.
+            </p>
+            <div class="presence-card-accent"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE FIVE PILLARS -->
+  <section class="section pillars">
+    <div class="section-inner">
+      <div class="pillars-header">
+        <div class="pillars-label label">What I Offer</div>
+        <h2 class="display-lg pillars-heading">The Five Pillars</h2>
+        <p class="pillars-sub body-sm">Each offering is a different doorway into presence, belonging, and shared becoming.</p>
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar">
+          <div class="pillar-number">01</div>
+          <div class="pillar-line"></div>
+          <h3 class="pillar-title">The Gathering</h3>
+          <div class="pillar-subtitle">Leadership & Facilitation</div>
+          <p class="pillar-body">Bringing people together to find shared focus and genuine belonging — without pressure or forced intensity.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">02</div>
+          <div class="pillar-line"></div>
+          <h3 class="pillar-title">The Container</h3>
+          <div class="pillar-subtitle">Space Holding</div>
+          <p class="pillar-body">Holding steady, regulated spaces during moments of transition or vulnerability — for depth, trust, and honesty.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">03</div>
+          <div class="pillar-line"></div>
+          <h3 class="pillar-title">The Ceremony</h3>
+          <div class="pillar-subtitle">Ritual & Meaning</div>
+          <p class="pillar-body">Grounded, inclusive rituals to mark threshold moments — openings, closings, milestones, and transitions.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">04</div>
+          <div class="pillar-line"></div>
+          <h3 class="pillar-title">Meaning Made Together</h3>
+          <div class="pillar-subtitle">Co-Created Experiences</div>
+          <p class="pillar-body">Participatory structures where the group builds its own meaning through collaborative making and reflection.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">05</div>
+          <div class="pillar-line"></div>
+          <h3 class="pillar-title">Workshops</h3>
+          <div class="pillar-subtitle">Meaningful Making</div>
+          <p class="pillar-body">Structured creative sessions on self-leadership, values, and storytelling — turning insight into collective tools.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREATING MEANINGFUL TOGETHERNESS -->
+  <section class="section meaning">
+    <div class="section-inner">
+      <div class="meaning-grid">
+        <div class="meaning-left">
+          <div class="section-label label">The Approach</div>
+          <h2 class="display-lg meaning-heading">Creating meaningful <em style="font-style:italic;color:var(--dusty-plum);">togetherness</em></h2>
+          <p class="body-lg meaning-body">
+            Meaningful togetherness isn't about intensity or spectacle. It's about participation, presence, and shared authorship.
+          </p>
+          <ul class="meaning-list">
+            <li>People are contributors, not spectators</li>
+            <li>Collaboration replaces consumption</li>
+            <li>Structure supports creativity</li>
+            <li>Meaning is made together, not delivered</li>
+          </ul>
+          <a href="#" class="btn btn-primary">Explore Offerings</a>
+        </div>
+        <div class="meaning-right">
+          <div class="meaning-stat">
+            <div class="meaning-stat-number">10+</div>
+            <div class="meaning-stat-label">Years of facilitation & community leadership</div>
+          </div>
+          <div class="meaning-stat">
+            <div class="meaning-stat-number">2</div>
+            <div class="meaning-stat-label">Continents — San Francisco & Stockholm</div>
+          </div>
+          <div class="meaning-stat">
+            <div class="meaning-stat-number">5</div>
+            <div class="meaning-stat-label">Modular offerings, infinitely interweavable</div>
+          </div>
+          <div class="meaning-stat">
+            <div class="meaning-stat-number">∞</div>
+            <div class="meaning-stat-label">Ways a gathering can create lasting meaning</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT FEELS -->
+  <section class="section feel">
+    <div class="feel-inner">
+      <div class="feel-label label">How it feels</div>
+      <h2 class="display-lg feel-heading">To be in my spaces</h2>
+      <div class="feel-words">
+        <span class="feel-word">Grounded.</span>
+        <span class="feel-word">Warm.</span>
+        <span class="feel-word">Clear.</span>
+        <span class="feel-word">Human.</span>
+      </div>
+      <p class="feel-body">
+        People often describe my gatherings as places where they can relax into themselves, connect without pressure, and feel part of something larger without losing their individuality.<br><br>
+        I lead with emotional integrity, relational respect, and a calm nervous system — creating environments where trust builds naturally and collaboration feels possible.
+      </p>
+      <a href="#contact" class="btn btn-ghost">Begin a Conversation</a>
+    </div>
+  </section>
+
+  <!-- WHO THIS IS FOR -->
+  <section class="section who">
+    <div class="section-inner">
+      <div class="who-grid">
+        <div class="who-left">
+          <div class="section-label label" style="color:var(--rose-gold);">Who this is for</div>
+          <h2 class="display-md who-heading">If you're looking for leadership that is present, participatory, and intentional —<br><em style="font-style:italic;">you're in the right place.</em></h2>
+          <p class="who-body">My work is for those building community, hosting gatherings, and creating meaningful shared experiences.</p>
+        </div>
+        <div class="who-right">
+          <div class="who-card">
+            <div class="who-card-icon">◦</div>
+            <div class="who-card-title">Communities & Collectives</div>
+            <p class="who-card-body">Groups seeking connection-centered, participatory leadership.</p>
+          </div>
+          <div class="who-card">
+            <div class="who-card-icon">◦</div>
+            <div class="who-card-title">Retreats & Gatherings</div>
+            <p class="who-card-body">Intimate to large-scale experiences requiring intentional facilitation.</p>
+          </div>
+          <div class="who-card">
+            <div class="who-card-icon">◦</div>
+            <div class="who-card-title">Festivals & Events</div>
+            <p class="who-card-body">Co-created experiences where participation and meaning interweave.</p>
+          </div>
+          <div class="who-card">
+            <div class="who-card-icon">◦</div>
+            <div class="who-card-title">Groups in Transition</div>
+            <p class="who-card-body">Organizations navigating growth, change, or new beginnings.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="section cta-section">
+    <div class="cta-inner">
+      <div class="cta-label label">Let's create something together</div>
+      <h2 class="display-lg cta-heading">Ready to gather<br><em style="font-style:italic;color:var(--rose-gold);">with intention?</em></h2>
+      <p class="cta-body">
+        If you're hosting a gathering, retreat, ceremony, or community experience — I'd love to explore what we can create together.
+      </p>
+      <div class="cta-buttons">
+        <a href="https://linkedin.com/in/{{ .Site.Params.linkedin }}" class="btn btn-primary">Connect on LinkedIn</a>
+        <a href="mailto:hello@lindsaybalfour.com" class="btn btn-ghost">Send an Email</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      Lindsay Balfour
+      <span>Community Leadership · Space Holding · Ceremony</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/work">Work</a></li>
+      <li><a href="https://linkedin.com/in/{{ .Site.Params.linkedin }}">LinkedIn</a></li>
+    </ul>
+    <p class="footer-copy">&copy; {{ now.Format "2006" }} Lindsay Balfour. All rights reserved.</p>
+  </footer>
+
+</body>
 </html>

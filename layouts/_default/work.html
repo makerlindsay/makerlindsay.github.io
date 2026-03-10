@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Work &amp; Gatherings — {{ .Site.Title }}</title>
+
+  <meta name="author" content="{{ .Site.Params.author }}" />
+  <meta name="description" content="A record of gatherings, ceremonies, retreats, and community experiences held by Lindsay Balfour." />
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:type" content="website" />
+  <meta name="og:title" content="Work &amp; Gatherings — {{ .Site.Title }}" />
+  <meta name="og:description" content="A record of gatherings, ceremonies, retreats, and community experiences held by Lindsay Balfour." />
+  <meta name="og:url" content="{{ .Permalink }}" />
+  {{ $avatar := resources.Get "images/avatar.jpg" }}
+  {{ with $avatar.Resize "512x512" }}
+  <meta name="og:image" content="{{ .Permalink }}" />
+  {{ end }}
+  {{ with $avatar.Resize "32x32" }}
+  <link rel="icon" sizes="{{ .Width }}x{{ .Height }}" type="image/png" href="{{ .RelPermalink }}" />
+  {{ end }}
+  {{ with $avatar.Resize "180x180" }}
+  <link rel="apple-touch-icon" sizes="{{ .Width }}x{{ .Height }}" type="image/png" href="{{ .RelPermalink }}" />
+  {{ end }}
+
+  <link rel="canonical" href="{{ .Permalink }}" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <script defer data-domain="lindsaybalfour.com" src="https://plausible.io/js/plausible.js"></script>
+
+  {{ $scssOptions := (dict "outputStyle" "compressed") }}
+  {{ $brand := resources.Get "scss/brand.scss" | css.Sass $scssOptions | fingerprint "sha512" }}
+  <link rel="stylesheet" href="{{ $brand.RelPermalink }}" integrity="{{ $brand.Data.Integrity }}" />
+
+  <style>
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--charcoal-espresso);
+      color: var(--bone);
+      padding: 0.6rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 9999;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 1rem; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bone);
+      color: var(--charcoal-espresso);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(242,235,224,0.93);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(158,136,120,0.2);
+    }
+    .nav-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.05em; color: var(--charcoal-espresso); }
+    .nav-logo span { display: block; font-size: 0.6rem; font-family: var(--font-body); font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm-taupe); margin-top: 0.1rem; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--charcoal-espresso); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--palatinate); }
+    .nav-links a.active { color: var(--maroon); }
+    .nav-cta { background: var(--maroon); color: var(--bone) !important; padding: 0.55rem 1.4rem; transition: background 0.3s ease !important; }
+    .nav-cta:hover { background: var(--charcoal-espresso) !important; }
+
+    /* ── SHARED ── */
+    .btn {
+      display: inline-block; font-family: var(--font-body);
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; padding: 0.85rem 2.2rem;
+      cursor: pointer; transition: all 0.35s ease; border: none;
+    }
+    .btn-primary { background: var(--maroon); color: var(--bone); }
+    .btn-primary:hover { background: var(--midnight-plum); }
+    .btn-secondary { background: transparent; color: var(--charcoal-espresso); border: 1px solid var(--warm-taupe); }
+    .btn-secondary:hover { border-color: var(--maroon); color: var(--maroon); }
+    .btn-ghost { background: transparent; color: var(--bone); border: 1px solid rgba(237,230,216,0.4); }
+    .btn-ghost:hover { background: rgba(237,230,216,0.1); border-color: var(--bone); }
+
+    .section { padding: 7rem 4rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .section-label::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      min-height: 75vh;
+      background: var(--midnight-plum);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 9rem 4rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 70%, rgba(107,45,45,0.4) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 20%, rgba(104,40,96,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(196,154,108,0.08) 0%, transparent 65%);
+    }
+    .hero-mosaic {
+      position: absolute; inset: 0; display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      opacity: 0.12; pointer-events: none;
+    }
+    .mosaic-cell { border: 1px solid rgba(237,230,216,0.15); position: relative; overflow: hidden; }
+    .mosaic-cell.filled { background: rgba(196,154,108,0.2); }
+    .mosaic-cell.accent { background: rgba(107,45,45,0.3); }
+    .mosaic-cell.plum   { background: rgba(104,40,96,0.25); }
+    .hero-inner { position: relative; max-width: 1200px; }
+    .hero-eyebrow {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 2.5rem; height: 1px; background: var(--rose-gold); }
+    .page-hero-heading {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: 300; line-height: 1.0; color: var(--bone); margin-bottom: 2rem;
+    }
+    .page-hero-heading em { font-style: italic; color: var(--rose-gold); }
+    .hero-meta { display: flex; gap: 4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .hero-meta-number { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; color: var(--bone); line-height: 1; }
+    .hero-meta-label { font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(237,230,216,0.45); margin-top: 0.25rem; }
+
+    /* ── INTRO BAND ── */
+    .intro-band {
+      background: var(--maroon); padding: 1.8rem 4rem;
+      display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap;
+    }
+    .intro-band-text { font-family: var(--font-display); font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--bone); opacity: 0.88; }
+    .intro-band-dot { width: 4px; height: 4px; background: var(--rose-gold); border-radius: 50%; flex-shrink: 0; }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      background: var(--bone); padding: 2rem 4rem;
+      border-bottom: 1px solid rgba(158,136,120,0.2);
+      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .filter-label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone-grey); }
+    .filter-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .filter-pill {
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.45rem 1.1rem; border: 1px solid rgba(158,136,120,0.35);
+      color: var(--warm-taupe); cursor: pointer; transition: all 0.25s; background: transparent;
+    }
+    .filter-pill:hover, .filter-pill.active { background: var(--maroon); border-color: var(--maroon); color: var(--bone); }
+
+    /* ── FEATURED GATHERING ── */
+    .featured { background: var(--bone); }
+    .featured-label { margin-bottom: 3rem; }
+    .featured-card { display: grid; grid-template-columns: 1.2fr 0.8fr; border: 1px solid rgba(158,136,120,0.2); overflow: hidden; }
+    .featured-photo {
+      position: relative; min-height: 520px; overflow: hidden;
+      background: linear-gradient(145deg, var(--warm-taupe) 0%, var(--clay-beige) 40%, var(--earthy-rose) 90%);
+    }
+    .featured-photo::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 60% 35%, rgba(196,154,108,0.3) 0%, transparent 55%);
+    }
+    .photo-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+    .photo-placeholder-icon { font-family: var(--font-display); font-size: 4rem; font-weight: 300; font-style: italic; color: rgba(237,230,216,0.35); }
+    .photo-placeholder-text { font-size: 0.62rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(237,230,216,0.35); }
+    .featured-tag { position: absolute; top: 2rem; left: 2rem; background: var(--maroon); color: var(--bone); font-size: 0.6rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 1rem; }
+    .featured-content { padding: 3.5rem; display: flex; flex-direction: column; justify-content: space-between; background: var(--midnight-plum); position: relative; overflow: hidden; }
+    .featured-content::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 80%, rgba(107,45,45,0.3) 0%, transparent 55%); }
+    .featured-content-inner { position: relative; }
+    .featured-type { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 1rem; }
+    .featured-title { font-family: var(--font-display); font-size: clamp(1.8rem, 2.5vw, 2.5rem); font-weight: 300; color: var(--bone); margin-bottom: 0.75rem; line-height: 1.15; }
+    .featured-location { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(237,230,216,0.45); margin-bottom: 2rem; }
+    .featured-desc { font-size: 0.9rem; font-weight: 300; line-height: 1.8; color: rgba(237,230,216,0.65); margin-bottom: 2.5rem; }
+    .featured-outcomes { margin-bottom: 2.5rem; }
+    .featured-outcomes-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 1rem; }
+    .outcome-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .outcome-item { font-size: 0.9rem; color: rgba(237,230,216,0.6); display: flex; align-items: flex-start; gap: 0.75rem; }
+    .outcome-item::before { content: '—'; color: var(--rose-gold); flex-shrink: 0; }
+    .featured-role { display: flex; align-items: center; gap: 1rem; padding-top: 2rem; border-top: 1px solid rgba(237,230,216,0.1); position: relative; flex-wrap: wrap; }
+    .role-badge { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.35rem 0.9rem; border: 1px solid rgba(196,154,108,0.4); color: var(--rose-gold); }
+
+    /* ── GATHERING GRID ── */
+    .gatherings { background: var(--bone); padding-top: 2rem; }
+    .gatherings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(158,136,120,0.15); }
+    .gathering-card { background: var(--bone); overflow: hidden; position: relative; cursor: default; transition: background 0.3s; }
+    .gathering-card:hover { background: #EAE3D4; }
+    .gathering-photo { height: 240px; position: relative; overflow: hidden; }
+    .gathering-photo-inner { position: absolute; inset: 0; transition: transform 0.6s ease; }
+    .gathering-card:hover .gathering-photo-inner { transform: scale(1.04); }
+    .g-color-1 { background: linear-gradient(145deg, var(--earthy-rose) 0%, var(--maroon) 100%); }
+    .g-color-2 { background: linear-gradient(145deg, var(--dusty-plum) 0%, var(--aubergine) 100%); }
+    .g-color-3 { background: linear-gradient(145deg, var(--warm-taupe) 0%, var(--clay-beige) 100%); }
+    .g-color-4 { background: linear-gradient(145deg, var(--iron-blue) 0%, var(--charcoal-espresso) 100%); }
+    .g-color-5 { background: linear-gradient(145deg, var(--muted-olive) 0%, var(--warm-taupe) 100%); }
+    .g-color-6 { background: linear-gradient(145deg, var(--copper-blush) 0%, var(--terra-cotta) 100%); }
+    .g-color-7 { background: linear-gradient(145deg, var(--faded-violet) 0%, var(--dusty-plum) 100%); }
+    .g-color-8 { background: linear-gradient(145deg, var(--charcoal-espresso) 0%, var(--maroon) 100%); }
+    .g-color-9 { background: linear-gradient(145deg, var(--rose-gold) 0%, var(--desert-peach) 100%); }
+    .gathering-photo-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(30,21,32,0.5) 100%); }
+    .gathering-photo-tag { position: absolute; top: 1.25rem; left: 1.25rem; font-size: 0.58rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.3rem 0.75rem; background: rgba(30,21,32,0.6); color: var(--bone); backdrop-filter: blur(4px); }
+    .gathering-icon { position: absolute; bottom: 1.25rem; right: 1.5rem; font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; font-style: italic; color: rgba(237,230,216,0.3); line-height: 1; }
+    .gathering-body { padding: 2rem; }
+    .gathering-meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; }
+    .gathering-location { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rose-gold); }
+    .gathering-dot { width: 3px; height: 3px; background: rgba(158,136,120,0.4); border-radius: 50%; }
+    .gathering-date { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone-grey); }
+    .gathering-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; color: var(--charcoal-espresso); margin-bottom: 0.6rem; line-height: 1.2; }
+    .gathering-desc { font-size: 0.8rem; font-weight: 300; color: var(--warm-taupe); line-height: 1.7; margin-bottom: 1.25rem; }
+    .gathering-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid rgba(158,136,120,0.15); }
+    .gathering-roles { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .gathering-role { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.25rem 0.65rem; border: 1px solid rgba(158,136,120,0.3); color: var(--warm-taupe); }
+    .gathering-arrow { font-size: 0.9rem; color: rgba(158,136,120,0.35); transition: color 0.25s, transform 0.25s; }
+    .gathering-card:hover .gathering-arrow { color: var(--maroon); transform: translateX(3px); }
+
+    /* ── ROLES SECTION ── */
+    .roles-section { background: var(--midnight-plum); position: relative; overflow: hidden; }
+    .roles-section::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 10% 60%, rgba(107,45,45,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 20%, rgba(104,40,96,0.18) 0%, transparent 45%);
+    }
+    .roles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; position: relative; }
+    .roles-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--bone); margin-bottom: 1.5rem; line-height: 1.1; }
+    .roles-heading em { font-style: italic; color: var(--rose-gold); }
+    .roles-body { font-size: 0.95rem; font-weight: 300; line-height: 1.85; color: rgba(237,230,216,0.6); max-width: 46ch; margin-bottom: 2.5rem; }
+    .roles-right { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(237,230,216,0.08); }
+    .role-card { background: var(--midnight-plum); padding: 2.5rem; transition: background 0.3s; }
+    .role-card:hover { background: rgba(237,230,216,0.04); }
+    .role-icon { font-family: var(--font-display); font-size: 2.2rem; font-weight: 300; font-style: italic; color: var(--rose-gold); opacity: 0.7; line-height: 1; margin-bottom: 1rem; }
+    .role-title { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bone); margin-bottom: 0.5rem; }
+    .role-desc { font-size: 0.8rem; font-weight: 300; color: rgba(237,230,216,0.5); line-height: 1.65; }
+
+    /* ── OUTCOMES ── */
+    .outcomes { background: var(--warm-taupe); }
+    .outcomes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .outcomes-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bone); margin-bottom: 1.5rem; line-height: 1.1; }
+    .outcomes-body { font-size: 0.95rem; font-weight: 300; line-height: 1.85; color: rgba(237,230,216,0.65); max-width: 46ch; margin-bottom: 2.5rem; }
+    .outcomes-right { display: flex; flex-direction: column; gap: 0; }
+    .outcome-stat { padding: 2rem 0; border-bottom: 1px solid rgba(237,230,216,0.12); display: grid; grid-template-columns: 5rem 1fr; gap: 1.5rem; align-items: center; }
+    .outcome-stat:first-child { padding-top: 0; }
+    .outcome-stat-num { font-family: var(--font-display); font-size: 2.8rem; font-weight: 300; color: var(--rose-gold); line-height: 1; }
+    .outcome-stat-text { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.65); line-height: 1.6; }
+    .outcome-stat-text strong { font-weight: 500; color: var(--bone); display: block; margin-bottom: 0.2rem; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--dusty-plum); position: relative; overflow: hidden; }
+    .testimonials::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(74,26,68,0.5) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 30%, rgba(107,45,45,0.25) 0%, transparent 50%);
+    }
+    .testimonials-header { text-align: center; margin-bottom: 4rem; position: relative; }
+    .testimonials-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-gold); display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; }
+    .testimonials-label::before, .testimonials-label::after { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+    .testimonials-heading { font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 300; font-style: italic; color: var(--bone); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(237,230,216,0.1); position: relative; }
+    .testimonial-card { background: var(--dusty-plum); padding: 3rem; }
+    .testimonial-quote-mark { font-family: var(--font-display); font-size: 4rem; line-height: 0.5; color: rgba(196,154,108,0.3); margin-bottom: 1.5rem; display: block; }
+    .testimonial-text { font-family: var(--font-display); font-size: 1.1rem; font-weight: 300; font-style: italic; color: var(--bone); line-height: 1.6; margin-bottom: 2rem; opacity: 0.9; }
+    .testimonial-divider { width: 2rem; height: 1px; background: var(--rose-gold); margin-bottom: 1.25rem; }
+    .testimonial-name { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 0.2rem; }
+    .testimonial-context { font-size: 0.72rem; font-weight: 300; color: rgba(237,230,216,0.45); }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--midnight-plum); text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(104,40,96,0.35) 0%, transparent 65%); }
+    .cta-inner { max-width: 680px; margin: 0 auto; position: relative; }
+    .cta-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-gold); display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+    .cta-label::before, .cta-label::after { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+    .cta-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bone); margin-bottom: 1.25rem; }
+    .cta-heading em { font-style: italic; color: var(--rose-gold); }
+    .cta-body { font-size: 0.95rem; color: rgba(237,230,216,0.6); margin-bottom: 3rem; max-width: 44ch; margin-left: auto; margin-right: auto; line-height: 1.8; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black-brown); padding: 4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; }
+    .footer-logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 300; color: var(--bone); }
+    .footer-logo span { display: block; font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rose-gold); margin-top: 0.2rem; }
+    .footer-links { display: flex; gap: 2.5rem; list-style: none; }
+    .footer-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(237,230,216,0.45); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--bone); }
+    .footer-copy { font-size: 0.7rem; color: rgba(237,230,216,0.25); letter-spacing: 0.05em; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.85s ease forwards; }
+    .delay-1 { animation-delay: 0.15s; opacity: 0; animation-fill-mode: forwards; }
+    .delay-2 { animation-delay: 0.3s;  opacity: 0; animation-fill-mode: forwards; }
+
+    /* ── RESPONSIVE ── */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem;
+      color: var(--charcoal-espresso);
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-hamburger { display: block; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(242,235,224,0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(158,136,120,0.2);
+        padding: 1.5rem 2rem;
+        gap: 1.25rem;
+        align-items: flex-start;
+      }
+      .section { padding: 4rem 2rem; }
+      .filter-bar { padding: 1.5rem 2rem; }
+      .page-hero { padding: 8rem 2rem 4rem; }
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-photo { min-height: 280px; }
+      .gatherings-grid { grid-template-columns: 1fr; }
+      .roles-grid, .outcomes-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .roles-right { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      footer { padding: 3rem 2rem; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      Lindsay Balfour
+      <span>Community Leader · Facilitator</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/work" class="active">Work</a></li>
+      <li><a href="/#contact" class="nav-cta">Work With Me</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+  </nav>
+  <script>
+    (function() {
+      var btn = document.querySelector('.nav-hamburger');
+      var links = document.querySelector('.nav-links');
+      btn.addEventListener('click', function() {
+        var open = links.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+        btn.innerHTML = open ? '&#10005;' : '&#9776;';
+      });
+    })();
+  </script>
+
+  <!-- PAGE HERO -->
+  <section id="main" class="page-hero">
+    <div class="hero-mosaic" aria-hidden="true">
+      <div class="mosaic-cell filled"></div><div class="mosaic-cell"></div><div class="mosaic-cell accent"></div><div class="mosaic-cell"></div><div class="mosaic-cell filled"></div><div class="mosaic-cell"></div>
+      <div class="mosaic-cell"></div><div class="mosaic-cell plum"></div><div class="mosaic-cell"></div><div class="mosaic-cell filled"></div><div class="mosaic-cell"></div><div class="mosaic-cell accent"></div>
+      <div class="mosaic-cell accent"></div><div class="mosaic-cell"></div><div class="mosaic-cell filled"></div><div class="mosaic-cell"></div><div class="mosaic-cell plum"></div><div class="mosaic-cell"></div>
+      <div class="mosaic-cell"></div><div class="mosaic-cell filled"></div><div class="mosaic-cell"></div><div class="mosaic-cell accent"></div><div class="mosaic-cell"></div><div class="mosaic-cell filled"></div>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow fade-up">Past Gatherings &amp; Work</div>
+      <h1 class="page-hero-heading fade-up delay-1">
+        Spaces held.<br><em>Meaning made.</em>
+      </h1>
+      <div class="hero-meta fade-up delay-2">
+        <div class="hero-meta-item">
+          <div class="hero-meta-number">10+</div>
+          <div class="hero-meta-label">Years facilitating</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-number">2</div>
+          <div class="hero-meta-label">Continents</div>
+        </div>
+        <div class="hero-meta-item">
+          <div class="hero-meta-number">&#8734;</div>
+          <div class="hero-meta-label">Moments of meaning</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BAND -->
+  <div class="intro-band">
+    <span class="intro-band-text">Retreats</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Ceremonies</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Festivals</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Workshops</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Community Gatherings</span>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <span class="filter-label">Filter by</span>
+    <div class="filter-pills">
+      <button class="filter-pill active" onclick="filterGatherings(this, 'all')">All</button>
+      <button class="filter-pill" onclick="filterGatherings(this, 'ceremony')">Ceremony</button>
+      <button class="filter-pill" onclick="filterGatherings(this, 'retreat')">Retreat</button>
+      <button class="filter-pill" onclick="filterGatherings(this, 'workshop')">Workshop</button>
+      <button class="filter-pill" onclick="filterGatherings(this, 'festival')">Festival</button>
+      <button class="filter-pill" onclick="filterGatherings(this, 'community')">Community</button>
+    </div>
+  </div>
+
+  <!-- FEATURED GATHERING -->
+  <section class="section featured" style="padding-bottom: 2rem;">
+    <div class="section-inner">
+      <div class="section-label featured-label">Featured Gathering</div>
+      <div class="featured-card">
+        <div class="featured-photo">
+          <div class="photo-placeholder">
+            <div class="photo-placeholder-icon">&#10022;</div>
+            <div class="photo-placeholder-text">Photo — Replace with your image</div>
+          </div>
+          <div class="featured-tag">Ceremony · Retreat</div>
+        </div>
+        <div class="featured-content">
+          <div class="featured-content-inner">
+            <div class="featured-type">Ceremonial Gathering</div>
+            <h2 class="featured-title">Opening Circle —<br>Intentional Community Retreat</h2>
+            <div class="featured-location">Bay Area, California</div>
+            <p class="featured-desc">
+              A multi-day retreat gathering for an intentional community navigating transition. Lindsay held the opening and closing ceremonies, facilitated daily check-ins, and led a co-creation session in which participants built a shared set of values and commitments for the year ahead.
+            </p>
+            <div class="featured-outcomes">
+              <div class="featured-outcomes-label">Outcomes</div>
+              <div class="outcome-list">
+                <div class="outcome-item">Community created a shared values document through collaborative making</div>
+                <div class="outcome-item">Ceremony marked the group's transition into a new chapter</div>
+                <div class="outcome-item">Participants described feeling grounded, seen, and connected</div>
+              </div>
+            </div>
+          </div>
+          <div class="featured-role">
+            <span class="role-badge">Space Holder</span>
+            <span class="role-badge">Ceremony Lead</span>
+            <span class="role-badge">Co-Creation Facilitator</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GATHERING GRID -->
+  <section class="section gatherings" style="padding-top: 2rem;">
+    <div class="section-inner">
+      <div class="gatherings-grid">
+
+        <div class="gathering-card" data-category="ceremony">
+          <div class="gathering-photo">
+            <div class="gathering-photo-inner g-color-1"></div>
+            <div class="gathering-photo-overlay"></div>
+            <div class="gathering-photo-tag">Ceremony</div>
+            <div class="gathering-icon">&#9678;</div>
+          </div>
+          <div class="gathering-body">
+            <div class="gathering-meta">
+              <span class="gathering-location">Stockholm, Sweden</span>
+              <span class="gathering-dot"></span>
+              <span class="gathering-date">2024</span>
+            </div>
+            <h3 class="gathering-title">Threshold Ceremony — Year's End Closing</h3>
+            <p class="gathering-desc">An intimate closing ceremony for a community of makers and creatives. Participants released what was complete and set intentions for the year ahead through shared ritual and reflection.</p>
+            <div class="gathering-footer">
+              <div class="gathering-roles">
+                <span class="gathering-role">Ceremony Lead</span>
+                <span class="gathering-role">Space Holder</span>
+              </div>
+              <span class="gathering-arrow">&#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gathering-card" data-category="workshop">
+          <div class="gathering-photo">
+            <div class="gathering-photo-inner g-color-2"></div>
+            <div class="gathering-photo-overlay"></div>
+            <div class="gathering-photo-tag">Workshop</div>
+            <div class="gathering-icon">&#9672;</div>
+          </div>
+          <div class="gathering-body">
+            <div class="gathering-meta">
+              <span class="gathering-location">San Francisco, CA</span>
+              <span class="gathering-dot"></span>
+              <span class="gathering-date">2024</span>
+            </div>
+            <h3 class="gathering-title">CEO of Me Inc. — Values &amp; Self-Leadership Workshop</h3>
+            <p class="gathering-desc">A playful, grounding workshop for a group of entrepreneurs and creatives — exploring personal values, boundaries, and intentional self-leadership through collaborative reflection.</p>
+            <div class="gathering-footer">
+              <div class="gathering-roles">
+                <span class="gathering-role">Workshop Facilitator</span>
+              </div>
+              <span class="gathering-arrow">&#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gathering-card" data-category="community">
+          <div class="gathering-photo">
+            <div class="gathering-photo-inner g-color-3"></div>
+            <div class="gathering-photo-overlay"></div>
+            <div class="gathering-photo-tag">Community</div>
+            <div class="gathering-icon">&#9671;</div>
+          </div>
+          <div class="gathering-body">
+            <div class="gathering-meta">
+              <span class="gathering-location">Bay Area, CA</span>
+              <span class="gathering-dot"></span>
+              <span class="gathering-date">2023</span>
+            </div>
+            <h3 class="gathering-title">Women's Circle — Reflection &amp; Relational Support</h3>
+            <p class="gathering-desc">A facilitated gathering blending gentle ritual, reflective dialogue, and collective wisdom for a community of women navigating growth and change.</p>
+            <div class="gathering-footer">
+              <div class="gathering-roles">
+                <span class="gathering-role">Circle Facilitator</span>
+                <span class="gathering-role">Space Holder</span>
+              </div>
+              <span class="gathering-arrow">&#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gathering-card" data-category="retreat">
+          <div class="gathering-photo">
+            <div class="gathering-photo-inner g-color-4"></div>
+            <div class="gathering-photo-overlay"></div>
+            <div class="gathering-photo-tag">Retreat</div>
+            <div class="gathering-icon">&#9689;</div>
+          </div>
+          <div class="gathering-body">
+            <div class="gathering-meta">
+              <span class="gathering-location">Stockholm, Sweden</span>
+              <span class="gathering-dot"></span>
+              <span class="gathering-date">2023</span>
+            </div>
+            <h3 class="gathering-title">Integration Retreat — Holding Space for Transition</h3>
+            <p class="gathering-desc">A full-day container for a group navigating major life transitions. Lindsay held the emotional and relational field, supporting participants in processing and integrating with care.</p>
+            <div class="gathering-footer">
+              <div class="gathering-roles">
+                <span class="gathering-role">Space Holder</span>
+                <span class="gathering-role">Container Facilitator</span>
+              </div>
+              <span class="gathering-arrow">&#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gathering-card" data-category="festival">
+          <div class="gathering-photo">
+            <div class="gathering-photo-inner g-color-5"></div>
+            <div class="gathering-photo-overlay"></div>
+            <div class="gathering-photo-tag">Festival</div>
+            <div class="gathering-icon">&#10022;</div>
+          </div>
+          <div class="gathering-body">
+            <div class="gathering-meta">
+              <span class="gathering-location">Bay Area, CA</span>
+              <span class="gathering-dot"></span>
+              <span class="gathering-date">2023</span>
+            </div>
+            <h3 class="gathering-title">Speed Relating — Festival Gathering Experience</h3>
+            <p class="gathering-desc">A light-hearted, authentic relating experience at a co-created festival — guiding participants through structured connection using presence, curiosity, and honest expression.</p>
+            <div class="gathering-footer">
+              <div class="gathering-roles">
+                <span class="gathering-role">Workshop Facilitator</span>
+                <span class="gathering-role">Community Leader</span>
+              </div>
+              <span class="gathering-arrow">&#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gathering-card" data-category="community">
+          <div class="gathering-photo">
+            <div class="gathering-photo-inner g-color-6"></div>
+            <div class="gathering-photo-overlay"></div>
+            <div class="gathering-photo-tag">Co-Creation</div>
+            <div class="gathering-icon">&#9680;</div>
+          </div>
+          <div class="gathering-body">
+            <div class="gathering-meta">
+              <span class="gathering-location">Stockholm, Sweden</span>
+              <span class="gathering-dot"></span>
+              <span class="gathering-date">2022</span>
+            </div>
+            <h3 class="gathering-title">Meaning Made Together — Collaborative Art Gathering</h3>
+            <p class="gathering-desc">A participatory making experience where a community of creatives contributed to a collective artwork — the process itself becoming the shared meaning.</p>
+            <div class="gathering-footer">
+              <div class="gathering-roles">
+                <span class="gathering-role">Co-Creation Lead</span>
+                <span class="gathering-role">Space Holder</span>
+              </div>
+              <span class="gathering-arrow">&#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gathering-card" data-category="workshop">
+          <div class="gathering-photo">
+            <div class="gathering-photo-inner g-color-7"></div>
+            <div class="gathering-photo-overlay"></div>
+            <div class="gathering-photo-tag">Workshop</div>
+            <div class="gathering-icon">&#9708;</div>
+          </div>
+          <div class="gathering-body">
+            <div class="gathering-meta">
+              <span class="gathering-location">San Francisco, CA</span>
+              <span class="gathering-dot"></span>
+              <span class="gathering-date">2022</span>
+            </div>
+            <h3 class="gathering-title">Poetry &amp; Voice — Creative Writing Workshop</h3>
+            <p class="gathering-desc">An expressive writing workshop using poetry and spoken word as tools for reflection, emotional presence, and collective storytelling — individually and as a group.</p>
+            <div class="gathering-footer">
+              <div class="gathering-roles">
+                <span class="gathering-role">Workshop Facilitator</span>
+              </div>
+              <span class="gathering-arrow">&#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gathering-card" data-category="community">
+          <div class="gathering-photo">
+            <div class="gathering-photo-inner g-color-8"></div>
+            <div class="gathering-photo-overlay"></div>
+            <div class="gathering-photo-tag">Community</div>
+            <div class="gathering-icon">&#9678;</div>
+          </div>
+          <div class="gathering-body">
+            <div class="gathering-meta">
+              <span class="gathering-location">Strawbees · Sweden</span>
+              <span class="gathering-dot"></span>
+              <span class="gathering-date">2021</span>
+            </div>
+            <h3 class="gathering-title">STEAM Community Gathering — Educator Convening</h3>
+            <p class="gathering-desc">A community gathering for global STEAM educators — building shared language, collective vision, and relational trust across an international network of teachers and makers.</p>
+            <div class="gathering-footer">
+              <div class="gathering-roles">
+                <span class="gathering-role">Community Leader</span>
+                <span class="gathering-role">Facilitator</span>
+              </div>
+              <span class="gathering-arrow">&#8594;</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gathering-card" data-category="ceremony">
+          <div class="gathering-photo">
+            <div class="gathering-photo-inner g-color-9"></div>
+            <div class="gathering-photo-overlay"></div>
+            <div class="gathering-photo-tag">Ceremony</div>
+            <div class="gathering-icon">&#10023;</div>
+          </div>
+          <div class="gathering-body">
+            <div class="gathering-meta">
+              <span class="gathering-location">Bay Area, CA</span>
+              <span class="gathering-dot"></span>
+              <span class="gathering-date">2020</span>
+            </div>
+            <h3 class="gathering-title">Rites of Passage — Coming of Age Ceremony</h3>
+            <p class="gathering-desc">A grounded, participatory ceremony marking a community milestone — weaving symbolism, reflection, and shared presence into a moment that held lasting resonance.</p>
+            <div class="gathering-footer">
+              <div class="gathering-roles">
+                <span class="gathering-role">Ceremony Lead</span>
+                <span class="gathering-role">Space Holder</span>
+              </div>
+              <span class="gathering-arrow">&#8594;</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLES SECTION -->
+  <section class="section roles-section">
+    <div class="section-inner">
+      <div class="roles-grid">
+        <div class="roles-left">
+          <div class="section-label">My Roles</div>
+          <h2 class="roles-heading">How I show up<br>in <em>every</em> gathering</h2>
+          <p class="roles-body">
+            Across all gatherings and experiences, Lindsay brings the same qualities — adapting her role to what the group needs, from setting the tone to holding the emotional field to guiding a co-creative process.
+          </p>
+          <a href="/#contact" class="btn btn-ghost">Work With Me</a>
+        </div>
+        <div class="roles-right">
+          <div class="role-card">
+            <div class="role-icon">&#9678;</div>
+            <div class="role-title">Community Leader</div>
+            <p class="role-desc">Setting the tone with clarity and steadiness. Creating the conditions for belonging to emerge naturally.</p>
+          </div>
+          <div class="role-card">
+            <div class="role-icon">&#9672;</div>
+            <div class="role-title">Space Holder</div>
+            <p class="role-desc">Holding the emotional and relational field so participants can be real, honest, and fully present.</p>
+          </div>
+          <div class="role-card">
+            <div class="role-icon">&#10022;</div>
+            <div class="role-title">Ceremony Lead</div>
+            <p class="role-desc">Designing and facilitating grounded ritual — accessible, participatory, and deeply felt.</p>
+          </div>
+          <div class="role-card">
+            <div class="role-icon">&#9671;</div>
+            <div class="role-title">Co-Creation Facilitator</div>
+            <p class="role-desc">Guiding groups into participatory making — where the process itself becomes the meaning.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES -->
+  <section class="section outcomes">
+    <div class="section-inner">
+      <div class="outcomes-grid">
+        <div class="outcomes-left">
+          <div class="section-label" style="color:var(--rose-gold);">What Gets Created</div>
+          <h2 class="outcomes-heading">Gatherings that<br>leave a mark</h2>
+          <p class="outcomes-body">
+            The measure of a gathering isn't just how it felt in the room — it's what people carry with them afterward. Lindsay's work is designed to create lasting resonance.
+          </p>
+          <a href="#" class="btn btn-primary">Explore Offerings</a>
+        </div>
+        <div class="outcomes-right">
+          <div class="outcome-stat">
+            <div class="outcome-stat-num">Trust</div>
+            <div class="outcome-stat-text"><strong>Relational safety</strong>Groups leave with a genuine felt sense of safety, connection, and mutual trust.</div>
+          </div>
+          <div class="outcome-stat">
+            <div class="outcome-stat-num">Clarity</div>
+            <div class="outcome-stat-text"><strong>Shared direction</strong>Communities emerge with clearer values, shared language, and collective focus.</div>
+          </div>
+          <div class="outcome-stat">
+            <div class="outcome-stat-num">Memory</div>
+            <div class="outcome-stat-text"><strong>Lasting meaning</strong>Ceremonies and rituals create anchors — moments that hold resonance long after the gathering ends.</div>
+          </div>
+          <div class="outcome-stat">
+            <div class="outcome-stat-num">Voice</div>
+            <div class="outcome-stat-text"><strong>Felt contribution</strong>Every participant leaves having contributed — not observed. Their presence shaped what was made.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section testimonials">
+    <div class="section-inner">
+      <div class="testimonials-header">
+        <div class="testimonials-label">What People Say</div>
+        <h2 class="testimonials-heading">From those who have gathered</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <span class="testimonial-quote-mark">"</span>
+          <p class="testimonial-text">Lindsay has a rare ability to slow a room down without losing its energy. I felt held, present, and part of something real.</p>
+          <div class="testimonial-divider"></div>
+          <div class="testimonial-name">Retreat Participant</div>
+          <div class="testimonial-context">Bay Area Intentional Community</div>
+        </div>
+        <div class="testimonial-card">
+          <span class="testimonial-quote-mark">"</span>
+          <p class="testimonial-text">The ceremony she designed for our community was grounded, beautiful, and felt genuinely ours. Everyone contributed. Everyone felt seen.</p>
+          <div class="testimonial-divider"></div>
+          <div class="testimonial-name">Community Organizer</div>
+          <div class="testimonial-context">Stockholm, Sweden</div>
+        </div>
+        <div class="testimonial-card">
+          <span class="testimonial-quote-mark">"</span>
+          <p class="testimonial-text">I walked in not knowing what to expect and left with a clarity about my own values I hadn't had before. The workshop was unlike any I've experienced.</p>
+          <div class="testimonial-divider"></div>
+          <div class="testimonial-name">Workshop Participant</div>
+          <div class="testimonial-context">CEO of Me Inc. Workshop</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section">
+    <div class="cta-inner">
+      <div class="cta-label">Let's gather</div>
+      <h2 class="cta-heading">Ready to create<br>something <em>together?</em></h2>
+      <p class="cta-body">
+        If you're hosting a retreat, ceremony, festival, or community experience — I'd love to explore what we can build.
+      </p>
+      <div class="cta-buttons">
+        <a href="/#contact" class="btn btn-primary">Get in Touch</a>
+        <a href="#" class="btn btn-ghost">Explore Offerings</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      Lindsay Balfour
+      <span>Community Leadership · Space Holding · Ceremony</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/work">Work</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+    <div class="footer-copy">&copy; {{ now.Year }} Lindsay Balfour</div>
+  </footer>
+
+  <script>
+    function filterGatherings(btn, category) {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.gathering-card').forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -3,8 +3,8 @@ title: "About"
 layout: about
 ---
 
-Lindsay Balfour is a paper engineer and designer who explores the mechanics of paper used in pop-up design, paper craft, and sculpture. She integrates electronics in her work to showcase technology as a tool and material to enhance ideas for creative expression. As a maker educator and artist, her work is an example of the intersection between fine art, physical computing, and fabrication techniques.
+Lindsay Balfour is a community leader and ceremonial facilitator based between San Francisco and Stockholm. She designs and holds spaces for meaningful human gathering — from intimate ceremonies to large-scale retreats and community experiences.
 
-Currently Lindsay is based in Stockholm, Sweden as working in Learning and Community at Strawbees in Sweden facilitating webinars, developing lesson plans, video media, project guides for teachers. She also teaches workshops for both teachers and students exploring physical construction and learning to program with educational technologies.
+Her work is rooted in grounded presence: creating environments where people can show up fully, connect without pressure, and build something together that lasts beyond the room.
 
-![About](/about.jpg)
+Lindsay's practice spans community leadership, space holding, ritual and ceremony, co-created experiences, and workshops on self-leadership, values, and storytelling.

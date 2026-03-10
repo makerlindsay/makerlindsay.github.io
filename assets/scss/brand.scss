@@ -1,0 +1,254 @@
+// ============================================================
+// BRAND SCSS — Lindsay Balfour
+// Shared design system for Home, About, and Work pages.
+// ============================================================
+
+// ── DESIGN TOKENS ──
+:root {
+  --bone:              #EAE0D5;
+  --soft-cream:        #F2EBE0;
+  --warm-linen:        #D4C5B0;
+  --warm-taupe:        #9E8878;
+  --taupe-rose:        #9E8878;
+  --charcoal-espresso: #1E1520;
+
+  --palatinate:        #682860;
+  --palatinate-deep:   #4A1A44;
+  --palatinate-mid:    #7E3870;
+  --dusty-plum:        #6E4E6E;
+  --soft-plum:         #8A6A8A;
+  --violet-dusk:       #7A5E8A;
+  --smoky-violet:      #5A4A6E;
+  --faded-violet:      #7A5E8A;
+  --lavender-stone:    #9A8AAA;
+  --smoky-lavender:    #9A8AAA;
+  --lilac-mist:        #C0A8C8;
+
+  --maroon:            #6B2D2D;
+  --maroon-deep:       #4E1E1E;
+  --earthy-rose:       #9E6060;
+
+  --rose-gold:         #C49A6C;
+  --rose-gold-warm:    #D4A870;
+  --copper-blush:      #C47A5A;
+  --clay-beige:        #C4A882;
+  --desert-peach:      #E8A882;
+  --terra-cotta:       #C07060;
+
+  --deep-night:        #0E0A14;
+  --midnight-plum:     #2A1A2E;
+  --purple-shadow:     #3A2A48;
+  --black-brown:       #0E0A14;
+  --aubergine:         #4A1A44;
+  --iron-blue:         #3A2A48;
+  --muted-olive:       #7A7A5A;
+  --stone-grey:        #9A8AAA;
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Jost', sans-serif;
+}
+
+// ── RESET & BASE ──
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background-color: var(--bone);
+  color: var(--charcoal-espresso);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+// ── SKIP LINK ──
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--charcoal-espresso);
+  color: var(--bone);
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  z-index: 9999;
+  text-decoration: none;
+  &:focus { top: 1rem; }
+}
+
+// ── TYPOGRAPHY ──
+.display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  font-weight: 300;
+  line-height: 1.15;
+}
+.display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+.label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.body-lg {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.8;
+}
+.body-sm {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+// ── BUTTON SYSTEM ──
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.85rem 2.2rem;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  border: none;
+}
+.btn-primary { background: var(--maroon); color: var(--bone); }
+.btn-primary:hover { background: var(--midnight-plum); }
+.btn-secondary { background: transparent; color: var(--charcoal-espresso); border: 1px solid var(--warm-taupe); }
+.btn-secondary:hover { border-color: var(--maroon); color: var(--maroon); }
+.btn-ghost { background: transparent; color: var(--bone); border: 1px solid rgba(237,230,216,0.4); }
+.btn-ghost:hover { background: rgba(237,230,216,0.1); border-color: var(--bone); }
+.btn-outline { background: transparent; color: var(--charcoal-espresso); border: 1px solid var(--warm-taupe); }
+.btn-outline:hover { border-color: var(--maroon); color: var(--maroon); }
+
+// ── NAVIGATION ──
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 4rem;
+  background: rgba(242,235,224,0.93);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(158,136,120,0.2);
+  transition: all 0.3s ease;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--charcoal-espresso);
+  span {
+    display: block;
+    font-size: 0.6rem;
+    font-family: var(--font-body);
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--warm-taupe);
+    margin-top: 0.1rem;
+  }
+}
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  align-items: center;
+  a {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--charcoal-espresso);
+    transition: color 0.2s;
+    &:hover, &.active { color: var(--palatinate); }
+  }
+}
+.nav-cta {
+  background: var(--maroon);
+  color: var(--bone) !important;
+  padding: 0.55rem 1.4rem;
+  transition: background 0.3s ease !important;
+  &:hover { background: var(--midnight-plum); color: var(--bone) !important; }
+}
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  color: var(--charcoal-espresso);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+// ── SECTION LAYOUT ──
+.section { padding: 7rem 4rem; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rose-gold);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  &::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+}
+
+// ── ANIMATIONS ──
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.8s ease forwards; }
+.fade-up-delay-1 { animation-delay: 0.15s; opacity: 0; animation-fill-mode: forwards; }
+.fade-up-delay-2 { animation-delay: 0.3s;  opacity: 0; animation-fill-mode: forwards; }
+.fade-up-delay-3 { animation-delay: 0.45s; opacity: 0; animation-fill-mode: forwards; }
+
+// ── RESPONSIVE — SHARED ──
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 2rem; }
+  .nav-hamburger { display: block; }
+  .nav-links {
+    display: none;
+    &.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(242,235,224,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(158,136,120,0.2);
+      padding: 1.5rem 2rem;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+  }
+  .section { padding: 4rem 2rem; }
+}

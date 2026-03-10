@@ -1,6 +1,850 @@
-{{ define "main"}}
-<article>
-  <h1>{{.Title}}</h1>
-  <div>{{.Content}}</div>
-</article>
-{{ end }}
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — {{ .Site.Title }}</title>
+
+  <meta name="author" content="{{ .Site.Params.author }}" />
+  <meta name="description" content="{{ .Summary }}" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="og:type" content="website" />
+  <meta name="og:title" content="About — {{ .Site.Title }}" />
+  <meta name="og:description" content="{{ .Summary }}" />
+  <meta name="og:url" content="{{ .Permalink }}" />
+  {{ $avatar := resources.Get "images/avatar.jpg" }}
+  {{ with $avatar.Resize "512x512" }}
+  <meta name="og:image" content="{{ .Permalink }}" />
+  {{ end }}
+  {{ with $avatar.Resize "32x32" }}
+  <link rel="icon" sizes="{{ .Width }}x{{ .Height }}" type="image/png" href="{{ .RelPermalink }}" />
+  {{ end }}
+  {{ with $avatar.Resize "180x180" }}
+  <link rel="apple-touch-icon" sizes="{{ .Width }}x{{ .Height }}" type="image/png" href="{{ .RelPermalink }}" />
+  {{ end }}
+
+  <link rel="canonical" href="{{ .Permalink }}" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <script defer data-domain="lindsaybalfour.com" src="https://plausible.io/js/plausible.js"></script>
+
+  {{ $scssOptions := (dict "outputStyle" "compressed") }}
+  {{ $brand := resources.Get "scss/brand.scss" | css.Sass $scssOptions | fingerprint "sha512" }}
+  <link rel="stylesheet" href="{{ $brand.RelPermalink }}" integrity="{{ $brand.Data.Integrity }}" />
+
+  <style>
+    .skip-link {
+      position: absolute;
+      top: -100%;
+      left: 1rem;
+      background: var(--charcoal-espresso);
+      color: var(--bone);
+      padding: 0.6rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      z-index: 9999;
+      text-decoration: none;
+    }
+    .skip-link:focus { top: 1rem; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bone);
+      color: var(--charcoal-espresso);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(242,235,224,0.93);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(158,136,120,0.2);
+    }
+    .nav-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.05em; color: var(--charcoal-espresso); }
+    .nav-logo span { display: block; font-size: 0.6rem; font-family: var(--font-body); font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm-taupe); margin-top: 0.1rem; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--charcoal-espresso); transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--palatinate); }
+    .nav-cta { background: var(--palatinate); color: var(--bone) !important; padding: 0.55rem 1.4rem; transition: background 0.3s ease !important; }
+    .nav-cta:hover { background: var(--charcoal-espresso) !important; }
+
+    /* ── SHARED ── */
+    .btn { display: inline-block; font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.85rem 2.2rem; cursor: pointer; transition: all 0.35s ease; border: none; }
+    .btn-primary { background: var(--maroon); color: var(--bone); }
+    .btn-primary:hover { background: var(--midnight-plum); }
+    .btn-ghost { background: transparent; color: var(--bone); border: 1px solid rgba(237,230,216,0.4); }
+    .btn-ghost:hover { background: rgba(237,230,216,0.1); border-color: var(--bone); }
+    .btn-outline { background: transparent; color: var(--charcoal-espresso); border: 1px solid var(--warm-taupe); }
+    .btn-outline:hover { border-color: var(--maroon); color: var(--maroon); }
+
+    .section { padding: 7rem 4rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .section-label::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+
+    /* ── HERO ── */
+    .page-hero {
+      min-height: 90vh;
+      display: grid; grid-template-columns: 1.1fr 0.9fr;
+      padding-top: 5.5rem; overflow: hidden;
+    }
+    .hero-left {
+      background: var(--midnight-plum);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 5rem 5rem 5.5rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-left::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 80%, rgba(107,45,45,0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 10%, rgba(104,40,96,0.2) 0%, transparent 50%);
+    }
+    .hero-bg-letter {
+      position: absolute; top: 50%; right: -1rem; transform: translateY(-50%);
+      font-family: var(--font-display); font-size: 26rem; font-weight: 300;
+      color: rgba(237,230,216,0.025); line-height: 1; pointer-events: none; user-select: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.75rem; position: relative;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 2.5rem; height: 1px; background: var(--rose-gold); }
+    .hero-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 5.2rem);
+      font-weight: 300; line-height: 1.0;
+      color: var(--bone); position: relative; margin-bottom: 2rem;
+    }
+    .hero-heading em { font-style: italic; color: var(--rose-gold); }
+    .hero-sub {
+      font-size: 1rem; font-weight: 300; line-height: 1.85;
+      color: rgba(237,230,216,0.6); max-width: 44ch; position: relative; margin-bottom: 2.5rem;
+    }
+    .hero-tagline {
+      font-family: var(--font-display); font-size: 1.15rem; font-style: italic;
+      font-weight: 300; color: var(--rose-gold); position: relative;
+      padding-left: 1.5rem; border-left: 2px solid var(--maroon); line-height: 1.5;
+    }
+    .hero-right { position: relative; overflow: hidden; }
+    .hero-right-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(150deg, var(--warm-taupe) 0%, var(--clay-beige) 50%, var(--earthy-rose) 100%);
+    }
+    .hero-right-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 65% 35%, rgba(196,154,108,0.35) 0%, transparent 55%);
+    }
+    .hero-right-inner {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 4rem 3rem;
+    }
+    .hero-identity-top { display: flex; flex-direction: column; gap: 0.4rem; }
+    .hero-identity-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(237,230,216,0.5); margin-bottom: 0.75rem; }
+    .hero-identity-line { font-family: var(--font-display); font-size: 1.25rem; font-weight: 300; font-style: italic; color: var(--bone); opacity: 0.9; line-height: 1.2; }
+    .hero-location-badge { display: inline-flex; align-items: center; gap: 0.75rem; }
+    .loc-dot { width: 6px; height: 6px; background: var(--rose-gold); border-radius: 50%; }
+    .loc-text { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(237,230,216,0.6); }
+    .hero-qualities { display: flex; flex-direction: column; gap: 0; }
+    .hero-quality { padding: 0.85rem 0; border-bottom: 1px solid rgba(237,230,216,0.12); display: flex; gap: 1rem; align-items: flex-start; }
+    .hero-quality:last-child { border-bottom: none; }
+    .quality-bullet { color: var(--rose-gold); font-size: 0.6rem; margin-top: 0.3rem; flex-shrink: 0; }
+    .quality-text { font-size: 0.78rem; font-weight: 300; color: rgba(237,230,216,0.7); line-height: 1.5; }
+    .quality-text strong { font-weight: 500; color: var(--bone); display: block; font-size: 0.72rem; letter-spacing: 0.05em; margin-bottom: 0.1rem; }
+
+    /* ── INTRO BAND ── */
+    .intro-band { background: var(--maroon); padding: 1.8rem 4rem; display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
+    .intro-band-text { font-family: var(--font-display); font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--bone); opacity: 0.88; }
+    .intro-band-dot { width: 4px; height: 4px; background: var(--rose-gold); border-radius: 50%; flex-shrink: 0; }
+
+    /* ── BRIDGE SECTION ── */
+    .bridge { background: var(--bone); }
+    .bridge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: start; }
+    .bridge-heading { font-family: var(--font-display); font-size: clamp(2.2rem, 3.8vw, 3.5rem); font-weight: 300; color: var(--charcoal-espresso); margin-bottom: 2rem; line-height: 1.05; }
+    .bridge-heading em { font-style: italic; color: var(--maroon); }
+    .bridge-body { font-size: 1rem; font-weight: 300; line-height: 1.9; color: var(--warm-taupe); margin-bottom: 1.5rem; max-width: 50ch; }
+    .bridge-body strong { font-weight: 500; color: var(--charcoal-espresso); }
+    .bridge-pull { margin: 2.5rem 0; padding: 2rem 2.5rem; border-left: 3px solid var(--rose-gold); background: rgba(196,154,108,0.07); }
+    .bridge-pull p { font-family: var(--font-display); font-size: 1.3rem; font-weight: 300; font-style: italic; color: var(--charcoal-espresso); line-height: 1.5; }
+    .city-cards-intro { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; font-weight: 300; color: var(--warm-taupe); margin-bottom: 1.5rem; line-height: 1.5; }
+    .city-cards { display: flex; flex-direction: column; gap: 1px; background: rgba(104,40,96,0.15); }
+    .city-card { padding: 2.25rem 2.75rem; position: relative; overflow: hidden; transition: opacity 0.3s; display: grid; grid-template-columns: 180px 1fr; gap: 2.25rem; align-items: center; }
+    .city-card:hover { opacity: 0.92; }
+    .city-card.img-right { grid-template-columns: 1fr 180px; }
+    .city-card.img-right .city-card-img-placeholder { order: 2; }
+    .city-card.img-right .city-card-content { order: 1; }
+    .city-card-img-placeholder { width: 180px; aspect-ratio: 3 / 4; background: rgba(255,255,255,0.06); border: 1px dashed rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; flex-shrink: 0; }
+    .city-card-img-placeholder span { font-size: 0.55rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+    .city-card-content { position: relative; z-index: 1; }
+    .city-mi { background: var(--purple-shadow); }
+    .city-mi::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 90% 50%, rgba(104,40,96,0.35) 0%, transparent 55%); }
+    .city-sk { background: var(--midnight-plum); }
+    .city-sk::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(107,45,45,0.3) 0%, transparent 60%); }
+    .city-pr { background: var(--palatinate-deep); }
+    .city-pr::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 80%, rgba(104,40,96,0.5) 0%, transparent 55%); }
+    .city-sf { background: var(--smoky-violet); }
+    .city-sf::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 75% 25%, rgba(74,26,68,0.4) 0%, transparent 55%); }
+    .city-sthlm { background: var(--maroon); }
+    .city-sthlm::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 25% 75%, rgba(107,45,45,0.4) 0%, transparent 55%); }
+    .city-card-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 0.4rem; }
+    .city-card-name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 300; color: var(--bone); margin-bottom: 0.4rem; line-height: 1.05; }
+    .city-card-desc { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.6); line-height: 1.7; }
+    .city-card-concept { font-family: var(--font-display); font-size: 0.88rem; font-style: italic; font-weight: 300; color: var(--rose-gold); margin-top: 0.6rem; }
+
+    /* ── PROFESSIONAL QUALITIES ── */
+    .qualities { background: var(--midnight-plum); position: relative; overflow: hidden; }
+    .qualities::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 8% 60%, rgba(107,45,45,0.25) 0%, transparent 50%), radial-gradient(ellipse at 92% 20%, rgba(104,40,96,0.18) 0%, transparent 45%); }
+    .qualities-header { max-width: 1200px; margin: 0 auto 4rem; position: relative; }
+    .qualities-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--bone); margin-bottom: 1rem; line-height: 1.1; }
+    .qualities-sub { font-size: 0.95rem; font-weight: 300; color: rgba(237,230,216,0.55); max-width: 52ch; line-height: 1.8; }
+    .qualities-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(237,230,216,0.08); position: relative; }
+    .quality-card { background: var(--midnight-plum); padding: 3rem; transition: background 0.35s; }
+    .quality-card:hover { background: rgba(237,230,216,0.04); }
+    .quality-card-icon { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; font-style: italic; color: rgba(196,154,108,0.4); line-height: 1; margin-bottom: 1.25rem; transition: color 0.35s; }
+    .quality-card:hover .quality-card-icon { color: rgba(196,154,108,0.7); }
+    .quality-card-title { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bone); margin-bottom: 0.5rem; }
+    .quality-card-focus { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 1rem; }
+    .quality-card-body { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.55); line-height: 1.75; }
+    .quality-card-body strong { color: rgba(237,230,216,0.85); font-weight: 400; }
+    .quality-card-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+
+    /* ── PILLARS DEEP DIVE ── */
+    .pillars-deep { background: var(--bone); }
+    .pillars-deep-header { margin-bottom: 4rem; }
+    .pillars-deep-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--charcoal-espresso); line-height: 1.1; margin-bottom: 1rem; }
+    .pillars-deep-sub { font-size: 0.95rem; font-weight: 300; color: var(--warm-taupe); max-width: 54ch; line-height: 1.8; }
+    .pillars-deep-list { display: flex; flex-direction: column; gap: 0; border: 1px solid rgba(158,136,120,0.2); }
+    .pillar-deep-item { display: grid; grid-template-columns: 5rem 1fr; border-bottom: 1px solid rgba(158,136,120,0.15); transition: background 0.3s; cursor: default; }
+    .pillar-deep-item:last-child { border-bottom: none; }
+    .pillar-deep-item:hover { background: rgba(107,45,45,0.03); }
+    .pillar-deep-num-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 2.5rem 0; border-right: 1px solid rgba(158,136,120,0.15); }
+    .pillar-deep-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; color: rgba(196,154,108,0.3); line-height: 1; transition: color 0.3s; }
+    .pillar-deep-item:hover .pillar-deep-num { color: rgba(196,154,108,0.6); }
+    .pillar-deep-content { padding: 2.5rem; }
+    .pillar-deep-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 400; color: var(--charcoal-espresso); margin-bottom: 0.3rem; }
+    .pillar-deep-focus { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 1rem; }
+    .pillar-deep-body { font-size: 0.9rem; font-weight: 300; color: var(--warm-taupe); line-height: 1.8; max-width: 68ch; }
+    .pillar-deep-body strong { font-weight: 500; color: var(--charcoal-espresso); }
+    .pillar-deep-body em { font-style: italic; }
+
+    /* ── CAREER TIMELINE ── */
+    .career { background: var(--warm-taupe); }
+    .career-header { margin-bottom: 4rem; }
+    .career-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bone); margin-bottom: 1rem; }
+    .career-sub { font-size: 0.95rem; color: rgba(237,230,216,0.65); max-width: 50ch; line-height: 1.8; }
+    .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 9.5rem; top: 0; bottom: 0; width: 1px; background: rgba(237,230,216,0.15); }
+    .timeline-item { display: grid; grid-template-columns: 9.5rem 1fr; gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid rgba(237,230,216,0.1); position: relative; }
+    .timeline-item::before { content: ''; position: absolute; left: 9.5rem; top: 2.9rem; width: 9px; height: 9px; border-radius: 50%; background: var(--rose-gold); transform: translateX(-4px); z-index: 1; }
+    .timeline-date { font-size: 0.62rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(237,230,216,0.4); padding-top: 0.2rem; text-align: right; padding-right: 2rem; line-height: 1.5; }
+    .timeline-role { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; color: var(--bone); margin-bottom: 0.25rem; line-height: 1.2; }
+    .timeline-org { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 0.75rem; }
+    .timeline-body { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.6); line-height: 1.75; max-width: 55ch; }
+    .timeline-bullets { margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .timeline-bullet { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.55); display: flex; gap: 0.75rem; }
+    .timeline-bullet::before { content: '—'; color: var(--rose-gold); flex-shrink: 0; }
+    .timeline-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .timeline-tag { font-size: 0.58rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.28rem 0.7rem; border: 1px solid rgba(237,230,216,0.2); color: rgba(237,230,216,0.4); }
+
+    /* ── GLOBAL REACH ── */
+    .global { background: var(--midnight-plum); position: relative; overflow: hidden; }
+    .global::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(107,45,45,0.2) 0%, transparent 65%); }
+    .global-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: center; position: relative; }
+    .global-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--bone); margin-bottom: 1.5rem; line-height: 1.1; }
+    .global-heading em { font-style: italic; color: var(--rose-gold); }
+    .global-body { font-size: 0.95rem; font-weight: 300; line-height: 1.85; color: rgba(237,230,216,0.6); max-width: 48ch; margin-bottom: 2.5rem; }
+    .global-partners { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(237,230,216,0.08); }
+    .global-partner { background: var(--midnight-plum); padding: 1.75rem; transition: background 0.3s; }
+    .global-partner:hover { background: rgba(237,230,216,0.04); }
+    .global-partner-name { font-family: var(--font-display); font-size: 1rem; font-weight: 400; color: var(--bone); margin-bottom: 0.2rem; }
+    .global-partner-loc { font-size: 0.6rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rose-gold); }
+
+    /* ── PERSONAL BACKGROUND ── */
+    .personal-bg { background: var(--midnight-plum); position: relative; overflow: hidden; }
+    .personal-bg::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 10% 60%, rgba(104,40,96,0.4) 0%, transparent 55%), radial-gradient(ellipse at 90% 20%, rgba(107,45,45,0.2) 0%, transparent 50%); }
+    .personal-bg .section-inner { position: relative; }
+    .personal-bg-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 7rem; align-items: start; }
+    .personal-bg-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; color: var(--bone); line-height: 1.05; margin-top: 1rem; }
+    .personal-bg-heading em { font-style: italic; color: var(--lilac-mist); }
+    .personal-bg-body { font-size: 1rem; font-weight: 300; color: rgba(234,224,213,0.65); line-height: 1.95; margin-bottom: 1.5rem; max-width: 58ch; }
+    .personal-bg-body em { font-style: italic; color: rgba(234,224,213,0.9); }
+    .personal-bg-pull { font-family: var(--font-display); font-size: 1.25rem; font-weight: 300; font-style: italic; color: var(--bone); line-height: 1.55; padding: 2rem 2.5rem; border-left: 3px solid var(--rose-gold); background: rgba(196,154,108,0.07); margin-top: 2.5rem; max-width: 52ch; }
+    .personal-bg-pull em { color: var(--lilac-mist); font-style: italic; }
+
+    /* ── PHILOSOPHY ── */
+    .philosophy { background: var(--dusty-plum); position: relative; overflow: hidden; text-align: center; }
+    .philosophy::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 40%, rgba(74,26,68,0.5) 0%, transparent 55%), radial-gradient(ellipse at 70% 70%, rgba(107,45,45,0.25) 0%, transparent 50%); }
+    .philosophy-inner { max-width: 780px; margin: 0 auto; position: relative; }
+    .philosophy-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-gold); display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+    .philosophy-label::before, .philosophy-label::after { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+    .philosophy-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 300; font-style: italic; color: var(--bone); margin-bottom: 2.5rem; line-height: 1.15; }
+    .philosophy-body { font-size: 1rem; font-weight: 300; line-height: 1.95; color: rgba(237,230,216,0.7); margin-bottom: 1.5rem; }
+    .philosophy-body strong { font-weight: 500; color: var(--bone); }
+    .philosophy-divider { width: 3rem; height: 1px; background: var(--rose-gold); margin: 2.5rem auto; }
+    .philosophy-closing { font-family: var(--font-display); font-size: 1.4rem; font-weight: 300; font-style: italic; color: var(--rose-gold); line-height: 1.5; }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--midnight-plum); text-align: center; position: relative; overflow: hidden; }
+    .cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(104,40,96,0.35) 0%, transparent 65%); }
+    .cta-inner { max-width: 680px; margin: 0 auto; position: relative; }
+    .cta-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-gold); display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+    .cta-label::before, .cta-label::after { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+    .cta-heading { font-family: var(--font-display); font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; color: var(--bone); margin-bottom: 1.25rem; }
+    .cta-heading em { font-style: italic; color: var(--rose-gold); }
+    .cta-body { font-size: 0.95rem; color: rgba(237,230,216,0.6); margin-bottom: 3rem; max-width: 44ch; margin-left: auto; margin-right: auto; line-height: 1.8; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black-brown); padding: 4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem; }
+    .footer-logo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 300; color: var(--bone); }
+    .footer-logo span { display: block; font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--rose-gold); margin-top: 0.2rem; }
+    .footer-links { display: flex; gap: 2.5rem; list-style: none; }
+    .footer-links a { font-size: 0.7rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(237,230,216,0.45); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--bone); }
+    .footer-copy { font-size: 0.7rem; color: rgba(237,230,216,0.25); letter-spacing: 0.05em; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.85s ease forwards; }
+    .delay-1 { animation-delay: 0.15s; opacity: 0; animation-fill-mode: forwards; }
+    .delay-2 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards; }
+    .delay-3 { animation-delay: 0.45s; opacity: 0; animation-fill-mode: forwards; }
+
+    /* ── RESPONSIVE ── */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem;
+      color: var(--charcoal-espresso);
+      font-size: 1.4rem;
+      line-height: 1;
+    }
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 2rem; }
+      .nav-hamburger { display: block; }
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(242,235,224,0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(158,136,120,0.2);
+        padding: 1.5rem 2rem;
+        gap: 1.25rem;
+        align-items: flex-start;
+      }
+      .page-hero { grid-template-columns: 1fr; }
+      .hero-right { min-height: 50vh; position: relative; }
+      .hero-right-bg { position: relative; }
+      .hero-right-inner { position: relative; min-height: 50vh; }
+      .hero-left { padding: 7rem 2rem 4rem; }
+      .section { padding: 4rem 2rem; }
+      .bridge-grid, .global-grid, .personal-bg-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .city-card, .city-card.img-right { grid-template-columns: 1fr; }
+      .city-card-img-placeholder { width: 100%; aspect-ratio: 16 / 9 !important; }
+      .city-card.img-right .city-card-img-placeholder { order: 0; }
+      .city-card.img-right .city-card-content { order: 1; }
+      .qualities-grid { grid-template-columns: 1fr; }
+      .quality-card-wide { grid-column: 1; grid-template-columns: 1fr; gap: 1.5rem; }
+      .pillar-deep-item { grid-template-columns: 3.5rem 1fr; }
+      .timeline::before { left: 0; }
+      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; padding-left: 1.5rem; }
+      .timeline-item::before { left: 0; }
+      .timeline-date { text-align: left; padding-right: 0; }
+      footer { padding: 3rem 2rem; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      Lindsay Balfour
+      <span>Community Leader · Facilitator</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/about" class="active">About</a></li>
+      <li><a href="/work">Work</a></li>
+      <li><a href="/#contact" class="nav-cta">Work With Me</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+  </nav>
+  <script>
+    (function() {
+      var btn = document.querySelector('.nav-hamburger');
+      var links = document.querySelector('.nav-links');
+      btn.addEventListener('click', function() {
+        var open = links.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+        btn.innerHTML = open ? '&#10005;' : '&#9776;';
+      });
+    })();
+  </script>
+
+  <!-- HERO -->
+  <section id="main" class="page-hero">
+    <div class="hero-left">
+      <div class="hero-bg-letter">L</div>
+      <div class="hero-eyebrow fade-up">About Lindsay Balfour</div>
+      <h1 class="hero-heading fade-up delay-1">
+        The Bridge<br>Between<br><em>Systems</em><br>and Soul.
+      </h1>
+      <p class="hero-sub fade-up delay-2">
+        A facilitator, strategist, and community leader with over a decade of experience helping groups move from fragmentation to coherence. Born in Michigan, half Puerto Rican, raised in South Korea, and currently based between San Francisco and Stockholm — she has always known what it means to find home in many places at once.
+      </p>
+      <p class="hero-tagline fade-up delay-3">
+        "The structures we build must be designed with clarity, care, and a bias toward belonging."
+      </p>
+    </div>
+    <div class="hero-right">
+      <div class="hero-right-bg"></div>
+      <div class="hero-right-inner">
+        <div class="hero-identity-top">
+          <div class="hero-identity-label">Identity</div>
+          <div class="hero-identity-line">Multidisciplinary Creative Leader</div>
+          <div class="hero-identity-line">Community Strategist</div>
+          <div class="hero-identity-line">Space Holder & Strategist</div>
+        </div>
+        <div>
+          <div class="hero-location-badge" style="margin-bottom:1.5rem;">
+            <span class="loc-dot"></span>
+            <span class="loc-text">San Francisco · Stockholm</span>
+          </div>
+          <div class="hero-qualities">
+            <div class="hero-quality">
+              <span class="quality-bullet">◆</span>
+              <div class="quality-text"><strong>Systems Thinker</strong>Translating big-picture vision into lived, granular participant experience.</div>
+            </div>
+            <div class="hero-quality">
+              <span class="quality-bullet">◆</span>
+              <div class="quality-text"><strong>Cross-context fluency</strong>Equally at home in corporate organisations, creative communities, and festival environments — adapting her approach without losing her voice.</div>
+            </div>
+            <div class="hero-quality">
+              <span class="quality-bullet">◆</span>
+              <div class="quality-text"><strong>Pedagogical Innovator</strong>Technology as a creative material. The goal is not output — it's discovery of one's own creative agency.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BAND -->
+  <div class="intro-band">
+    <span class="intro-band-text">Facilitator</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Strategist</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Community Leader</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Space Holder</span>
+    <span class="intro-band-dot"></span>
+    <span class="intro-band-text">Creative Educator</span>
+  </div>
+
+  <!-- THE BRIDGE -->
+  <section class="section bridge">
+    <div class="section-inner">
+      <div class="bridge-grid">
+        <div>
+          <div class="section-label">Some of what shaped me</div>
+          <h2 class="bridge-heading">From product<br>development to<br><em>space holding</em></h2>
+          <p class="bridge-body">
+            Lindsay's professional identity is rooted in her background as a creative educator — an approach that transforms leadership from a top-down management style into a participatory art form.
+          </p>
+          <p class="bridge-body">
+            Her foundation was built in the heart of the <strong>"Maker" movement</strong>. As a Business Advisor and Product Developer at Chibitronics, she navigated the complexities of the customer journey — bridging the gap between vision and execution, spearheading the restructuring of the digital buying experience, and leading cross-functional teams to build a comprehensive Educational Resource Hub.
+          </p>
+          <div class="bridge-pull">
+            <p>By translating user needs into actionable user stories, she learned how to create containers that are both functional and inspiring.</p>
+          </div>
+          <p class="bridge-body">
+            With a career spanning over a decade, she bridges the gap between technical infrastructure and human connection — helping groups move from <strong>fragmentation to coherence</strong>.
+          </p>
+        </div>
+        <div>
+          <p class="city-cards-intro">"Where are you from?" Honestly, it depends on the day.</p>
+          <div class="city-cards">
+            <div class="city-card city-mi">
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+              <div class="city-card-content">
+                <div class="city-card-label">Michigan · Roots</div>
+                <div class="city-card-name">Where I started</div>
+                <p class="city-card-desc">Born in Michigan — where big skies, changing seasons, and a certain Midwestern groundedness shaped my earliest sense of self. The place that gave me roots before the world gave me wings.</p>
+                <div class="city-card-concept">Groundedness · Simplicity · Home base</div>
+              </div>
+            </div>
+            <div class="city-card city-sk img-right">
+              <div class="city-card-content">
+                <div class="city-card-label">South Korea · Curiosity</div>
+                <div class="city-card-name">Learning to belong</div>
+                <p class="city-card-desc">Growing up in Korea for seven and a half years gave me a genuine love for many ways of being in the world — different rhythms, rituals, foods, and ways of connecting. It's where I first learned that the world is wonderfully wide, and that there's real joy in being inside a culture that isn't the one you were born into.</p>
+                <div class="city-card-concept">Wonder · Openness · A love for the world</div>
+              </div>
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+            </div>
+            <div class="city-card city-pr">
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+              <div class="city-card-content">
+                <div class="city-card-label">Puerto Rico · Warmth</div>
+                <div class="city-card-name">A way of welcoming</div>
+                <p class="city-card-desc">Half Puerto Rican, I grew up with a particular kind of hospitality in my bones — the kind that doesn't just make space for people, but genuinely wants them there. That's not something I learned. It's something I inherited.</p>
+                <div class="city-card-concept">Welcome · Generosity · Genuine care</div>
+              </div>
+            </div>
+            <div class="city-card city-sf img-right">
+              <div class="city-card-content">
+                <div class="city-card-label">San Francisco · Making</div>
+                <div class="city-card-name">Hands in everything</div>
+                <p class="city-card-desc">The Maker movement gave me a language for what I'd always believed — that creativity belongs to everyone, and that the act of making something with your hands changes how you think about what's possible.</p>
+                <div class="city-card-concept">Making · Empowerment · Creative agency</div>
+              </div>
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+            </div>
+            <div class="city-card city-sthlm">
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+              <div class="city-card-content">
+                <div class="city-card-label">Stockholm · Depth</div>
+                <div class="city-card-name">Slowing down to listen</div>
+                <p class="city-card-desc">Living and working in Stockholm deepened my practice in ways I didn't expect — a slower pace, longer trust, and a culture that takes collective well-being seriously. It changed how I hold space.</p>
+                <div class="city-card-concept">Presence · Trust · Long-form community</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFESSIONAL QUALITIES -->
+  <section class="section qualities">
+    <div class="qualities-header">
+      <div class="section-label" style="color:var(--rose-gold);">Professional Qualities</div>
+      <h2 class="qualities-heading">A multidisciplinary<br>creative leader</h2>
+      <p class="qualities-sub">Lindsay's expertise is defined by her ability to bridge the gap between technical toolkits and human connection — at every scale.</p>
+    </div>
+    <div class="qualities-grid">
+      <div class="quality-card">
+        <div class="quality-card-icon">◎</div>
+        <div class="quality-card-title">Strategic Systems Thinker</div>
+        <div class="quality-card-focus">Vision → Experience</div>
+        <p class="quality-card-body">Expert at translating high-level vision into <strong>actionable product roadmaps</strong> — from structuring digital customer journeys to architecting global educational platforms. She sees the big picture while holding the granular details of a participant's experience simultaneously.</p>
+      </div>
+      <div class="quality-card">
+        <div class="quality-card-icon">◈</div>
+        <div class="quality-card-title">Facilitator of Meaningful Making</div>
+        <div class="quality-card-focus">Passive → Participatory</div>
+        <p class="quality-card-body">Skilled at transforming passive learning into <strong>participatory experiences</strong>. With a specific focus on empowering youth and women in STEAM through hands-on creative technologies — where the goal is not a specific technical output but the discovery of one's own creative agency.</p>
+      </div>
+      <div class="quality-card">
+        <div class="quality-card-icon">◇</div>
+        <div class="quality-card-title">Product & Content Architect</div>
+        <div class="quality-card-focus">Cross-functional leadership</div>
+        <p class="quality-card-body">Proficient in acting as a <strong>bridge between CEOs, designers, and developers</strong> to build intuitive user stories and robust resource hubs. Whether a digital platform or a community ritual — the container must be designed with clarity and care.</p>
+      </div>
+      <div class="quality-card">
+        <div class="quality-card-icon">✦</div>
+        <div class="quality-card-title">International Practitioner</div>
+        <div class="quality-card-focus">Global reach · local depth</div>
+        <p class="quality-card-body">Operating across multiple countries and contexts — managing international partnerships, speaking at global conferences, and working with communities across North America, Europe, and beyond while maintaining deep roots in each place she works.</p>
+      </div>
+      <div class="quality-card quality-card-wide">
+        <div>
+          <div class="quality-card-icon">◐</div>
+          <div class="quality-card-title">Advocate for Computational Thinking</div>
+          <div class="quality-card-focus">Public speaker · Thought leader</div>
+        </div>
+        <p class="quality-card-body" style="padding-top:0.5rem;">A recognized <strong>public speaker and thought leader</strong> on the intersection of computer science, maker education, and crafting — speaking at international conferences and organizing intergenerational STEAM programs. Her focus has always been on Meaningful Making: spaces where curiosity is safe and collaboration is the natural state.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILLARS DEEP DIVE -->
+  <section class="section pillars-deep">
+    <div class="section-inner">
+      <div class="pillars-deep-header">
+        <div class="section-label">Leadership Methodology</div>
+        <h2 class="pillars-deep-heading">Five pillars — and the<br>deeper story behind each</h2>
+        <p class="pillars-deep-sub">Lindsay's identity translates her professional qualities into a specific methodology for group leadership. Each pillar is more than a service — it's a distinct philosophy shaped by decades of practice.</p>
+      </div>
+      <div class="pillars-deep-list">
+        <div class="pillar-deep-item">
+          <div class="pillar-deep-num-col"><div class="pillar-deep-num">01</div></div>
+          <div class="pillar-deep-content">
+            <div class="pillar-deep-title">The Gathering — Leadership through Invitation</div>
+            <div class="pillar-deep-focus">Focus: Clarity & Coherence</div>
+            <p class="pillar-deep-body">In the corporate world, gatherings are often mandatory and transactional. Lindsay reimagines this by focusing on <strong>human-centered leadership</strong>. She uses her background in educational strategy to ensure that every participant knows <em>why</em> they are there — creating a "felt sense of belonging" that allows for deeper collective focus without the pressure of forced intensity.</p>
+          </div>
+        </div>
+        <div class="pillar-deep-item">
+          <div class="pillar-deep-num-col"><div class="pillar-deep-num">02</div></div>
+          <div class="pillar-deep-content">
+            <div class="pillar-deep-title">The Container — Mastering the "Hold"</div>
+            <div class="pillar-deep-focus">Focus: Emotional & Relational Safety</div>
+            <p class="pillar-deep-body">Building on her experience managing complex maker spaces, Lindsay treats the "container" as both a physical and emotional infrastructure. She excels at <strong>regulating pace</strong> — slowing a group down when they are rushing through discomfort, or speeding them up when they are stuck. This is critical for groups navigating integration after intense experiences.</p>
+          </div>
+        </div>
+        <div class="pillar-deep-item">
+          <div class="pillar-deep-num-col"><div class="pillar-deep-num">03</div></div>
+          <div class="pillar-deep-content">
+            <div class="pillar-deep-title">The Ceremony — Secular Meaning-Making</div>
+            <div class="pillar-deep-focus">Focus: Presence over Belief</div>
+            <p class="pillar-deep-body">Lindsay de-mystifies ceremony, making it a tool for <strong>community milestones</strong>. By rooting ritual in "presence rather than belief systems," she makes meaning-making accessible to diverse, modern teams. This pillar is about marking the threshold moments — the start of a new project, or the closing of a significant chapter. Ceremony is how groups remember what they're doing together.</p>
+          </div>
+        </div>
+        <div class="pillar-deep-item">
+          <div class="pillar-deep-num-col"><div class="pillar-deep-num">04</div></div>
+          <div class="pillar-deep-content">
+            <div class="pillar-deep-title">Meaning Made Together — Shared Authorship</div>
+            <div class="pillar-deep-focus">Focus: Participatory Structures</div>
+            <p class="pillar-deep-body">This pillar is the direct evolution of her Maker philosophy. Instead of a leader delivering a message, Lindsay designs structures where the group <strong>"makes" the meaning</strong> through collaborative art, ritual, or reflection. It shifts the power dynamic from one-to-many to many-to-many — where every participant is a contributor, not a spectator.</p>
+          </div>
+        </div>
+        <div class="pillar-deep-item">
+          <div class="pillar-deep-num-col"><div class="pillar-deep-num">05</div></div>
+          <div class="pillar-deep-content">
+            <div class="pillar-deep-title">Workshops for Meaningful Making — Structured Exploration</div>
+            <div class="pillar-deep-focus">Focus: Insight & Expression</div>
+            <p class="pillar-deep-body">These are the tactical application of her work. Her workshops are <strong>"living containers"</strong> — responsive to the room's energy. Unlike static seminars, these sessions use creative expression and storytelling to help individuals find personal clarity while contributing to the collective's goals. They don't just teach — they transform.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAREER TIMELINE -->
+  <section class="section career">
+    <div class="section-inner">
+      <div class="career-header">
+        <div class="section-label" style="color:var(--rose-gold);">Career History</div>
+        <h2 class="career-heading">From product development<br>to space holding</h2>
+        <p class="career-sub">A decade of building systems, leading teams, and creating containers — across two continents and multiple disciplines.</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">Present</div>
+          <div>
+            <div class="timeline-role">Facilitator & Community Leader</div>
+            <div class="timeline-org">Independent Practice · San Francisco & Stockholm</div>
+            <p class="timeline-body">Holding space for communities, retreats, festivals, and organisations through the five-pillar methodology.</p>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Space Holding</span>
+              <span class="timeline-tag">Ceremony</span>
+              <span class="timeline-tag">Co-Creation</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Recent</div>
+          <div>
+            <div class="timeline-role">Advisory Specialist & Content Creator</div>
+            <div class="timeline-org">Chibitronics · Remote US / Sweden</div>
+            <div class="timeline-bullets">
+              <div class="timeline-bullet">Structured the comprehensive customer buying journey</div>
+              <div class="timeline-bullet">Led development of Chibitronics.com — overseeing feature development with CEO, designer, and developer</div>
+              <div class="timeline-bullet">Authored user stories as product developer and lead content creator for the Educational Resource Hub</div>
+            </div>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Product Strategy</span>
+              <span class="timeline-tag">Platform Development</span>
+              <span class="timeline-tag">Content Architecture</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Sweden</div>
+          <div>
+            <div class="timeline-role">Head of Education</div>
+            <div class="timeline-org">Strawbees · Stockholm, Sweden</div>
+            <div class="timeline-bullets">
+              <div class="timeline-bullet">Developed the creative learning pedagogy for Strawbees Classroom</div>
+              <div class="timeline-bullet">Created over 100 visually inclusive resources and educator guides — used globally for STEAM implementation</div>
+              <div class="timeline-bullet">Designed the strategic vision for global educational scaling</div>
+            </div>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Educational Strategy</span>
+              <span class="timeline-tag">Curriculum Design</span>
+              <span class="timeline-tag">Global STEAM</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Bay Area</div>
+          <div>
+            <div class="timeline-role">Artist-in-Residence & Workshop Facilitator</div>
+            <div class="timeline-org">TechShop · San Francisco Bay Area</div>
+            <div class="timeline-bullets">
+              <div class="timeline-bullet">Facilitated workshops teaching digital fabrication and maker tools</div>
+              <div class="timeline-bullet">Facilitated the "tools of facilitation" — empowering others to bridge imagination and creation</div>
+            </div>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Facilitation</span>
+              <span class="timeline-tag">Digital Fabrication</span>
+              <span class="timeline-tag">Maker Education</span>
+            </div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">San Francisco</div>
+          <div>
+            <div class="timeline-role">Innovation & Technology Specialist</div>
+            <div class="timeline-org">Children's Creativity Museum · San Francisco</div>
+            <div class="timeline-bullets">
+              <div class="timeline-bullet">Led daily STEAM workshops on creativity and collaboration</div>
+              <div class="timeline-bullet">Maker Corps Member with The Tech Interactive — intergenerational learning programs</div>
+              <div class="timeline-bullet">Organised after-school programs at Sunnyvale Library for girls (ages 8–12) and their mothers in STEAM</div>
+            </div>
+            <div class="timeline-tags">
+              <span class="timeline-tag">Museum Education</span>
+              <span class="timeline-tag">Youth Programs</span>
+              <span class="timeline-tag">STEAM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLOBAL REACH -->
+  <section class="section global">
+    <div class="section-inner">
+      <div class="global-grid">
+        <div>
+          <div class="section-label" style="color:var(--rose-gold);">Global Reach</div>
+          <h2 class="global-heading">Speaking, teaching,<br>and leading — <em>globally</em></h2>
+          <p class="global-body">Lindsay has collaborated with organisations, schools, and communities across North America, Europe, and beyond — bringing her cross-cultural fluency and participatory approach to each context.</p>
+          <p class="global-body">From international conferences on computational thinking to local STEAM programs in public libraries — her work lives at the intersection of the global and the deeply personal.</p>
+        </div>
+        <div>
+          <div class="global-partners">
+            <div class="global-partner">
+              <div class="global-partner-name">Chibitronics</div>
+              <div class="global-partner-loc">United States / Sweden</div>
+            </div>
+            <div class="global-partner">
+              <div class="global-partner-name">Strawbees</div>
+              <div class="global-partner-loc">Stockholm, Sweden</div>
+            </div>
+            <div class="global-partner">
+              <div class="global-partner-name">TechShop</div>
+              <div class="global-partner-loc">San Francisco Bay Area</div>
+            </div>
+            <div class="global-partner">
+              <div class="global-partner-name">Children's Creativity Museum</div>
+              <div class="global-partner-loc">San Francisco, CA</div>
+            </div>
+            <div class="global-partner">
+              <div class="global-partner-name">The Tech Interactive</div>
+              <div class="global-partner-loc">San Jose, CA</div>
+            </div>
+            <div class="global-partner">
+              <div class="global-partner-name">Sunnyvale Public Library</div>
+              <div class="global-partner-loc">Sunnyvale, CA</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONAL BACKGROUND -->
+  <section class="section personal-bg">
+    <div class="section-inner">
+      <div class="personal-bg-grid">
+        <div>
+          <div class="section-label" style="color:var(--lilac-mist);">Personal Background</div>
+          <h2 class="personal-bg-heading">Between<br>many worlds,<br><em>fully present</em></h2>
+        </div>
+        <div>
+          <p class="personal-bg-body">
+            Lindsay was born in Michigan, grew up in South Korea for seven and a half years, and carries her Puerto Rican heritage with her everywhere. She has spent her adult life between San Francisco and Stockholm — two cities that have shaped her practice in complementary and unexpected ways.
+          </p>
+          <p class="personal-bg-body">
+            This is not a story of instability. It is a story of <em>radical belonging</em> — of someone who learned early that home is not a fixed place, but a quality of attention you bring to wherever you are.
+          </p>
+          <p class="personal-bg-body">
+            That understanding is the root of everything she does. Whether she is facilitating a community retreat or holding the close of a ceremony, Lindsay brings the same quality: a <em>genuine, unhurried presence</em> that makes people feel seen.
+          </p>
+          <div class="personal-bg-pull">
+            "I've never had just one place. So I learned to be fully present in whichever place I'm in — and to help others do the same."
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="section philosophy">
+    <div class="philosophy-inner">
+      <div class="philosophy-label">Core Philosophy</div>
+      <h2 class="philosophy-heading">Presence is the practice.<br>Belonging is the outcome.</h2>
+      <p class="philosophy-body">
+        Lindsay believes that <strong>the quality of a gathering is determined long before anyone arrives</strong>. It lives in the questions asked before the invite is sent, in the structure designed to invite rather than demand, and in the quality of attention the facilitator brings into the room.
+      </p>
+      <p class="philosophy-body">
+        She does not believe in forced connection or manufactured intensity. She believes in <strong>creating the conditions for what already wants to happen</strong> — and then holding steady while it does.
+      </p>
+      <div class="philosophy-divider"></div>
+      <p class="philosophy-closing">
+        "I don't create for people. I create with them."
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="contact" class="section cta-section">
+    <div class="cta-inner">
+      <div class="cta-label">Let's create something together</div>
+      <h2 class="cta-heading">Ready to work<br><em>together?</em></h2>
+      <p class="cta-body">
+        If you're building a community, hosting a gathering, or navigating a meaningful transition — I'd love to explore what we can create together.
+      </p>
+      <div class="cta-buttons">
+        <a href="https://linkedin.com/in/{{ .Site.Params.linkedin }}" class="btn btn-primary">Get in Touch</a>
+        <a href="https://linkedin.com/in/{{ .Site.Params.linkedin }}" class="btn btn-ghost">Book a Conversation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      Lindsay Balfour
+      <span>Community Leadership · Space Holding · Ceremony</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="#">Offerings</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/work">Work</a></li>
+      <li><a href="https://linkedin.com/in/{{ .Site.Params.linkedin }}">LinkedIn</a></li>
+    </ul>
+    <p class="footer-copy">&copy; {{ now.Format "2006" }} Lindsay Balfour. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
