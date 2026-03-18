@@ -1,0 +1,132 @@
+nav:
+  logo_name: "Lindsay Balfour"
+  logo_tagline: "Community Leader · Facilitator"
+
+hero:
+  eyebrow: "San Francisco · Stockholm"
+  heading_line1: "Gathering"
+  heading_line2: "with presence."
+  heading_line3: "Creating"
+  heading_line4: "meaning"
+  heading_line5: "together."
+  subtext: "Community leadership, ceremonial facilitation, and co-created experiences rooted in grounded presence."
+  button_primary_label: "Work With Me"
+  button_primary_href: "#contact"
+  button_secondary_label: "See Gatherings I've Led"
+  button_secondary_href: "#"
+  quote: "Soft presence. Strong spaces."
+  tags:
+    - "Community Leadership"
+    - "Space Holding"
+    - "Ceremony & Ritual"
+    - "Co-Creation"
+    - "Meaning-Making"
+
+marquee:
+  items:
+    - "Community leadership"
+    - "Space holding"
+    - "Ceremony & ritual"
+    - "Meaningful co-creation"
+    - "Grounded presence"
+
+presence:
+  label: "Philosophy"
+  heading: "Where presence becomes leadership"
+  heading_em: "leadership"
+  body1: "I lead with steadiness rather than force. With structure that creates safety, and openness that invites participation."
+  body2: "My role is to set the tone and hold the container, so individuals can show up fully and the group can move together with trust and coherence. When presence is grounded, leadership becomes felt rather than performed."
+  signature: "— Lindsay Balfour"
+  card_quote: "I don't create for people. I create with them."
+
+pillars:
+  label: "What I Offer"
+  heading: "The Five Pillars"
+  subtext: "Each offering is a different doorway into presence, belonging, and shared becoming."
+  items:
+    - number: "01"
+      title: "The Gathering"
+      subtitle: "Leadership & Facilitation"
+      body: "Bringing people together to find shared focus and genuine belonging — without pressure or forced intensity."
+    - number: "02"
+      title: "The Container"
+      subtitle: "Space Holding"
+      body: "Holding steady, regulated spaces during moments of transition or vulnerability — for depth, trust, and honesty."
+    - number: "03"
+      title: "The Ceremony"
+      subtitle: "Ritual & Meaning"
+      body: "Grounded, inclusive rituals to mark threshold moments — openings, closings, milestones, and transitions."
+    - number: "04"
+      title: "Meaning Made Together"
+      subtitle: "Co-Created Experiences"
+      body: "Participatory structures where the group builds its own meaning through collaborative making and reflection."
+    - number: "05"
+      title: "Workshops"
+      subtitle: "Meaningful Making"
+      body: "Structured creative sessions on self-leadership, values, and storytelling — turning insight into collective tools."
+
+meaning:
+  label: "The Approach"
+  heading: "Creating meaningful togetherness"
+  heading_em: "togetherness"
+  body: "Meaningful togetherness isn't about intensity or spectacle. It's about participation, presence, and shared authorship."
+  list_items:
+    - "People are contributors, not spectators"
+    - "Collaboration replaces consumption"
+    - "Structure supports creativity"
+    - "Meaning is made together, not delivered"
+  button_label: "Explore Offerings"
+  button_href: "#"
+  stats:
+    - number: "10+"
+      label: "Years of facilitation & community leadership"
+    - number: "2"
+      label: "Continents — San Francisco & Stockholm"
+    - number: "5"
+      label: "Modular offerings, infinitely interweavable"
+    - number: "∞"
+      label: "Ways a gathering can create lasting meaning"
+
+feel:
+  label: "How it feels"
+  heading: "To be in my spaces"
+  words:
+    - "Grounded."
+    - "Warm."
+    - "Clear."
+    - "Human."
+  body: "People often describe my gatherings as places where they can relax into themselves, connect without pressure, and feel part of something larger without losing their individuality.\n\nI lead with emotional integrity, relational respect, and a calm nervous system — creating environments where trust builds naturally and collaboration feels possible."
+  button_label: "Begin a Conversation"
+  button_href: "#contact"
+
+who:
+  label: "Who this is for"
+  heading: "If you're looking for leadership that is present, participatory, and intentional —"
+  heading_em: "you're in the right place."
+  body: "My work is for those building community, hosting gatherings, and creating meaningful shared experiences."
+  cards:
+    - icon: "◦"
+      title: "Communities & Collectives"
+      body: "Groups seeking connection-centered, participatory leadership."
+    - icon: "◦"
+      title: "Retreats & Gatherings"
+      body: "Intimate to large-scale experiences requiring intentional facilitation."
+    - icon: "◦"
+      title: "Festivals & Events"
+      body: "Co-created experiences where participation and meaning interweave."
+    - icon: "◦"
+      title: "Groups in Transition"
+      body: "Organizations navigating growth, change, or new beginnings."
+
+cta:
+  label: "Let's create something together"
+  heading: "Ready to gather"
+  heading_em: "with intention?"
+  body: "If you're hosting a gathering, retreat, ceremony, or community experience — I'd love to explore what we can create together."
+  button_primary_label: "Connect on LinkedIn"
+  button_secondary_label: "Send an Email"
+  button_secondary_href: "mailto:hello@lindsaybalfour.com"
+
+footer:
+  logo_name: "Lindsay Balfour"
+  tagline: "Community Leadership · Space Holding · Ceremony"

@@ -836,6 +836,49 @@
     }
 
     /* ============================================================
+       CONTACT FORM
+       ============================================================ */
+    .contact-form {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      background: rgba(237,230,216,0.08);
+      border: 1px solid rgba(237,230,216,0.2);
+      color: var(--bone);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 300;
+      padding: 0.9rem 1.2rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: rgba(237,230,216,0.35);
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: rgba(237,230,216,0.5);
+    }
+    .contact-form textarea { resize: vertical; }
+    @media (max-width: 900px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
        FOOTER
        ============================================================ */
     footer {
@@ -945,11 +988,13 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  {{ $h := .Site.Data.home }}
+
   <!-- NAVIGATION -->
   <nav>
     <div class="nav-logo">
-      Lindsay Balfour
-      <span>Community Leader · Facilitator</span>
+      {{ $h.nav.logo_name }}
+      <span>{{ $h.nav.logo_tagline }}</span>
     </div>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
@@ -975,29 +1020,25 @@
   <section id="main" class="hero">
     <div class="hero-left">
       <div class="hero-ornament">L</div>
-      <div class="hero-eyebrow label fade-up">San Francisco · Stockholm</div>
+      <div class="hero-eyebrow label fade-up">{{ $h.hero.eyebrow }}</div>
       <h1 class="display-xl hero-heading fade-up fade-up-delay-1">
-        Gathering<br>with <em>presence.</em><br>Creating<br>meaning<br>together.
+        {{ $h.hero.heading_line1 }}<br>{{ $h.hero.heading_line2 | replaceRE "presence" "<em>presence</em>" | safeHTML }}<br>{{ $h.hero.heading_line3 }}<br>{{ $h.hero.heading_line4 }}<br>{{ $h.hero.heading_line5 }}
       </h1>
       <p class="hero-sub fade-up fade-up-delay-2">
-        Community leadership, ceremonial facilitation, and co-created experiences rooted in grounded presence.
+        {{ $h.hero.subtext }}
       </p>
       <div class="hero-buttons fade-up fade-up-delay-3">
-        <a href="#contact" class="btn btn-primary">Work With Me</a>
-        <a href="#" class="btn btn-ghost">See Gatherings I've Led</a>
+        <a href="{{ $h.hero.button_primary_href }}" class="btn btn-primary">{{ $h.hero.button_primary_label }}</a>
+        <a href="{{ $h.hero.button_secondary_href }}" class="btn btn-ghost">{{ $h.hero.button_secondary_label }}</a>
       </div>
     </div>
     <div class="hero-right">
       <div class="hero-right-inner">
         <p class="hero-quote">
-          "Soft presence.<br>Strong spaces."
+          "{{ $h.hero.quote }}"
         </p>
         <div class="hero-tags">
-          <span class="hero-tag">Community Leadership</span>
-          <span class="hero-tag">Space Holding</span>
-          <span class="hero-tag">Ceremony & Ritual</span>
-          <span class="hero-tag">Co-Creation</span>
-          <span class="hero-tag">Meaning-Making</span>
+          {{ range $h.hero.tags }}<span class="hero-tag">{{ . }}</span>{{ end }}
         </div>
       </div>
     </div>
@@ -1009,15 +1050,10 @@
 
   <!-- MARQUEE BAND -->
   <div class="intro-band">
-    <span class="intro-band-text">Community leadership</span>
-    <span class="intro-band-dot"></span>
-    <span class="intro-band-text">Space holding</span>
-    <span class="intro-band-dot"></span>
-    <span class="intro-band-text">Ceremony & ritual</span>
-    <span class="intro-band-dot"></span>
-    <span class="intro-band-text">Meaningful co-creation</span>
-    <span class="intro-band-dot"></span>
-    <span class="intro-band-text">Grounded presence</span>
+    {{ range $i, $item := $h.marquee.items }}
+      {{ if $i }}<span class="intro-band-dot"></span>{{ end }}
+      <span class="intro-band-text">{{ $item }}</span>
+    {{ end }}
   </div>
 
   <!-- WHERE PRESENCE BECOMES LEADERSHIP -->
@@ -1025,21 +1061,15 @@
     <div class="section-inner">
       <div class="presence-grid">
         <div class="presence-left">
-          <div class="section-label label">Philosophy</div>
-          <h2 class="display-lg presence-heading">Where presence<br>becomes <em style="font-style:italic;color:var(--maroon);">leadership</em></h2>
-          <p class="body-lg presence-body">
-            I lead with steadiness rather than force. With structure that creates safety, and openness that invites participation.
-          </p>
-          <p class="body-lg presence-body">
-            My role is to set the tone and hold the container, so individuals can show up fully and the group can move together with trust and coherence. When presence is grounded, leadership becomes felt rather than performed.
-          </p>
-          <p class="presence-signature">— Lindsay Balfour</p>
+          <div class="section-label label">{{ $h.presence.label }}</div>
+          <h2 class="display-lg presence-heading">{{ $h.presence.heading | replaceRE $h.presence.heading_em (printf "<em style=\"font-style:italic;color:var(--maroon);\">%s</em>" $h.presence.heading_em) | safeHTML }}</h2>
+          <p class="body-lg presence-body">{{ $h.presence.body1 }}</p>
+          <p class="body-lg presence-body">{{ $h.presence.body2 }}</p>
+          <p class="presence-signature">{{ $h.presence.signature }}</p>
         </div>
         <div class="presence-right">
           <div class="presence-card">
-            <p class="presence-card-quote">
-              I don't create for people. I create with them.
-            </p>
+            <p class="presence-card-quote">{{ $h.presence.card_quote }}</p>
             <div class="presence-card-accent"></div>
           </div>
         </div>
@@ -1051,46 +1081,20 @@
   <section class="section pillars">
     <div class="section-inner">
       <div class="pillars-header">
-        <div class="pillars-label label">What I Offer</div>
-        <h2 class="display-lg pillars-heading">The Five Pillars</h2>
-        <p class="pillars-sub body-sm">Each offering is a different doorway into presence, belonging, and shared becoming.</p>
+        <div class="pillars-label label">{{ $h.pillars.label }}</div>
+        <h2 class="display-lg pillars-heading">{{ $h.pillars.heading }}</h2>
+        <p class="pillars-sub body-sm">{{ $h.pillars.subtext }}</p>
       </div>
       <div class="pillars-grid">
+        {{ range $h.pillars.items }}
         <div class="pillar">
-          <div class="pillar-number">01</div>
+          <div class="pillar-number">{{ .number }}</div>
           <div class="pillar-line"></div>
-          <h3 class="pillar-title">The Gathering</h3>
-          <div class="pillar-subtitle">Leadership & Facilitation</div>
-          <p class="pillar-body">Bringing people together to find shared focus and genuine belonging — without pressure or forced intensity.</p>
+          <h3 class="pillar-title">{{ .title }}</h3>
+          <div class="pillar-subtitle">{{ .subtitle }}</div>
+          <p class="pillar-body">{{ .body }}</p>
         </div>
-        <div class="pillar">
-          <div class="pillar-number">02</div>
-          <div class="pillar-line"></div>
-          <h3 class="pillar-title">The Container</h3>
-          <div class="pillar-subtitle">Space Holding</div>
-          <p class="pillar-body">Holding steady, regulated spaces during moments of transition or vulnerability — for depth, trust, and honesty.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-number">03</div>
-          <div class="pillar-line"></div>
-          <h3 class="pillar-title">The Ceremony</h3>
-          <div class="pillar-subtitle">Ritual & Meaning</div>
-          <p class="pillar-body">Grounded, inclusive rituals to mark threshold moments — openings, closings, milestones, and transitions.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-number">04</div>
-          <div class="pillar-line"></div>
-          <h3 class="pillar-title">Meaning Made Together</h3>
-          <div class="pillar-subtitle">Co-Created Experiences</div>
-          <p class="pillar-body">Participatory structures where the group builds its own meaning through collaborative making and reflection.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-number">05</div>
-          <div class="pillar-line"></div>
-          <h3 class="pillar-title">Workshops</h3>
-          <div class="pillar-subtitle">Meaningful Making</div>
-          <p class="pillar-body">Structured creative sessions on self-leadership, values, and storytelling — turning insight into collective tools.</p>
-        </div>
+        {{ end }}
       </div>
     </div>
   </section>
@@ -1100,36 +1104,21 @@
     <div class="section-inner">
       <div class="meaning-grid">
         <div class="meaning-left">
-          <div class="section-label label">The Approach</div>
-          <h2 class="display-lg meaning-heading">Creating meaningful <em style="font-style:italic;color:var(--dusty-plum);">togetherness</em></h2>
-          <p class="body-lg meaning-body">
-            Meaningful togetherness isn't about intensity or spectacle. It's about participation, presence, and shared authorship.
-          </p>
+          <div class="section-label label">{{ $h.meaning.label }}</div>
+          <h2 class="display-lg meaning-heading">{{ $h.meaning.heading | replaceRE $h.meaning.heading_em (printf "<em style=\"font-style:italic;color:var(--dusty-plum);\">%s</em>" $h.meaning.heading_em) | safeHTML }}</h2>
+          <p class="body-lg meaning-body">{{ $h.meaning.body }}</p>
           <ul class="meaning-list">
-            <li>People are contributors, not spectators</li>
-            <li>Collaboration replaces consumption</li>
-            <li>Structure supports creativity</li>
-            <li>Meaning is made together, not delivered</li>
+            {{ range $h.meaning.list_items }}<li>{{ . }}</li>{{ end }}
           </ul>
-          <a href="#" class="btn btn-primary">Explore Offerings</a>
+          <a href="{{ $h.meaning.button_href }}" class="btn btn-primary">{{ $h.meaning.button_label }}</a>
         </div>
         <div class="meaning-right">
+          {{ range $h.meaning.stats }}
           <div class="meaning-stat">
-            <div class="meaning-stat-number">10+</div>
-            <div class="meaning-stat-label">Years of facilitation & community leadership</div>
+            <div class="meaning-stat-number">{{ .number }}</div>
+            <div class="meaning-stat-label">{{ .label }}</div>
           </div>
-          <div class="meaning-stat">
-            <div class="meaning-stat-number">2</div>
-            <div class="meaning-stat-label">Continents — San Francisco & Stockholm</div>
-          </div>
-          <div class="meaning-stat">
-            <div class="meaning-stat-number">5</div>
-            <div class="meaning-stat-label">Modular offerings, infinitely interweavable</div>
-          </div>
-          <div class="meaning-stat">
-            <div class="meaning-stat-number">∞</div>
-            <div class="meaning-stat-label">Ways a gathering can create lasting meaning</div>
-          </div>
+          {{ end }}
         </div>
       </div>
     </div>
@@ -1138,19 +1127,13 @@
   <!-- HOW IT FEELS -->
   <section class="section feel">
     <div class="feel-inner">
-      <div class="feel-label label">How it feels</div>
-      <h2 class="display-lg feel-heading">To be in my spaces</h2>
+      <div class="feel-label label">{{ $h.feel.label }}</div>
+      <h2 class="display-lg feel-heading">{{ $h.feel.heading }}</h2>
       <div class="feel-words">
-        <span class="feel-word">Grounded.</span>
-        <span class="feel-word">Warm.</span>
-        <span class="feel-word">Clear.</span>
-        <span class="feel-word">Human.</span>
+        {{ range $h.feel.words }}<span class="feel-word">{{ . }}</span>{{ end }}
       </div>
-      <p class="feel-body">
-        People often describe my gatherings as places where they can relax into themselves, connect without pressure, and feel part of something larger without losing their individuality.<br><br>
-        I lead with emotional integrity, relational respect, and a calm nervous system — creating environments where trust builds naturally and collaboration feels possible.
-      </p>
-      <a href="#contact" class="btn btn-ghost">Begin a Conversation</a>
+      <p class="feel-body">{{ $h.feel.body | replaceRE "\n\n" "<br><br>" | safeHTML }}</p>
+      <a href="{{ $h.feel.button_href }}" class="btn btn-ghost">{{ $h.feel.button_label }}</a>
     </div>
   </section>
 
@@ -1159,56 +1142,50 @@
     <div class="section-inner">
       <div class="who-grid">
         <div class="who-left">
-          <div class="section-label label" style="color:var(--rose-gold);">Who this is for</div>
-          <h2 class="display-md who-heading">If you're looking for leadership that is present, participatory, and intentional —<br><em style="font-style:italic;">you're in the right place.</em></h2>
-          <p class="who-body">My work is for those building community, hosting gatherings, and creating meaningful shared experiences.</p>
+          <div class="section-label label" style="color:var(--rose-gold);">{{ $h.who.label }}</div>
+          <h2 class="display-md who-heading">{{ $h.who.heading }}<br><em style="font-style:italic;">{{ $h.who.heading_em }}</em></h2>
+          <p class="who-body">{{ $h.who.body }}</p>
         </div>
         <div class="who-right">
+          {{ range $h.who.cards }}
           <div class="who-card">
-            <div class="who-card-icon">◦</div>
-            <div class="who-card-title">Communities & Collectives</div>
-            <p class="who-card-body">Groups seeking connection-centered, participatory leadership.</p>
+            <div class="who-card-icon">{{ .icon }}</div>
+            <div class="who-card-title">{{ .title }}</div>
+            <p class="who-card-body">{{ .body }}</p>
           </div>
-          <div class="who-card">
-            <div class="who-card-icon">◦</div>
-            <div class="who-card-title">Retreats & Gatherings</div>
-            <p class="who-card-body">Intimate to large-scale experiences requiring intentional facilitation.</p>
-          </div>
-          <div class="who-card">
-            <div class="who-card-icon">◦</div>
-            <div class="who-card-title">Festivals & Events</div>
-            <p class="who-card-body">Co-created experiences where participation and meaning interweave.</p>
-          </div>
-          <div class="who-card">
-            <div class="who-card-icon">◦</div>
-            <div class="who-card-title">Groups in Transition</div>
-            <p class="who-card-body">Organizations navigating growth, change, or new beginnings.</p>
-          </div>
+          {{ end }}
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- CTA / CONTACT -->
   <section id="contact" class="section cta-section">
     <div class="cta-inner">
-      <div class="cta-label label">Let's create something together</div>
-      <h2 class="display-lg cta-heading">Ready to gather<br><em style="font-style:italic;color:var(--rose-gold);">with intention?</em></h2>
-      <p class="cta-body">
-        If you're hosting a gathering, retreat, ceremony, or community experience — I'd love to explore what we can create together.
-      </p>
-      <div class="cta-buttons">
-        <a href="https://linkedin.com/in/{{ .Site.Params.linkedin }}" class="btn btn-primary">Connect on LinkedIn</a>
-        <a href="mailto:hello@lindsaybalfour.com" class="btn btn-ghost">Send an Email</a>
-      </div>
+      <div class="cta-label label">{{ $h.cta.label }}</div>
+      <h2 class="display-lg cta-heading">{{ $h.cta.heading }}<br><em style="font-style:italic;color:var(--rose-gold);">{{ $h.cta.heading_em }}</em></h2>
+      <p class="cta-body">{{ $h.cta.body }}</p>
+      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
+        <input type="hidden" name="form-name" value="contact" />
+        <p style="display:none;"><input name="bot-field" /></p>
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="Your email" required />
+        </div>
+        <textarea name="message" placeholder="Tell me about your gathering, retreat, or ceremony…" rows="5" required></textarea>
+        <div class="cta-buttons">
+          <button type="submit" class="btn btn-primary">Send Message</button>
+          <a href="{{ $h.cta.button_secondary_href }}" class="btn btn-ghost">{{ $h.cta.button_secondary_label }}</a>
+        </div>
+      </form>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">
-      Lindsay Balfour
-      <span>Community Leadership · Space Holding · Ceremony</span>
+      {{ $h.footer.logo_name }}
+      <span>{{ $h.footer.tagline }}</span>
     </div>
     <ul class="footer-links">
       <li><a href="/">Home</a></li>
@@ -1216,7 +1193,7 @@
       <li><a href="/work">Work</a></li>
       <li><a href="https://linkedin.com/in/{{ .Site.Params.linkedin }}">LinkedIn</a></li>
     </ul>
-    <p class="footer-copy">&copy; {{ now.Format "2006" }} Lindsay Balfour. All rights reserved.</p>
+    <p class="footer-copy">&copy; {{ now.Format "2006" }} {{ $h.footer.logo_name }}. All rights reserved.</p>
   </footer>
 
 </body>

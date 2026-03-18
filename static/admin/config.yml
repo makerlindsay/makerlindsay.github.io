@@ -1,0 +1,173 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: assets/images
+public_folder: /images
+
+collections:
+
+  # ── HOME PAGE ───────────────────────────────────────────────────────────────
+  - name: home
+    label: Home Page
+    files:
+      - name: home
+        label: Home Page Content
+        file: data/home.yaml
+        fields:
+
+          - label: Navigation
+            name: nav
+            widget: object
+            fields:
+              - { label: "Your Name (logo)", name: logo_name, widget: string }
+              - { label: "Tagline under name", name: logo_tagline, widget: string }
+
+          - label: Hero Section
+            name: hero
+            widget: object
+            fields:
+              - { label: "Eyebrow (location line)", name: eyebrow, widget: string }
+              - { label: "Heading line 1", name: heading_line1, widget: string }
+              - { label: "Heading line 2", name: heading_line2, widget: string }
+              - { label: "Heading line 3", name: heading_line3, widget: string }
+              - { label: "Heading line 4", name: heading_line4, widget: string }
+              - { label: "Heading line 5", name: heading_line5, widget: string }
+              - { label: "Subtext paragraph", name: subtext, widget: text }
+              - { label: "Primary button label", name: button_primary_label, widget: string }
+              - { label: "Primary button link", name: button_primary_href, widget: string }
+              - { label: "Secondary button label", name: button_secondary_label, widget: string }
+              - { label: "Secondary button link", name: button_secondary_href, widget: string }
+              - { label: "Pull quote", name: quote, widget: string }
+              - label: Tags
+                name: tags
+                widget: list
+                field: { label: Tag, name: tag, widget: string }
+
+          - label: Marquee Band
+            name: marquee
+            widget: object
+            fields:
+              - label: Items
+                name: items
+                widget: list
+                field: { label: Item, name: item, widget: string }
+
+          - label: "Philosophy Section"
+            name: presence
+            widget: object
+            fields:
+              - { label: "Section label", name: label, widget: string }
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Italic word in heading", name: heading_em, widget: string }
+              - { label: "Body paragraph 1", name: body1, widget: text }
+              - { label: "Body paragraph 2", name: body2, widget: text }
+              - { label: "Signature", name: signature, widget: string }
+              - { label: "Card pull quote", name: card_quote, widget: text }
+
+          - label: "Pillars Section"
+            name: pillars
+            widget: object
+            fields:
+              - { label: "Section label", name: label, widget: string }
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Subtext", name: subtext, widget: text }
+              - label: Pillars
+                name: items
+                widget: list
+                fields:
+                  - { label: "Number (e.g. 01)", name: number, widget: string }
+                  - { label: "Title", name: title, widget: string }
+                  - { label: "Subtitle / category", name: subtitle, widget: string }
+                  - { label: "Body text", name: body, widget: text }
+
+          - label: "Approach Section"
+            name: meaning
+            widget: object
+            fields:
+              - { label: "Section label", name: label, widget: string }
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Italic word in heading", name: heading_em, widget: string }
+              - { label: "Body paragraph", name: body, widget: text }
+              - label: "List items"
+                name: list_items
+                widget: list
+                field: { label: Item, name: item, widget: string }
+              - { label: "Button label", name: button_label, widget: string }
+              - { label: "Button link", name: button_href, widget: string }
+              - label: Stats
+                name: stats
+                widget: list
+                fields:
+                  - { label: "Number / symbol", name: number, widget: string }
+                  - { label: "Label", name: label, widget: string }
+
+          - label: "How It Feels Section"
+            name: feel
+            widget: object
+            fields:
+              - { label: "Section label", name: label, widget: string }
+              - { label: "Heading", name: heading, widget: string }
+              - label: "Feeling words"
+                name: words
+                widget: list
+                field: { label: Word, name: word, widget: string }
+              - { label: "Body text", name: body, widget: text }
+              - { label: "Button label", name: button_label, widget: string }
+              - { label: "Button link", name: button_href, widget: string }
+
+          - label: "Who This Is For Section"
+            name: who
+            widget: object
+            fields:
+              - { label: "Section label", name: label, widget: string }
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Italic line in heading", name: heading_em, widget: string }
+              - { label: "Body text", name: body, widget: text }
+              - label: Cards
+                name: cards
+                widget: list
+                fields:
+                  - { label: "Icon character", name: icon, widget: string }
+                  - { label: "Card title", name: title, widget: string }
+                  - { label: "Card body", name: body, widget: text }
+
+          - label: "Contact / CTA Section"
+            name: cta
+            widget: object
+            fields:
+              - { label: "Section label", name: label, widget: string }
+              - { label: "Heading", name: heading, widget: string }
+              - { label: "Italic line in heading", name: heading_em, widget: string }
+              - { label: "Body text", name: body, widget: text }
+              - { label: "Secondary button label", name: button_secondary_label, widget: string }
+              - { label: "Secondary button link", name: button_secondary_href, widget: string }
+
+          - label: Footer
+            name: footer
+            widget: object
+            fields:
+              - { label: "Name in footer", name: logo_name, widget: string }
+              - { label: "Footer tagline", name: tagline, widget: string }
+
+  # ── ABOUT PAGE ──────────────────────────────────────────────────────────────
+  - name: about
+    label: About Page
+    files:
+      - name: about
+        label: About Page
+        file: content/about.md
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
+
+  # ── WORK PAGE ───────────────────────────────────────────────────────────────
+  - name: work
+    label: Work Page
+    files:
+      - name: work
+        label: Work Page
+        file: content/work.md
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Body, name: body, widget: markdown }
