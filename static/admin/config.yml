@@ -1,8 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: makerlindsay/makerlindsay.github.io
   branch: main
 
-media_folder: assets/images
+media_folder: static/images
 public_folder: /images
 
 collections:
