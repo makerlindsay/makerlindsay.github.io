@@ -76,12 +76,12 @@
     .nav-links a { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--charcoal-espresso); transition: color 0.2s; }
     .nav-links a:hover, .nav-links a.active { color: var(--palatinate); }
     .nav-cta { background: var(--palatinate); color: var(--bone) !important; padding: 0.55rem 1.4rem; transition: background 0.3s ease !important; }
-    .nav-cta:hover { background: var(--charcoal-espresso) !important; }
+    .nav-cta:hover { background: var(--rose-gold) !important; color: var(--charcoal-espresso) !important; }
 
     /* ── SHARED ── */
     .btn { display: inline-block; font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.85rem 2.2rem; cursor: pointer; transition: all 0.35s ease; border: none; }
-    .btn-primary { background: var(--maroon); color: var(--bone); }
-    .btn-primary:hover { background: var(--midnight-plum); }
+    .btn-primary { background: var(--palatinate); color: var(--bone); }
+    .btn-primary:hover { background: var(--rose-gold); color: var(--charcoal-espresso); }
     .btn-ghost { background: transparent; color: var(--bone); border: 1px solid rgba(237,230,216,0.4); }
     .btn-ghost:hover { background: rgba(237,230,216,0.1); border-color: var(--bone); }
     .btn-outline { background: transparent; color: var(--charcoal-espresso); border: 1px solid var(--warm-taupe); }
@@ -97,75 +97,48 @@
 
     /* ── HERO ── */
     .page-hero {
+      position: relative;
       min-height: 90vh;
-      display: grid; grid-template-columns: 1.1fr 0.9fr;
-      padding-top: 5.5rem; overflow: hidden;
+      overflow: hidden;
     }
-    .hero-left {
-      background: var(--midnight-plum);
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 5rem 5rem 5.5rem 4rem;
-      position: relative; overflow: hidden;
+    .hero-photo {
+      position: absolute; inset: 0;
+      background: url('/images/Hero-Banner-About-Lindsay.jpg') center top / cover no-repeat;
     }
-    .hero-left::before {
-      content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 15% 80%, rgba(107,45,45,0.4) 0%, transparent 50%),
-        radial-gradient(ellipse at 85% 10%, rgba(104,40,96,0.2) 0%, transparent 50%);
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(20,10,18,0.9) 0%,
+        rgba(20,10,18,0.45) 45%,
+        rgba(20,10,18,0.12) 100%
+      );
     }
-    .hero-bg-letter {
-      position: absolute; top: 50%; right: -1rem; transform: translateY(-50%);
-      font-family: var(--font-display); font-size: 26rem; font-weight: 300;
-      color: rgba(237,230,216,0.025); line-height: 1; pointer-events: none; user-select: none;
+    .hero-content {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 5rem 5rem 5rem;
+      display: flex; justify-content: space-between; align-items: flex-end; gap: 3rem;
     }
+    .hero-left { max-width: 560px; }
     .hero-eyebrow {
-      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem;
-      margin-bottom: 1.75rem; position: relative;
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;
     }
-    .hero-eyebrow::before { content: ''; display: block; width: 2.5rem; height: 1px; background: var(--rose-gold); }
+    .hero-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
     .hero-heading {
-      font-family: var(--font-display);
-      font-size: clamp(2.8rem, 5vw, 5.2rem);
-      font-weight: 300; line-height: 1.0;
-      color: var(--bone); position: relative; margin-bottom: 2rem;
+      font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 300;
+      line-height: 1.0; color: var(--bone); margin-bottom: 1.5rem;
     }
     .hero-heading em { font-style: italic; color: var(--rose-gold); }
     .hero-sub {
-      font-size: 1rem; font-weight: 300; line-height: 1.85;
-      color: rgba(237,230,216,0.85); max-width: 44ch; position: relative; margin-bottom: 2.5rem;
+      font-size: 1rem; font-weight: 300; color: rgba(237,230,216,0.82); line-height: 1.85;
+      max-width: 44ch; margin-bottom: 2rem;
     }
+    .hero-right { flex-shrink: 0; text-align: right; }
     .hero-tagline {
-      font-family: var(--font-display); font-size: 1.15rem; font-style: italic;
-      font-weight: 300; color: var(--rose-gold); position: relative;
-      padding-left: 1.5rem; border-left: 2px solid var(--maroon); line-height: 1.5;
+      font-family: var(--font-display); font-size: 1.1rem; font-style: italic; font-weight: 300;
+      color: rgba(237,230,216,0.65); border-right: 2px solid var(--maroon);
+      padding-right: 1.25rem; line-height: 1.6;
     }
-    .hero-right { position: relative; overflow: hidden; }
-    .hero-right-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(150deg, var(--warm-taupe) 0%, var(--clay-beige) 50%, var(--earthy-rose) 100%);
-    }
-    .hero-right-bg::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 65% 35%, rgba(196,154,108,0.35) 0%, transparent 55%);
-    }
-    .hero-right-inner {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; justify-content: space-between;
-      padding: 4rem 3rem;
-    }
-    .hero-identity-top { display: flex; flex-direction: column; gap: 0.4rem; }
-    .hero-identity-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(237,230,216,0.75); margin-bottom: 0.75rem; }
-    .hero-identity-line { font-family: var(--font-display); font-size: 1.25rem; font-weight: 300; font-style: italic; color: var(--bone); opacity: 0.9; line-height: 1.2; }
-    .hero-location-badge { display: inline-flex; align-items: center; gap: 0.75rem; }
-    .loc-dot { width: 6px; height: 6px; background: var(--rose-gold); border-radius: 50%; }
-    .loc-text { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(237,230,216,0.85); }
-    .hero-qualities { display: flex; flex-direction: column; gap: 0; }
-    .hero-quality { padding: 0.85rem 0; border-bottom: 1px solid rgba(237,230,216,0.12); display: flex; gap: 1rem; align-items: flex-start; }
-    .hero-quality:last-child { border-bottom: none; }
-    .quality-bullet { color: var(--rose-gold); font-size: 0.75rem; margin-top: 0.3rem; flex-shrink: 0; }
-    .quality-text { font-size: 1rem; font-weight: 300; color: rgba(237,230,216,0.88); line-height: 1.6; }
-    .quality-text strong { font-weight: 500; color: var(--bone); display: block; font-size: 0.95rem; letter-spacing: 0.05em; margin-bottom: 0.15rem; }
 
     /* ── INTRO BAND ── */
     .intro-band { background: var(--maroon); padding: 1.8rem 4rem; display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
@@ -354,11 +327,9 @@
         gap: 1.25rem;
         align-items: flex-start;
       }
-      .page-hero { grid-template-columns: 1fr; }
-      .hero-right { min-height: 50vh; position: relative; }
-      .hero-right-bg { position: relative; }
-      .hero-right-inner { position: relative; min-height: 50vh; }
-      .hero-left { padding: 7rem 2rem 4rem; }
+      .hero-content { flex-direction: column; align-items: flex-start; padding: 3rem 2rem; }
+      .hero-right { display: none; }
+      .hero-left { max-width: 100%; }
       .section { padding: 4rem 2rem; }
       .bridge-grid, .global-grid, .personal-bg-grid { grid-template-columns: 1fr; gap: 3rem; }
       .city-card, .city-card.img-right { grid-template-columns: 1fr; }
@@ -407,48 +378,18 @@
 
   <!-- HERO -->
   <section id="main" class="page-hero">
-    <div class="hero-left">
-      <div class="hero-bg-letter">L</div>
-      <div class="hero-eyebrow fade-up">About Lindsay Balfour</div>
-      <h1 class="hero-heading fade-up delay-1">
-        The Bridge<br>Between<br><em>Systems</em><br>and Soul.
-      </h1>
-      <p class="hero-sub fade-up delay-2">
-        A facilitator, strategist, and community leader with over a decade of experience helping groups move from fragmentation to coherence. Born in Michigan, half Puerto Rican, raised in South Korea, and currently based between San Francisco and Stockholm — she has always known what it means to find home in many places at once.
-      </p>
-      <p class="hero-tagline fade-up delay-3">
-        "The structures we build must be designed with clarity, care, and a bias toward belonging."
-      </p>
-    </div>
-    <div class="hero-right">
-      <div class="hero-right-bg"></div>
-      <div class="hero-right-inner">
-        <div class="hero-identity-top">
-          <div class="hero-identity-label">Identity</div>
-          <div class="hero-identity-line">Multidisciplinary Creative Leader</div>
-          <div class="hero-identity-line">Community Strategist</div>
-          <div class="hero-identity-line">Space Holder & Strategist</div>
-        </div>
-        <div>
-          <div class="hero-location-badge" style="margin-bottom:1.5rem;">
-            <span class="loc-dot"></span>
-            <span class="loc-text">San Francisco · Stockholm</span>
-          </div>
-          <div class="hero-qualities">
-            <div class="hero-quality">
-              <span class="quality-bullet">◆</span>
-              <div class="quality-text"><strong>Systems Thinker</strong>Translating big-picture vision into lived, granular participant experience.</div>
-            </div>
-            <div class="hero-quality">
-              <span class="quality-bullet">◆</span>
-              <div class="quality-text"><strong>Cross-context fluency</strong>Equally at home in corporate organisations, creative communities, and festival environments — adapting her approach without losing her voice.</div>
-            </div>
-            <div class="hero-quality">
-              <span class="quality-bullet">◆</span>
-              <div class="quality-text"><strong>Pedagogical Innovator</strong>Technology as a creative material. The goal is not output — it's discovery of one's own creative agency.</div>
-            </div>
-          </div>
-        </div>
+    <div class="hero-photo"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-eyebrow fade-up">About Lindsay Balfour</div>
+        <h1 class="hero-heading fade-up delay-1">
+          Community<br>leader.<br><em>Facilitator.</em>
+        </h1>
+
+      </div>
+      <div class="hero-right">
+        <p class="hero-tagline">"The structures we build must be<br>designed with clarity, care,<br>and a bias toward belonging."</p>
       </div>
     </div>
   </section>

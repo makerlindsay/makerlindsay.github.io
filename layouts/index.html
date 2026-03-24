@@ -210,7 +210,7 @@
       padding: 0.55rem 1.4rem;
       transition: background 0.3s ease !important;
     }
-    .nav-cta:hover { background: var(--palatinate-deep); color: var(--bone) !important; }
+    .nav-cta:hover { background: var(--rose-gold) !important; color: var(--charcoal-espresso) !important; }
 
     /* ============================================================
        HERO SECTION
@@ -1033,13 +1033,9 @@
       <p class="hero-sub fade-up fade-up-delay-2">
         {{ $h.hero.subtext }}
       </p>
-      <div class="hero-buttons fade-up fade-up-delay-3">
-        <a href="{{ $h.hero.button_primary_href }}" class="btn btn-primary">{{ $h.hero.button_primary_label }}</a>
-        <a href="{{ $h.hero.button_secondary_href }}" class="btn btn-ghost">{{ $h.hero.button_secondary_label }}</a>
-      </div>
     </div>
     <div class="hero-right">
-      {{ $portrait := resources.Get "images/Hero-Banner-Lindsay.jpg" }}
+      {{ $portrait := resources.Get "images/Lindsey_MikaelaBaggström_42.jpg" }}
       {{ if $portrait }}
       <img class="hero-portrait" src="{{ ($portrait.Resize "1200x q85").RelPermalink }}" alt="Lindsay Balfour" />
       {{ else }}
