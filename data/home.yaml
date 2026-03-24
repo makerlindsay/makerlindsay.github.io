@@ -9,18 +9,13 @@ hero:
   heading_line3: "Creating"
   heading_line4: "meaning"
   heading_line5: "together."
-  subtext: "Community leadership, ceremonial facilitation, and co-created experiences rooted in grounded presence."
+  subtext: ""
   button_primary_label: "Work With Me"
   button_primary_href: "#contact"
-  button_secondary_label: "See Gatherings I've Led"
+  button_secondary_label: "See Gatherings"
   button_secondary_href: "#"
   quote: "Soft presence. Strong spaces."
-  tags:
-    - "Community Leadership"
-    - "Space Holding"
-    - "Ceremony & Ritual"
-    - "Co-Creation"
-    - "Meaning-Making"
+  tags: []
 
 marquee:
   items:

@@ -48,6 +48,16 @@
   --font-body: 'Jost', sans-serif;
 }
 
+// ── IMAGE PLACEHOLDER FALLBACK ──
+.img-placeholder {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 60% 40%, rgba(196,154,108,0.3) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(107,45,45,0.25) 0%, transparent 50%),
+    linear-gradient(160deg, var(--warm-taupe) 0%, var(--clay-beige) 40%, var(--earthy-rose) 100%);
+}
+
 // ── RESET & BASE ──
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }

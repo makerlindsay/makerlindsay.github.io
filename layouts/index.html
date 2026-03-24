@@ -129,11 +129,11 @@
       border: none;
     }
     .btn-primary {
-      background: var(--maroon);
+      background: var(--palatinate);
       color: var(--bone);
     }
     .btn-primary:hover {
-      background: var(--midnight-plum);
+      background: var(--palatinate-deep);
     }
     .btn-secondary {
       background: transparent;
@@ -205,12 +205,12 @@
     }
     .nav-links a:hover { color: var(--palatinate); }
     .nav-cta {
-      background: var(--maroon);
+      background: var(--palatinate);
       color: var(--bone) !important;
       padding: 0.55rem 1.4rem;
       transition: background 0.3s ease !important;
     }
-    .nav-cta:hover { background: var(--midnight-plum); color: var(--bone) !important; }
+    .nav-cta:hover { background: var(--palatinate-deep); color: var(--bone) !important; }
 
     /* ============================================================
        HERO SECTION
@@ -295,16 +295,23 @@
       position: relative;
       overflow: hidden;
     }
+    .hero-portrait {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
     .hero-right-inner {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse at 60% 40%, rgba(196,154,108,0.3) 0%, transparent 60%),
-        radial-gradient(ellipse at 20% 80%, rgba(107,45,45,0.25) 0%, transparent 50%),
-        linear-gradient(160deg, var(--warm-taupe) 0%, var(--clay-beige) 40%, var(--earthy-rose) 100%);
+        radial-gradient(ellipse at 60% 40%, rgba(196,154,108,0.1) 0%, transparent 60%),
+        linear-gradient(to top, rgba(30,10,20,0.45) 0%, transparent 50%);
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
       padding: 6rem 3rem;
     }
@@ -1032,13 +1039,13 @@
       </div>
     </div>
     <div class="hero-right">
+      {{ $portrait := resources.Get "images/Hero-Banner-Lindsay.jpg" }}
+      {{ if $portrait }}
+      <img class="hero-portrait" src="{{ ($portrait.Resize "1200x q85").RelPermalink }}" alt="Lindsay Balfour" />
+      {{ else }}
+      <div class="hero-portrait img-placeholder"></div>
+      {{ end }}
       <div class="hero-right-inner">
-        <p class="hero-quote">
-          "{{ $h.hero.quote }}"
-        </p>
-        <div class="hero-tags">
-          {{ range $h.hero.tags }}<span class="hero-tag">{{ . }}</span>{{ end }}
-        </div>
       </div>
     </div>
     <div class="hero-scroll">
