@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Hero Prototypes — Lindsay Balfour</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Jost', sans-serif;
+      --bone: #EDE6D8;
+      --warm-taupe: #9E8878;
+      --clay-beige: #C4967D;
+      --earthy-rose: #B87C6E;
+      --maroon: #6B2D2D;
+      --rose-gold: #C49A6C;
+      --midnight-plum: #2D1F2D;
+      --dusty-plum: #5C3D52;
+      --palatinate: #682860;
+      --charcoal-espresso: #2A1F1A;
+      --purple-shadow: #3D2840;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: #1a1a1a; color: var(--bone); }
+
+    /* ── TOC NAV ── */
+    .toc {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(26,26,26,0.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 1rem 2rem;
+      display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    }
+    .toc-label {
+      font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rose-gold); flex-shrink: 0;
+    }
+    .toc a {
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(237,230,216,0.6); text-decoration: none; transition: color 0.2s; white-space: nowrap;
+    }
+    .toc a:hover { color: var(--bone); }
+    .toc-divider { width: 1px; height: 1rem; background: rgba(255,255,255,0.12); flex-shrink: 0; }
+
+    /* ── SECTION LABELS ── */
+    .proto-label {
+      background: rgba(26,26,26,0.9);
+      padding: 2.5rem 4rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .proto-number {
+      font-size: 0.58rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--rose-gold); margin-bottom: 0.4rem;
+    }
+    .proto-title {
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 300; color: var(--bone);
+      margin-bottom: 0.4rem;
+    }
+    .proto-desc {
+      font-size: 0.8rem; font-weight: 300; color: rgba(237,230,216,0.5); max-width: 60ch;
+    }
+
+    /* ─────────────────────────────────────────────
+       OPTION 1 — Full-width photo banner
+    ───────────────────────────────────────────── */
+    .hero-1 {
+      position: relative;
+      height: 90vh;
+      overflow: hidden;
+    }
+    .hero-1-photo {
+      position: absolute; inset: 0;
+      background: url('/images/Hero-Banner-Lindsay.jpg') center top / cover no-repeat;
+    }
+    .hero-1-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(20,10,18,0.88) 0%,
+        rgba(20,10,18,0.4) 45%,
+        rgba(20,10,18,0.1) 100%
+      );
+    }
+    .hero-1-content {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 5rem 5rem 5rem 5rem;
+      display: flex; justify-content: space-between; align-items: flex-end; gap: 3rem;
+    }
+    .hero-1-left { max-width: 560px; }
+    .hero-1-eyebrow {
+      font-size: 0.65rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;
+    }
+    .hero-1-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+    .hero-1-heading {
+      font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 300;
+      line-height: 1.0; color: var(--bone); margin-bottom: 1.5rem;
+    }
+    .hero-1-heading em { font-style: italic; color: var(--rose-gold); }
+    .hero-1-sub {
+      font-size: 1rem; font-weight: 300; color: rgba(237,230,216,0.8); line-height: 1.8;
+      max-width: 44ch; margin-bottom: 2rem;
+    }
+    .hero-1-right { text-align: right; flex-shrink: 0; }
+    .hero-1-tagline {
+      font-family: var(--font-display); font-size: 1.1rem; font-style: italic; font-weight: 300;
+      color: rgba(237,230,216,0.6); border-right: 2px solid var(--maroon);
+      padding-right: 1.25rem; line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block; font-family: var(--font-body); font-size: 0.68rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase; padding: 0.85rem 2.2rem;
+      cursor: pointer; text-decoration: none; transition: all 0.3s;
+    }
+    .btn-primary { background: var(--palatinate); color: var(--bone); }
+    .btn-primary:hover { background: var(--maroon); }
+    .btn-ghost {
+      background: transparent; color: var(--bone); border: 1px solid rgba(237,230,216,0.35);
+    }
+    .btn-ghost:hover { border-color: var(--bone); }
+
+    /* ─────────────────────────────────────────────
+       OPTION 2 — Centered text, no split
+    ───────────────────────────────────────────── */
+    .hero-2 {
+      min-height: 85vh;
+      background: var(--midnight-plum);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 4rem 6rem;
+    }
+    .hero-2-photo {
+      position: absolute; inset: 0;
+      background: url('/images/Hero-Banner-Lindsay.jpg') center top / cover no-repeat;
+    }
+    .hero-2::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        rgba(45,31,45,0.75),
+        radial-gradient(ellipse at 50% 0%, rgba(104,40,96,0.5) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 100%, rgba(107,45,45,0.4) 0%, transparent 55%);
+      z-index: 1;
+    }
+    .hero-2-bg-word {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-family: var(--font-display); font-size: 28vw; font-weight: 300; line-height: 1;
+      color: rgba(237,230,216,0.04); white-space: nowrap; pointer-events: none; user-select: none;
+      z-index: 2;
+    }
+    .hero-2-content { position: relative; max-width: 680px; z-index: 3; }
+    .hero-2-eyebrow {
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--rose-gold); margin-bottom: 2rem;
+      display: flex; align-items: center; justify-content: center; gap: 1.5rem;
+    }
+    .hero-2-eyebrow::before, .hero-2-eyebrow::after {
+      content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold);
+    }
+    .hero-2-heading {
+      font-family: var(--font-display); font-size: clamp(3rem, 6vw, 5.8rem); font-weight: 300;
+      line-height: 1.0; color: var(--bone); margin-bottom: 1.75rem;
+    }
+    .hero-2-heading em { font-style: italic; color: var(--rose-gold); }
+    .hero-2-sub {
+      font-size: 1rem; font-weight: 300; color: rgba(237,230,216,0.75); line-height: 1.85;
+      max-width: 46ch; margin: 0 auto 2.5rem;
+    }
+    .hero-2-divider {
+      width: 3rem; height: 1px; background: var(--rose-gold); margin: 2.5rem auto;
+    }
+    .hero-2-tagline {
+      font-family: var(--font-display); font-size: 1.2rem; font-style: italic; font-weight: 300;
+      color: rgba(237,230,216,0.6);
+    }
+
+    /* ─────────────────────────────────────────────
+       OPTION 3 — Photo left, text right
+    ───────────────────────────────────────────── */
+    .hero-3 {
+      min-height: 90vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .hero-3-photo {
+      background: url('/images/Hero-Banner-Lindsay.jpg') center top / cover no-repeat;
+      position: relative;
+    }
+    .hero-3-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 70%, var(--charcoal-espresso) 100%);
+    }
+    .hero-3-content {
+      background: var(--charcoal-espresso);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 7rem 5rem 7rem 4.5rem;
+      position: relative;
+    }
+    .hero-3-content::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 100% 20%, rgba(104,40,96,0.2) 0%, transparent 55%),
+        radial-gradient(ellipse at 0% 80%, rgba(107,45,45,0.15) 0%, transparent 50%);
+    }
+    .hero-3-eyebrow {
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.75rem;
+      position: relative;
+    }
+    .hero-3-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+    .hero-3-heading {
+      font-family: var(--font-display); font-size: clamp(2.8rem, 4vw, 4.8rem); font-weight: 300;
+      line-height: 1.0; color: var(--bone); margin-bottom: 1.75rem; position: relative;
+    }
+    .hero-3-heading em { font-style: italic; color: var(--rose-gold); }
+    .hero-3-sub {
+      font-size: 1rem; font-weight: 300; color: rgba(237,230,216,0.78); line-height: 1.85;
+      max-width: 42ch; margin-bottom: 2.5rem; position: relative;
+    }
+    .hero-3-tagline {
+      font-family: var(--font-display); font-size: 1.05rem; font-style: italic; font-weight: 300;
+      color: var(--rose-gold); padding-left: 1.5rem; border-left: 2px solid var(--maroon);
+      line-height: 1.5; position: relative;
+    }
+    .hero-3-buttons { display: flex; gap: 1rem; margin-bottom: 2.5rem; position: relative; }
+
+    /* ─────────────────────────────────────────────
+       OPTION 4 — Oversized typographic header
+    ───────────────────────────────────────────── */
+    .hero-4 {
+      min-height: 85vh;
+      background: var(--bone);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 5rem 5rem;
+    }
+    .hero-4-bg-name {
+      position: absolute; bottom: -4rem; left: -0.5rem;
+      font-family: var(--font-display); font-size: clamp(10rem, 20vw, 20rem); font-weight: 300;
+      line-height: 1; color: rgba(42,31,26,0.05); white-space: nowrap;
+      pointer-events: none; user-select: none; letter-spacing: -0.02em;
+    }
+    .hero-4-photo-inset {
+      position: absolute; top: 5rem; right: 5rem;
+      width: 340px; aspect-ratio: 3/4;
+      background: url('/images/Hero-Banner-Lindsay.jpg') center top / cover no-repeat;
+      box-shadow: 0 2rem 5rem rgba(42,31,26,0.2);
+    }
+    .hero-4-content { position: relative; max-width: 700px; }
+    .hero-4-eyebrow {
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
+    }
+    .hero-4-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+    .hero-4-heading {
+      font-family: var(--font-display); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 300;
+      line-height: 1.0; color: var(--charcoal-espresso); margin-bottom: 1.75rem;
+    }
+    .hero-4-heading em { font-style: italic; color: var(--maroon); }
+    .hero-4-sub {
+      font-size: 1rem; font-weight: 300; color: var(--warm-taupe); line-height: 1.85;
+      max-width: 46ch; margin-bottom: 2.5rem;
+    }
+    .hero-4-buttons { display: flex; gap: 1rem; }
+    .btn-dark { background: var(--palatinate); color: var(--bone); }
+    .btn-dark:hover { background: var(--midnight-plum); }
+    .btn-outline-dark {
+      background: transparent; color: var(--charcoal-espresso);
+      border: 1px solid rgba(42,31,26,0.3);
+    }
+    .btn-outline-dark:hover { border-color: var(--maroon); color: var(--maroon); }
+
+    /* ─────────────────────────────────────────────
+       OPTION 5 — Asymmetric photo strip
+    ───────────────────────────────────────────── */
+    .hero-5 {
+      background: var(--midnight-plum);
+      position: relative; overflow: hidden;
+    }
+    .hero-5-photo-strip {
+      width: 100%; height: 42vh;
+      background: url('/images/Hero-Banner-Lindsay.jpg') center 20% / cover no-repeat;
+      position: relative;
+    }
+    .hero-5-photo-strip::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(45,31,45,0.1) 0%,
+        rgba(45,31,45,0.7) 100%
+      );
+    }
+    .hero-5-content {
+      padding: 4rem 5rem 6rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: end;
+      position: relative;
+    }
+    .hero-5-content::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(104,40,96,0.25) 0%, transparent 60%);
+    }
+    .hero-5-left { position: relative; }
+    .hero-5-eyebrow {
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .hero-5-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+    .hero-5-heading {
+      font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 5rem); font-weight: 300;
+      line-height: 1.0; color: var(--bone); margin-bottom: 1.5rem;
+    }
+    .hero-5-heading em { font-style: italic; color: var(--rose-gold); }
+    .hero-5-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-5-right { position: relative; display: flex; flex-direction: column; justify-content: flex-end; gap: 2rem; }
+    .hero-5-sub {
+      font-size: 1rem; font-weight: 300; color: rgba(237,230,216,0.78); line-height: 1.85;
+      max-width: 38ch;
+    }
+    .hero-5-tagline {
+      font-family: var(--font-display); font-size: 1.2rem; font-style: italic; font-weight: 300;
+      color: var(--rose-gold); padding-left: 1.5rem; border-left: 2px solid var(--maroon);
+      line-height: 1.5;
+    }
+
+    /* ── SPACER ── */
+    .proto-spacer { height: 3rem; background: #1a1a1a; }
+  </style>
+</head>
+<body>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <span class="toc-label">Hero Prototypes</span>
+    <div class="toc-divider"></div>
+    <a href="#opt1">1 · Full-Width Photo</a>
+    <a href="#opt2">2 · Centered Text</a>
+    <a href="#opt3">3 · Photo Left</a>
+    <a href="#opt4">4 · Typographic</a>
+    <a href="#opt5">5 · Photo Strip</a>
+  </nav>
+
+  <!-- ── OPTION 1 ── -->
+  <div id="opt1" class="proto-label">
+    <div class="proto-number">Option 01</div>
+    <div class="proto-title">Full-Width Photo Banner</div>
+    <div class="proto-desc">Your photo fills the entire hero. Text is overlaid at the bottom with a dark gradient. Editorial and immersive.</div>
+  </div>
+  <section class="hero-1">
+    <div class="hero-1-photo"></div>
+    <div class="hero-1-overlay"></div>
+    <div class="hero-1-content">
+      <div class="hero-1-left">
+        <div class="hero-1-eyebrow">San Francisco · Stockholm</div>
+        <h1 class="hero-1-heading">Community<br>leader.<br><em>Facilitator.</em></h1>
+        <p class="hero-1-sub">I bring people together through grounded presence, ceremonial facilitation, and co-created experiences that last.</p>
+        <a href="#" class="btn btn-primary">Work With Me</a>
+      </div>
+      <div class="hero-1-right">
+        <p class="hero-1-tagline">Soft presence.<br>Strong spaces.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="proto-spacer"></div>
+
+  <!-- ── OPTION 2 ── -->
+  <div id="opt2" class="proto-label">
+    <div class="proto-number">Option 02</div>
+    <div class="proto-title">Centered Text, No Split</div>
+    <div class="proto-desc">Clean single-column layout. Large display type centered on a deep plum background. Minimal and confident — no photo.</div>
+  </div>
+  <section class="hero-2">
+    <div class="hero-2-photo"></div>
+    <div class="hero-2-bg-word">About</div>
+    <div class="hero-2-content">
+      <div class="hero-2-eyebrow">Lindsay Balfour</div>
+      <h1 class="hero-2-heading">Present.<br>Purposeful.<br><em>In community.</em></h1>
+      <div class="hero-2-divider"></div>
+      <p class="hero-2-sub">Community leader and ceremonial facilitator based between San Francisco and Stockholm. I create the conditions for belonging.</p>
+      <div style="display:flex; gap:1rem; justify-content:center; margin-top: 2.5rem;">
+        <a href="#" class="btn btn-primary">Work With Me</a>
+        <a href="#" class="btn btn-ghost">See Gatherings</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="proto-spacer"></div>
+
+  <!-- ── OPTION 3 ── -->
+  <div id="opt3" class="proto-label">
+    <div class="proto-number">Option 03</div>
+    <div class="proto-title">Photo Left, Text Right</div>
+    <div class="proto-desc">Portrait on the left, intro text on the right on a dark background. Classic "meet me" layout — feels personal and direct.</div>
+  </div>
+  <section class="hero-3">
+    <div class="hero-3-photo"></div>
+    <div class="hero-3-content">
+      <div class="hero-3-eyebrow">About Lindsay</div>
+      <h1 class="hero-3-heading">Gathering<br>with <em>presence.</em></h1>
+      <p class="hero-3-sub">Community leader and ceremonial facilitator. I design and hold spaces where people can show up fully — and leave changed.</p>
+      <div class="hero-3-buttons">
+        <a href="#" class="btn btn-primary">Work With Me</a>
+        <a href="#" class="btn btn-ghost">See Gatherings</a>
+      </div>
+      <p class="hero-3-tagline">"I don't create for people.<br>I create with them."</p>
+    </div>
+  </section>
+
+  <div class="proto-spacer"></div>
+
+  <!-- ── OPTION 4 ── -->
+  <div id="opt4" class="proto-label">
+    <div class="proto-number">Option 04</div>
+    <div class="proto-title">Oversized Typographic Header</div>
+    <div class="proto-desc">Huge display text dominates the hero on a bone/light background. Small portrait inset top-right. Elegant and bold.</div>
+  </div>
+  <section class="hero-4">
+    <div class="hero-4-bg-name">Lindsay</div>
+    <div class="hero-4-photo-inset"></div>
+    <div class="hero-4-content">
+      <div class="hero-4-eyebrow">San Francisco · Stockholm</div>
+      <h1 class="hero-4-heading">Community<br>leader &<br><em>facilitator.</em></h1>
+      <p class="hero-4-sub">I create the conditions for belonging — through grounded presence, ceremonial facilitation, and co-created experiences.</p>
+      <div class="hero-4-buttons">
+        <a href="#" class="btn btn-dark">Work With Me</a>
+        <a href="#" class="btn btn-outline-dark">See Gatherings</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="proto-spacer"></div>
+
+  <!-- ── OPTION 5 ── -->
+  <div id="opt5" class="proto-label">
+    <div class="proto-number">Option 05</div>
+    <div class="proto-title">Asymmetric Photo Strip</div>
+    <div class="proto-desc">A wide landscape photo strip at the top, headline and body text in a two-column layout below. Structured and editorial.</div>
+  </div>
+  <section class="hero-5">
+    <div class="hero-5-photo-strip"></div>
+    <div class="hero-5-content">
+      <div class="hero-5-left">
+        <div class="hero-5-eyebrow">About Lindsay</div>
+        <h1 class="hero-5-heading">Creating<br>meaning<br><em>together.</em></h1>
+        <div class="hero-5-buttons">
+          <a href="#" class="btn btn-primary">Work With Me</a>
+          <a href="#" class="btn btn-ghost">See Gatherings</a>
+        </div>
+      </div>
+      <div class="hero-5-right">
+        <p class="hero-5-sub">Community leader and ceremonial facilitator based between San Francisco and Stockholm. I design spaces where people can show up fully.</p>
+        <p class="hero-5-tagline">"Soft presence.<br>Strong spaces."</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="proto-spacer"></div>
+
+</body>
+</html>
