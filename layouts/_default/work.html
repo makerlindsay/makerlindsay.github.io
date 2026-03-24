@@ -70,7 +70,8 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(158,136,120,0.2);
     }
-    .nav-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.05em; color: var(--charcoal-espresso); }
+    .nav-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.05em; color: var(--charcoal-espresso); display: flex; align-items: center; gap: 0.75rem; }
+    .nav-logo img { width: 46px; height: 46px; opacity: 0.85; flex-shrink: 0; }
     .nav-logo span { display: block; font-size: 0.6rem; font-family: var(--font-body); font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--warm-taupe); margin-top: 0.1rem; }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
     .nav-links a { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--charcoal-espresso); transition: color 0.2s; }
@@ -104,43 +105,30 @@
     /* ── PAGE HERO ── */
     .page-hero {
       min-height: 75vh;
-      background: var(--midnight-plum);
+      background:
+        radial-gradient(ellipse at 60% 40%, rgba(196,154,108,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(107,45,45,0.28) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 10%, rgba(104,40,96,0.2) 0%, transparent 50%),
+        linear-gradient(160deg, var(--warm-taupe) 0%, var(--clay-beige) 45%, var(--earthy-rose) 100%);
       display: flex; flex-direction: column; justify-content: flex-end;
       padding: 9rem 4rem 5rem;
       position: relative; overflow: hidden;
     }
-    .page-hero::before {
-      content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 15% 70%, rgba(107,45,45,0.4) 0%, transparent 55%),
-        radial-gradient(ellipse at 85% 20%, rgba(104,40,96,0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(196,154,108,0.08) 0%, transparent 65%);
-    }
-    .hero-mosaic {
-      position: absolute; inset: 0; display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      grid-template-rows: repeat(4, 1fr);
-      opacity: 0.12; pointer-events: none;
-    }
-    .mosaic-cell { border: 1px solid rgba(237,230,216,0.15); position: relative; overflow: hidden; }
-    .mosaic-cell.filled { background: rgba(196,154,108,0.2); }
-    .mosaic-cell.accent { background: rgba(107,45,45,0.3); }
-    .mosaic-cell.plum   { background: rgba(104,40,96,0.25); }
     .hero-inner { position: relative; max-width: 1200px; }
     .hero-eyebrow {
       font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+      color: var(--maroon); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
     }
-    .hero-eyebrow::before { content: ''; display: block; width: 2.5rem; height: 1px; background: var(--rose-gold); }
+    .hero-eyebrow::before { content: ''; display: block; width: 2.5rem; height: 1px; background: var(--maroon); }
     .page-hero-heading {
       font-family: var(--font-display);
       font-size: clamp(3rem, 6vw, 6rem);
-      font-weight: 300; line-height: 1.0; color: var(--bone); margin-bottom: 2rem;
+      font-weight: 300; line-height: 1.0; color: var(--midnight-plum); margin-bottom: 2rem;
     }
-    .page-hero-heading em { font-style: italic; color: var(--rose-gold); }
+    .page-hero-heading em { font-style: italic; color: var(--maroon); }
     .hero-meta { display: flex; gap: 4rem; flex-wrap: wrap; margin-bottom: 1rem; }
-    .hero-meta-number { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; color: var(--bone); line-height: 1; }
-    .hero-meta-label { font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(237,230,216,0.45); margin-top: 0.25rem; }
+    .hero-meta-number { font-family: var(--font-display); font-size: 2.5rem; font-weight: 300; color: var(--charcoal-espresso); line-height: 1; }
+    .hero-meta-label { font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(42,31,26,0.55); margin-top: 0.25rem; }
 
     /* ── INTRO BAND ── */
     .intro-band {
@@ -357,8 +345,8 @@
   <!-- NAV -->
   <nav>
     <a href="/" class="nav-logo">
-      Lindsay Balfour
-      <span>Community Leader · Facilitator</span>
+      <img src="/svg/gather.svg" alt="">
+      <div>Lindsay Balfour<span>Community Leader · Facilitator</span></div>
     </a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
@@ -382,12 +370,6 @@
 
   <!-- PAGE HERO -->
   <section id="main" class="page-hero">
-    <div class="hero-mosaic" aria-hidden="true">
-      <div class="mosaic-cell filled"></div><div class="mosaic-cell"></div><div class="mosaic-cell accent"></div><div class="mosaic-cell"></div><div class="mosaic-cell filled"></div><div class="mosaic-cell"></div>
-      <div class="mosaic-cell"></div><div class="mosaic-cell plum"></div><div class="mosaic-cell"></div><div class="mosaic-cell filled"></div><div class="mosaic-cell"></div><div class="mosaic-cell accent"></div>
-      <div class="mosaic-cell accent"></div><div class="mosaic-cell"></div><div class="mosaic-cell filled"></div><div class="mosaic-cell"></div><div class="mosaic-cell plum"></div><div class="mosaic-cell"></div>
-      <div class="mosaic-cell"></div><div class="mosaic-cell filled"></div><div class="mosaic-cell"></div><div class="mosaic-cell accent"></div><div class="mosaic-cell"></div><div class="mosaic-cell filled"></div>
-    </div>
     <div class="hero-inner">
       <div class="hero-eyebrow fade-up">Past Gatherings &amp; Work</div>
       <h1 class="page-hero-heading fade-up delay-1">
