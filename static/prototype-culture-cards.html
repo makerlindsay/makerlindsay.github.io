@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prototype — Culture Cards Reorder</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ── BRAND TOKENS ── */
+    :root {
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Jost', sans-serif;
+      --bone: #f2ebe0;
+      --warm-taupe: #9e8878;
+      --charcoal-espresso: #2c1f1a;
+      --rose-gold: #c49a6c;
+      --maroon: #6b2d2d;
+      --midnight-plum: #2d1f2e;
+      --palatinate: #4a1a44;
+      --palatinate-deep: #3b1438;
+      --dusty-plum: #5c3d5c;
+      --smoky-violet: #4a2c48;
+      --purple-shadow: #3d2640;
+      --lilac-mist: #c8b4d0;
+      --black-brown: #1a1008;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bone);
+      color: var(--charcoal-espresso);
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── PROTOTYPE BANNER ── */
+    .proto-banner {
+      background: var(--charcoal-espresso);
+      color: var(--bone);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .proto-banner-label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--rose-gold);
+    }
+    .proto-banner-note {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(237,230,216,0.75);
+    }
+    .proto-banner a {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rose-gold);
+      border-bottom: 1px solid currentColor;
+    }
+
+    /* ── ARC RATIONALE ── */
+    .arc-rationale {
+      background: var(--bone);
+      border-bottom: 1px solid rgba(158,136,120,0.2);
+      padding: 3rem 4rem;
+    }
+    .arc-rationale-inner { max-width: 1200px; margin: 0 auto; }
+    .arc-label {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--rose-gold);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .arc-label::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--rose-gold); }
+    .arc-heading {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 300;
+      color: var(--charcoal-espresso);
+      margin-bottom: 0.75rem;
+      line-height: 1.15;
+    }
+    .arc-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--warm-taupe);
+      line-height: 1.85;
+      max-width: 70ch;
+      margin-bottom: 2rem;
+    }
+    .arc-steps {
+      display: flex;
+      gap: 0;
+      border: 1px solid rgba(158,136,120,0.2);
+    }
+    .arc-step {
+      flex: 1;
+      padding: 1.25rem 1.5rem;
+      border-right: 1px solid rgba(158,136,120,0.15);
+      position: relative;
+    }
+    .arc-step:last-child { border-right: none; }
+    .arc-step-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: rgba(196,154,108,0.25);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .arc-step-place {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--charcoal-espresso);
+      margin-bottom: 0.25rem;
+    }
+    .arc-step-mode {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--rose-gold);
+    }
+    .arc-arrow {
+      position: absolute;
+      right: -0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7rem;
+      color: var(--rose-gold);
+      z-index: 1;
+      display: none;
+    }
+
+    /* ── SECTION ── */
+    .section { padding: 7rem 4rem; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--rose-gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .section-label::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rose-gold); }
+
+    /* ── BRIDGE (context wrapper) ── */
+    .bridge { background: var(--bone); }
+    .bridge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7rem; align-items: start; }
+    .bridge-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 3.8vw, 3.5rem);
+      font-weight: 300;
+      color: var(--charcoal-espresso);
+      margin-bottom: 2rem;
+      line-height: 1.05;
+    }
+    .bridge-heading em { font-style: italic; color: var(--maroon); }
+    .bridge-body { font-size: 1rem; font-weight: 300; line-height: 1.9; color: var(--warm-taupe); margin-bottom: 1.5rem; max-width: 50ch; }
+    .bridge-body strong { font-weight: 500; color: var(--charcoal-espresso); }
+    .bridge-pull { margin: 2.5rem 0; padding: 2rem 2.5rem; border-left: 3px solid var(--rose-gold); background: rgba(196,154,108,0.07); }
+    .bridge-pull p { font-family: var(--font-display); font-size: 1.3rem; font-weight: 300; font-style: italic; color: var(--charcoal-espresso); line-height: 1.5; }
+
+    /* ── CITY CARDS ── */
+    .city-cards-intro { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; font-weight: 300; color: var(--warm-taupe); margin-bottom: 1.5rem; line-height: 1.5; }
+    .city-cards { display: flex; flex-direction: column; gap: 1px; background: rgba(104,40,96,0.15); }
+    .city-card { padding: 2.25rem 2.75rem; position: relative; overflow: hidden; transition: opacity 0.3s; display: grid; grid-template-columns: 180px 1fr; gap: 2.25rem; align-items: center; }
+    .city-card:hover { opacity: 0.92; }
+    .city-card.img-right { grid-template-columns: 1fr 180px; }
+    .city-card.img-right .city-card-img-placeholder { order: 2; }
+    .city-card.img-right .city-card-content { order: 1; }
+    .city-card-img-placeholder { width: 180px; aspect-ratio: 3 / 4; background: rgba(255,255,255,0.06); border: 1px dashed rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; flex-shrink: 0; }
+    .city-card-img-placeholder span { font-size: 0.55rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
+    .city-card-content { position: relative; z-index: 1; }
+
+    /* card backgrounds */
+    .city-mi { background: var(--purple-shadow); }
+    .city-mi::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 90% 50%, rgba(104,40,96,0.35) 0%, transparent 55%); }
+    .city-sk { background: var(--midnight-plum); }
+    .city-sk::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(107,45,45,0.3) 0%, transparent 60%); }
+    .city-pr { background: var(--palatinate-deep); }
+    .city-pr::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 80%, rgba(104,40,96,0.5) 0%, transparent 55%); }
+    .city-sf { background: var(--smoky-violet); }
+    .city-sf::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 75% 25%, rgba(74,26,68,0.4) 0%, transparent 55%); }
+    .city-sthlm { background: var(--maroon); }
+    .city-sthlm::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 25% 75%, rgba(107,45,45,0.4) 0%, transparent 55%); }
+
+    .city-card-label { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-gold); margin-bottom: 0.4rem; }
+    .city-card-name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 300; color: var(--bone); margin-bottom: 0.4rem; line-height: 1.05; }
+    .city-card-desc { font-size: 0.9rem; font-weight: 300; color: rgba(237,230,216,0.85); line-height: 1.7; }
+    .city-card-concept { font-family: var(--font-display); font-size: 0.88rem; font-style: italic; font-weight: 300; color: var(--rose-gold); margin-top: 0.6rem; }
+
+    /* arc mode label — new addition */
+    .city-card-arc {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .city-card-arc::before {
+      content: '';
+      display: block;
+      width: 1rem;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .arc-rationale { padding: 2rem; }
+      .arc-steps { flex-direction: column; }
+      .arc-step { border-right: none; border-bottom: 1px solid rgba(158,136,120,0.15); }
+      .arc-step:last-child { border-bottom: none; }
+      .section { padding: 4rem 2rem; }
+      .bridge-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .city-card, .city-card.img-right { grid-template-columns: 1fr; }
+      .city-card-img-placeholder { width: 100%; aspect-ratio: 16 / 9 !important; }
+      .city-card.img-right .city-card-img-placeholder { order: 0; }
+      .city-card.img-right .city-card-content { order: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROTOTYPE BANNER -->
+  <div class="proto-banner">
+    <span class="proto-banner-label">Prototype</span>
+    <span class="proto-banner-note">Culture cards — narrative arc reorder. <a href="/about">View current About page →</a></span>
+  </div>
+
+  <!-- ARC RATIONALE -->
+  <div class="arc-rationale">
+    <div class="arc-rationale-inner">
+      <div class="arc-label">Narrative arc proposal</div>
+      <h2 class="arc-heading">From inheritance to practice</h2>
+      <p class="arc-body">
+        The current order is roughly chronological by place of residence. This reorder moves from <strong>inside out</strong> — beginning with what you were <em>born carrying</em> (Puerto Rican heritage), then physical ground (Michigan), then how the world opened you (South Korea), then where you found your craft (San Francisco), and finally where the work deepened into its present form (Stockholm). The arc reads as a story of becoming, not a timeline of locations.
+      </p>
+      <div class="arc-steps">
+        <div class="arc-step">
+          <div class="arc-step-num">01</div>
+          <div class="arc-step-place">Puerto Rico</div>
+          <div class="arc-step-mode">Born with</div>
+        </div>
+        <div class="arc-step">
+          <div class="arc-step-num">02</div>
+          <div class="arc-step-place">Michigan</div>
+          <div class="arc-step-mode">Rooted in</div>
+        </div>
+        <div class="arc-step">
+          <div class="arc-step-num">03</div>
+          <div class="arc-step-place">South Korea</div>
+          <div class="arc-step-mode">Opened by</div>
+        </div>
+        <div class="arc-step">
+          <div class="arc-step-num">04</div>
+          <div class="arc-step-place">San Francisco</div>
+          <div class="arc-step-mode">Made by</div>
+        </div>
+        <div class="arc-step">
+          <div class="arc-step-num">05</div>
+          <div class="arc-step-place">Stockholm</div>
+          <div class="arc-step-mode">Deepened in</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: CULTURE CARDS (reordered) -->
+  <section class="section bridge">
+    <div class="section-inner">
+      <div class="bridge-grid">
+
+        <!-- LEFT: context copy (unchanged) -->
+        <div>
+          <div class="section-label">Some of what shaped me</div>
+          <h2 class="bridge-heading">From product<br>development to<br><em>space holding</em></h2>
+          <p class="bridge-body">
+            Lindsay's professional identity is rooted in her background as a creative educator — an approach that transforms leadership from a top-down management style into a participatory art form.
+          </p>
+          <p class="bridge-body">
+            Her foundation was built in the heart of the <strong>"Maker" movement</strong>. As a Business Advisor and Product Developer at Chibitronics, she navigated the complexities of the customer journey — bridging the gap between vision and execution, spearheading the restructuring of the digital buying experience, and leading cross-functional teams to build a comprehensive Educational Resource Hub.
+          </p>
+          <div class="bridge-pull">
+            <p>By translating user needs into actionable user stories, she learned how to create containers that are both functional and inspiring.</p>
+          </div>
+          <p class="bridge-body">
+            With a career spanning over a decade, she bridges the gap between technical infrastructure and human connection — helping groups move from <strong>fragmentation to coherence</strong>.
+          </p>
+        </div>
+
+        <!-- RIGHT: REORDERED CARDS -->
+        <div>
+          <p class="city-cards-intro">"Where are you from?" Honestly, it depends on the day.</p>
+          <div class="city-cards">
+
+            <!-- 01 — Puerto Rico (was 3rd) -->
+            <div class="city-card city-pr">
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+              <div class="city-card-content">
+                <div class="city-card-arc">Born with</div>
+                <div class="city-card-label">Puerto Rico · Warmth</div>
+                <div class="city-card-name">A way of welcoming</div>
+                <p class="city-card-desc">Half Puerto Rican, I grew up with a particular kind of hospitality in my bones — the kind that doesn't just make space for people, but genuinely wants them there. That's not something I learned. It's something I inherited.</p>
+                <div class="city-card-concept">Welcome · Generosity · Genuine care</div>
+              </div>
+            </div>
+
+            <!-- 02 — Michigan (was 1st) -->
+            <div class="city-card city-mi img-right">
+              <div class="city-card-content">
+                <div class="city-card-arc">Rooted in</div>
+                <div class="city-card-label">Michigan · Roots</div>
+                <div class="city-card-name">Where I started</div>
+                <p class="city-card-desc">Born in Michigan — where big skies, changing seasons, and a certain Midwestern groundedness shaped my earliest sense of self. The place that gave me roots before the world gave me wings.</p>
+                <div class="city-card-concept">Groundedness · Simplicity · Home base</div>
+              </div>
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+            </div>
+
+            <!-- 03 — South Korea (was 2nd) -->
+            <div class="city-card city-sk">
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+              <div class="city-card-content">
+                <div class="city-card-arc">Opened by</div>
+                <div class="city-card-label">South Korea · Curiosity</div>
+                <div class="city-card-name">Learning to belong</div>
+                <p class="city-card-desc">Growing up in Korea for seven and a half years gave me a genuine love for many ways of being in the world — different rhythms, rituals, foods, and ways of connecting. It's where I first learned that the world is wonderfully wide, and that there's real joy in being inside a culture that isn't the one you were born into.</p>
+                <div class="city-card-concept">Wonder · Openness · A love for the world</div>
+              </div>
+            </div>
+
+            <!-- 04 — San Francisco (unchanged) -->
+            <div class="city-card city-sf img-right">
+              <div class="city-card-content">
+                <div class="city-card-arc">Made by</div>
+                <div class="city-card-label">San Francisco · Making</div>
+                <div class="city-card-name">Hands in everything</div>
+                <p class="city-card-desc">The Maker movement gave me a language for what I'd always believed — that creativity belongs to everyone, and that the act of making something with your hands changes how you think about what's possible.</p>
+                <div class="city-card-concept">Making · Empowerment · Creative agency</div>
+              </div>
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+            </div>
+
+            <!-- 05 — Stockholm (unchanged) -->
+            <div class="city-card city-sthlm">
+              <div class="city-card-img-placeholder"><span>Add photo</span></div>
+              <div class="city-card-content">
+                <div class="city-card-arc">Deepened in</div>
+                <div class="city-card-label">Stockholm · Depth</div>
+                <div class="city-card-name">Slowing down to listen</div>
+                <p class="city-card-desc">Living and working in Stockholm deepened my practice in ways I didn't expect — a slower pace, longer trust, and a culture that takes collective well-being seriously. It changed how I hold space.</p>
+                <div class="city-card-concept">Presence · Trust · Long-form community</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

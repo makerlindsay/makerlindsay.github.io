@@ -19,6 +19,7 @@
   {{ with $avatar.Resize "512x512" }}
   <meta name="og:image" content="{{ .Permalink }}" />
   {{ end }}
+  <link rel="icon" type="image/svg+xml" href="/svg/gather.svg" />
   {{ with $avatar.Resize "32x32" }}
   <link rel="icon" sizes="{{ .Width }}x{{ .Height }}" type="image/png" href="{{ .RelPermalink }}" />
   {{ end }}
@@ -559,17 +560,17 @@
     .pillar:hover {
       background: rgba(237,230,216,0.04);
     }
-    .pillar-number {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      font-weight: 300;
-      color: rgba(196,154,108,0.2);
-      line-height: 1;
+    .pillar-icon {
+      width: 2.5rem;
+      height: 2.5rem;
       margin-bottom: 1.5rem;
-      transition: color 0.4s;
+      filter: brightness(0) invert(1) sepia(0.3);
+      opacity: 0.6;
+      transition: opacity 0.4s, filter 0.4s;
     }
-    .pillar:hover .pillar-number {
-      color: rgba(196,154,108,0.5);
+    .pillar:hover .pillar-icon {
+      opacity: 1;
+      filter: brightness(0) invert(1) sepia(0.5) saturate(1.5) hue-rotate(330deg);
     }
     .pillar-title {
       font-family: var(--font-display);
@@ -1011,7 +1012,7 @@
       <li><a href="/">Home</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/work">Work</a></li>
-      <li><a href="#contact" class="nav-cta">Work With Me</a></li>
+      <li><a href="#contact" class="nav-cta">Let's Co-Create</a></li>
     </ul>
     <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
   </nav>
@@ -1094,7 +1095,7 @@
       <div class="pillars-grid">
         {{ range $h.pillars.items }}
         <div class="pillar">
-          <div class="pillar-number">{{ .number }}</div>
+          <img class="pillar-icon" src="/svg/{{ .icon }}" alt="" aria-hidden="true">
           <div class="pillar-line"></div>
           <h3 class="pillar-title">{{ .title }}</h3>
           <div class="pillar-subtitle">{{ .subtitle }}</div>

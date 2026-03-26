@@ -35,7 +35,9 @@
     <meta name="og:image" content="{{ .Permalink }}" />
     {{ end }} {{ if .Params.noindex }}
     <meta name="robots" content="noindex" />
-    {{ end }} {{ with $avatar.Resize "32x32" }}
+    {{ end }}
+    <link rel="icon" type="image/svg+xml" href="/svg/gather.svg" />
+    {{ with $avatar.Resize "32x32" }}
     <link
       rel="icon"
       sizes="{{ .Width }}x{{ .Height }}"

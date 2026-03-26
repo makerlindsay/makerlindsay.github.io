@@ -16,6 +16,7 @@
   {{ with $avatar.Resize "512x512" }}
   <meta name="og:image" content="{{ .Permalink }}" />
   {{ end }}
+  <link rel="icon" type="image/svg+xml" href="/svg/gather.svg" />
   {{ with $avatar.Resize "32x32" }}
   <link rel="icon" sizes="{{ .Width }}x{{ .Height }}" type="image/png" href="{{ .RelPermalink }}" />
   {{ end }}
@@ -352,7 +353,7 @@
       <li><a href="/">Home</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/work" class="active">Work</a></li>
-      <li><a href="/#contact" class="nav-cta">Work With Me</a></li>
+      <li><a href="/#contact" class="nav-cta">Let's Co-Create</a></li>
     </ul>
     <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
   </nav>
@@ -699,7 +700,7 @@
           <p class="roles-body">
             Across all gatherings and experiences, Lindsay brings the same qualities — adapting her role to what the group needs, from setting the tone to holding the emotional field to guiding a co-creative process.
           </p>
-          <a href="/#contact" class="btn btn-ghost">Work With Me</a>
+          <a href="/#contact" class="btn btn-ghost">Let's Co-Create</a>
         </div>
         <div class="roles-right">
           <div class="role-card">
