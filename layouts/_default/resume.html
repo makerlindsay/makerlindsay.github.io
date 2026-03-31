@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    {{- with resources.Get "scss/resume.scss" | toCSS | postCSS | fingerprint
+    "sha512" -}}
+    <link
+      rel="stylesheet"
+      href="{{ .RelPermalink }}"
+      integrity="{{ .Data.Integrity }}"
+    />
+    {{- end -}}
+  </head>
+  <body>
+    <section class="page">
+      <div class="container">
+        <aside>
+          <h1>Lindsay<br />Balfour</h1>
+          <section id="summary">
+            <p>
+              Community and growth leader with 7+ years scaling educator
+              ecosystems at a SaaS startup — from early hire through investment
+              funding and full platform launch. Built ambassador programs
+              spanning 6+ countries, grew a global teacher community of 600+,
+              and owned content and community strategy through a
+              product-to-SaaS transition. Experienced in structured community
+              programs that drive user activation, retention, and organic
+              reach. Stockholm-based with deep roots in the maker and builder
+              community, and a passion for co-creation and collaborative
+              making.
+            </p>
+          </section>
+          <section id="social">
+            <ul>
+              <li class="h-stack">
+                <img src="/svg/mail.svg" width="14" height="14" alt="" />
+                <a href="mailto:lindsay.m.balfour@gmail.com">lindsay.m.balfour@gmail.com</a>
+              </li>
+              <li class="h-stack">
+                <img src="/svg/earth.svg" width="14" height="14" alt="" />
+                <a href="https://lindsaybalfour.com">lindsaybalfour.com</a>
+              </li>
+              <li class="h-stack">
+                <img src="/svg/linkedin.svg" width="14" height="14" alt="" />
+                <a href="https://linkedin.com/in/lbalfour">
+                  linkedin.com/in/lbalfour
+                </a>
+              </li>
+              <li class="h-stack">
+                <img src="/svg/map-pin.svg" width="14" height="14" alt="" />
+                Stockholm, Sweden
+              </li>
+            </ul>
+          </section>
+          <section id="additional-skills">
+            <h2>Skills</h2>
+
+            <h3>Community & Growth</h3>
+            <ul>
+              <li>Ambassador &amp; Champions Programs</li>
+              <li>Community-Led Growth</li>
+              <li>User Activation &amp; Retention</li>
+              <li>Onboarding Experience Design</li>
+              <li>Event &amp; Workshop Facilitation</li>
+              <li>International Market Expansion</li>
+            </ul>
+
+            <h3>Community Platforms</h3>
+            <ul>
+              <li>Slack, Discord, Facebook Groups</li>
+            </ul>
+
+            <h3>Analytics & CRM</h3>
+            <ul>
+              <li>Plausible, Hotjar</li>
+              <li>HubSpot</li>
+            </ul>
+
+            <h3>Content & Creative</h3>
+            <ul>
+              <li>Content Strategy &amp; Editorial Direction</li>
+              <li>Creative Direction</li>
+              <li>Video Production</li>
+              <li>Adobe Creative Suite</li>
+              <li>Figma</li>
+            </ul>
+
+            <h3>Business</h3>
+            <ul>
+              <li>Strategic Partnerships</li>
+              <li>Customer Success Journey Design</li>
+              <li>GitHub, GitLab</li>
+            </ul>
+
+          </section>
+        </aside>
+        <main>
+          <section>
+            <h2>Work Experience</h2>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Business Advisor &amp; Content Creator</h3>
+                  <p class="organization">
+                    <a href="https://chibitronics.com">Chibitronics</a>, Remote · Contract
+                  </p>
+                </div>
+                <p class="time-period">Mar 2025—Present</p>
+              </header>
+              <ul>
+                <li>
+                  Led brand refresh initiative as external advisor, aligning
+                  creative direction with company growth strategy.
+                </li>
+                <li>
+                  Oversaw redesign and launch of the Chibitronics website,
+                  improving user experience and product navigation for
+                  educators, makers, and crafters.
+                </li>
+                <li>
+                  Designed customer success journey to support a new product
+                  lineup launch, streamlining onboarding across educator,
+                  maker, and crafter audiences.
+                </li>
+                <li>
+                  Co-created new products and supporting content that expanded
+                  the Chibitronics paper circuits system, enabling customers to
+                  integrate electronics into hands-on creative projects.
+                </li>
+              </ul>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Head of Education</h3>
+                  <p class="organization">
+                    <a href="https://strawbees.com">Strawbees</a>, Remote
+                  </p>
+                </div>
+                <p class="time-period">Feb 2019—Feb 2024</p>
+              </header>
+              <ul>
+                <li>
+                  Promoted from within as Strawbees transitioned from a
+                  physical product company to a subscription SaaS platform
+                  backed by investment funding — took ownership of the
+                  strategic vision for education, leading content, community,
+                  and creative direction across the platform as the company
+                  scaled.
+                </li>
+                <li>
+                  Partnered closely with the Head of Design to align creative
+                  direction with educational strategy, ensuring platform content
+                  and media were both pedagogically sound and visually
+                  compelling across all formats.
+                </li>
+                <li>
+                  Scaled global Ambassador program across 3 cohorts of 15
+                  educators representing 6+ countries including the US, India,
+                  Singapore, Nigeria, UAE, and Sweden — ambassadors ran local
+                  events, attended conferences on behalf of Strawbees, and
+                  produced community content that extended platform reach
+                  organically.
+                </li>
+                <li>
+                  Managed a team of contracted educators to create localized
+                  lesson plans and media for US market expansion, directing
+                  briefs for photographers and designers to maintain consistent
+                  platform quality.
+                </li>
+                <li>
+                  Expanded platform into 3–4 international markets, partnering
+                  with the United Nations Information Centers and the Swedish
+                  Institute to localize curriculum and support institutional
+                  adoption.
+                </li>
+                <li>
+                  Co-led product development partnerships with micro:bit
+                  Educational Foundation, Sam Labs, Marusys Co., Saturday Kids
+                  (Singapore), and Arkki International (Finland), managing
+                  co-created product launches and supporting educational content.
+                </li>
+                <li>
+                  Represented Strawbees and facilitated workshops at
+                  international edtech and maker conferences including ISTE,
+                  BETT (UK), SETT (Sweden), and Maker Faire.
+                </li>
+              </ul>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Content and Community Manager</h3>
+                  <p class="organization">
+                    <a href="https://strawbees.com">Strawbees</a>, Gothenburg
+                  </p>
+                </div>
+                <p class="time-period">Feb 2017—Jan 2019</p>
+              </header>
+              <ul>
+                <li>
+                  Joined Strawbees as an early hire during the grassroots
+                  stage, building the educational content and community
+                  function from zero — became the internal go-to person for
+                  content strategy, community engagement, and creative
+                  production, earning promotion to Head of Education.
+                </li>
+                <li>
+                  Built and managed a Facebook educator community of 629
+                  teachers globally, establishing it as the primary engagement
+                  and support channel for the Strawbees user base.
+                </li>
+                <li>
+                  Launched the initial Ambassador program, creating the
+                  framework for educator-led community growth that later scaled
+                  across 6+ countries.
+                </li>
+                <li>
+                  Authored and edited 100+ platform resources including
+                  step-by-step project guides, video tutorials, lesson plans,
+                  and printed kit guidebooks — visual, hands-on content drove
+                  the highest platform session times.
+                </li>
+              </ul>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Educator, Innovation and Tech Specialist</h3>
+                  <p class="organization">
+                    <a href="https://creativity.org/"
+                      >Children's Creativity Museum</a
+                    >, San Francisco
+                  </p>
+                </div>
+                <p class="time-period">Jul 2014—May 2017</p>
+              </header>
+              <ul>
+                <li>
+                  Serving as the educational technology expert on the team
+                  taking the lead in developing the curriculum and facilitation
+                  guides to train interns and staff to facilitate all 1 and 2
+                  hour Coding field trips for school groups.
+                </li>
+                <li>
+                  Lead additional 1 and 2 hour field trips such as creating
+                  stopmotion animations, incorporating Garageband for sound
+                  effects, and building a prototype to solve for a design
+                  challenge.
+                </li>
+                <li>
+                  Lead weekly professional development sessions and training for
+                  Education Interns and Maker Corps Members to maintain exhibit
+                  spaces and facilitate experiences to school groups and general
+                  admission while embodying the museum's mission and vision.
+                </li>
+                <li>
+                  As the Innovation Specialist networked and partnered with
+                  makers, educational technology startups, artists, and
+                  educators to design and facilitate a workshop series each
+                  month — representing the museum at conferences including
+                  TECA and Maker Faire.
+                </li>
+                <li>
+                  Ran the InnovatED weekend workshops with unique challenges to
+                  make with educational technologies such as the MaKey MaKey for
+                  children to creatively express themselves with technology.
+                </li>
+              </ul>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Maker Corps Mentor</h3>
+                  <p class="organization">
+                    Maker Education Initiative, San Francisco
+                  </p>
+                </div>
+                <p class="time-period">Sep 2013–Apr 2017</p>
+              </header>
+              <ul>
+                <li>
+                  Serving as an inspiration for incoming Maker Corps Members
+                  through providing resources, project ideas, documentation
+                  advice, and sharing experiences with students. Working on
+                  sharing documentation and research with educators for
+                  inspiring making in their own space.
+                </li>
+                <li>
+                  Connected with other educators and makers as Maker Corps
+                  representative of the Maker Education Initiative at public
+                  events, such as Maker Faire and the Making Possibilities
+                  Workshop, to share stories and reflections to encourage
+                  educators to promote making in the classroom, library,
+                  museums, and other spaces.
+                </li>
+              </ul>
+            </article>
+          </section>
+        </main>
+      </div>
+    </section>
+    <section class="page">
+      <div class="container">
+        <aside>
+          <section>
+            <h2>Projects & Accomplishments</h2>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Published Works</h3>
+                  <p class="organization">Constructing Modern Knowledge Press</p>
+                </div>
+              </header>
+              <ul>
+                <li>
+                  <a href="https://www.amazon.com/dp/1955604061">The Invent to Learn Guide to the micro:bit</a>
+                  (2023) — layout design and custom illustrations, incorporating
+                  original watercolor paintings by the authors.
+                </li>
+                <li>
+                  <a href="https://www.amazon.com/gp/product/0999477684/">Scrappy Circuits</a>
+                  (2021) — full illustration and typesetting.
+                </li>
+                <li>
+                  <a href="https://www.amazon.com/dp/0997554304/">Making Science: Reimagining STEM Education in Middle School and Beyond</a>
+                  (2016) — layout design and illustrations.
+                </li>
+              </ul>
+            </article>
+          </section>
+          <section id="education">
+            <h2>Education</h2>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Bachelor of Fine Arts</h3>
+                  <p class="organization">University of Michigan</p>
+                  <p class="time-period">2008—2012</p>
+                </div>
+              </header>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Python Bootcamp</h3>
+                  <p class="organization">Hackbright Academy</p>
+                  <p class="time-period">2016</p>
+                </div>
+              </header>
+            </article>
+            <article class="position">
+              <header>
+                <div>
+                  <h3>Bachelor of Fine Arts</h3>
+                  <p class="organization">Studio Art Center International</p>
+                  <p class="time-period">2010</p>
+                </div>
+              </header>
+            </article>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </body>
+</html>

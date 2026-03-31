@@ -4,8 +4,8 @@
   --space-sm: 1rem;
   --space-xs: 0.5rem;
 
-  --primary-color: rgb(85, 190, 240);
-  --secondary-color: rgb(255, 45, 85);
+  --primary-color: #6B2D2D;
+  --secondary-color: #6E4E6E;
 }
 @page {
   margin: 0;
@@ -42,14 +42,11 @@ body {
 
 .page {
   margin: 0;
-  overflow: hidden;
   position: relative;
   box-sizing: border-box;
-  page-break-after: always;
 
   // A4
   width: 210mm;
-  height: 297mm;
   padding: 10mm;
 }
 
@@ -64,6 +61,8 @@ body {
   .page {
     background: white;
     margin: 5mm auto;
+    height: 297mm;
+    overflow: hidden;
     box-shadow:
       rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
       rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
@@ -243,5 +242,23 @@ a {
     &:hover {
       text-decoration-thickness: 2px;
     }
+  }
+}
+
+@media print {
+  .page {
+    page-break-after: always;
+
+    &:last-child {
+      page-break-after: avoid;
+    }
+  }
+
+  .position {
+    break-inside: avoid;
+  }
+
+  .container {
+    break-inside: avoid;
   }
 }
