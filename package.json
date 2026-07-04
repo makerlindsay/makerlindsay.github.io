@@ -1,10 +1,14 @@
 {
+  "scripts": {
+    "pdf": "node scripts/generate-pdf.js"
+  },
   "dependencies": {
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.28",
     "postcss-cli": "^10.1.0"
   },
   "devDependencies": {
+    "playwright": "^1.61.1",
     "prettier": "^3.2.5",
     "prettier-plugin-go-template": "^0.0.15"
   }
