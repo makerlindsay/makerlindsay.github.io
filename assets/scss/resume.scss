@@ -282,7 +282,7 @@ a {
   color: inherit;
 
   &[href]::after {
-    content: '\2197';
+    content: '↗';
     font-size: 0.65em;
     color: #9E8878;
     margin-left: 0.15em;

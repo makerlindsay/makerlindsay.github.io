@@ -36,8 +36,7 @@ async function findUrl() {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
-  // Use print media for clean output (no background pattern, white page only)
-  await page.emulateMedia({ media: 'print' });
+  // page.pdf() uses print CSS automatically — no need to emulateMedia
   await page.goto(url, { waitUntil: 'networkidle' });
 
   // PDF
@@ -49,10 +48,10 @@ async function findUrl() {
   });
   console.log(`PDF saved: ${pdfOut}`);
 
-  // JPG — switch back to screen for screenshot, set white bg, clip to page size
+  // JPG — use screen media for screenshot
   await page.emulateMedia({ media: 'screen' });
   await page.reload({ waitUntil: 'networkidle' });
-  await page.setViewportSize({ width: 794, height: 2245 }); // 210mm × 297mm × 2 pages @96dpi
+  await page.setViewportSize({ width: 794, height: 2245 });
   await page.screenshot({
     path: jpgOut,
     fullPage: true,
