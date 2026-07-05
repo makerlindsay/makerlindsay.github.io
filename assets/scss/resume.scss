@@ -44,8 +44,6 @@ body {
   margin: 0;
   position: relative;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
 
   // A4
   width: 210mm;
@@ -82,7 +80,6 @@ body {
   display: grid;
   grid-template-columns: 3fr 5fr;
   gap: var(--space-lg);
-  flex: 1;
 
   > aside {
     background-color: #EAE0D5;
@@ -310,5 +307,6 @@ a {
 
   .container {
     break-inside: avoid;
+    min-height: calc(297mm - 20mm);
   }
 }
