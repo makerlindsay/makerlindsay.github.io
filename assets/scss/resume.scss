@@ -283,16 +283,12 @@ a {
 
   &[href]::after {
     content: '↗';
-    font-size: 0.65em;
-    color: #9E8878;
-    margin-left: 0.15em;
+    font-size: 0.75em;
+    color: #6B2D2D;
+    margin-left: 0.2em;
     vertical-align: super;
     line-height: 1;
   }
-}
-
-#social a::after {
-  display: none;
 }
 
 @media screen {
