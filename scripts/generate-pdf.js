@@ -10,8 +10,13 @@ const path = require('path');
 
 const slug = process.argv[2] || 'resume-pm';
 const staticDir = path.join(__dirname, '../static');
-const pdfOut = path.join(staticDir, 'lindsay-balfour-resume.pdf');
-const jpgOut = path.join(staticDir, 'lindsay-balfour-resume.jpg');
+const outBase =
+  process.argv[3] ||
+  (slug === 'resume-pm'
+    ? 'lindsay-balfour-resume'
+    : `lindsay-balfour-resume-${slug.replace(/^resume-/, '')}`);
+const pdfOut = path.join(staticDir, `${outBase}.pdf`);
+const jpgOut = path.join(staticDir, `${outBase}.jpg`);
 
 // Try both common dev server ports
 const ports = [1313, 1314];

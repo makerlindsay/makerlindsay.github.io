@@ -68,6 +68,10 @@ body {
       rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   }
 
+  .container {
+    min-height: calc(297mm - 20mm);
+  }
+
   h1 {
     color: var(--primary-color);
   }
@@ -157,9 +161,10 @@ section {
   }
 }
 
-#additional-skills {
+#additional-skills,
+#additional-skills-continued {
   ul {
-    font-size: 0.8rem;
+    font-size: 1rem;
     line-height: 1.3;
 
     li {
@@ -254,7 +259,18 @@ h2 {
 }
 
 .pub-note {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
+}
+
+#published-content {
+  ul {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .position {
+    margin-bottom: var(--space-sm);
+  }
 }
 
 .organization {
