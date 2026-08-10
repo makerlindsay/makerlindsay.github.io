@@ -85,6 +85,10 @@ body {
   grid-template-columns: 3fr 5fr;
   gap: var(--space-lg);
 
+  &.container--full {
+    grid-template-columns: 1fr;
+  }
+
   > aside {
     background-color: #EAE0D5;
     margin: -10mm 0 -10mm -10mm;
