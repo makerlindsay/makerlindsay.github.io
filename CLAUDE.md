@@ -31,7 +31,7 @@ Hugo static site for `lindsaybalfour.com`. Content lives in `/content/` as Markd
 
 **Asset pipeline:** Hugo Pipes compiles SCSS, fingerprints assets for cache busting. Static files in `/static/` are copied as-is. PostCSS/autoprefixer runs via `postcss.config.js`.
 
-**Deployment:** GitHub Actions (`.github/workflows/hugo.yml`) deploys to GitHub Pages on pushes to `main`. Hugo version pinned to `0.124.1`. GitLab CI (`.gitlab-ci.yml`) provides a secondary deployment to GitLab Pages.
+**Deployment:** GitHub Actions (`.github/workflows/hugo.yml`) deploys to GitHub Pages on pushes to `main`. Hugo version pinned to `0.157.0`.
 
 ## Design Tokens
 
