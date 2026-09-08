@@ -361,7 +361,9 @@
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
       <li><a href="/about" class="active">About</a></li>
+      {{ if eq hugo.Environment "staging" }}
       <li><a href="/work">Work</a></li>
+      {{ end }}
       <li><a href="/#contact" class="nav-cta">Let's Co-Create</a></li>
     </ul>
     <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
@@ -783,7 +785,9 @@
       <li><a href="/">Home</a></li>
       <li><a href="#">Offerings</a></li>
       <li><a href="/about">About</a></li>
+      {{ if eq hugo.Environment "staging" }}
       <li><a href="/work">Work</a></li>
+      {{ end }}
       <li><a href="https://linkedin.com/in/{{ .Site.Params.linkedin }}">LinkedIn</a></li>
     </ul>
     <p class="footer-copy">&copy; {{ now.Format "2006" }} Lindsay Balfour. All rights reserved.</p>
