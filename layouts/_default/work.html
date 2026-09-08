@@ -352,9 +352,6 @@
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
       <li><a href="/about">About</a></li>
-      {{ if eq hugo.Environment "staging" }}
-      <li><a href="/work" class="active">Work</a></li>
-      {{ end }}
       <li><a href="/#contact" class="nav-cta">Let's Co-Create</a></li>
     </ul>
     <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
@@ -821,9 +818,6 @@
     <ul class="footer-links">
       <li><a href="/">Home</a></li>
       <li><a href="/about">About</a></li>
-      {{ if eq hugo.Environment "staging" }}
-      <li><a href="/work">Work</a></li>
-      {{ end }}
       <li><a href="/#contact">Contact</a></li>
     </ul>
     <div class="footer-copy">&copy; {{ now.Year }} Lindsay Balfour</div>
