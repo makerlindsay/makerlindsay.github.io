@@ -1,0 +1,27 @@
+# Production-only settings (GitHub Actions builds with HUGO_ENVIRONMENT=production).
+# `hugo server` runs in development, so everything below still works locally.
+
+# No tag or category listing pages on the live site.
+disableKinds = ["taxonomy", "term"]
+
+# Unpublished from the live site until the new website is ready.
+# Only the front page and /resume-community/ stay public.
+[[cascade]]
+  [cascade.build]
+    render = "never"
+    list = "never"
+  [cascade.target]
+    path = "{/about,/work,/art,/art/**,/event,/event/**,/project,/project/**,/resume,/resume-cm,/resume-content,/resume-ld,/resume-pm,/resume-furhat,/project-manager,/cover-letter,/cover-letter-furhat}"
+
+# Keep drafts, prototypes, the CMS login and the signature off the live site.
+[module]
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+    files = [
+      "! hero-prototypes.html",
+      "! icon-preview.html",
+      "! prototype-culture-cards.html",
+      "! admin/**",
+      "! images/signature.png",
+    ]
