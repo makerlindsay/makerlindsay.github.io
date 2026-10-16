@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    {{ partial "resume-head.html" . }}
+    <title>Cover Letter - Lindsay Balfour</title>
+    <style>
+      .container.cl-container {
+        grid-template-columns: 50mm 1fr;
+        gap: 9mm;
+      }
+
+      .cl-container > aside {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cl-container > aside h1 {
+        font-size: 2.8rem;
+      }
+
+      .cl-container > aside #social {
+        font-size: 0.85rem;
+      }
+
+      .cl-rule {
+        width: 2.5rem;
+        height: 3px;
+        background: var(--primary-color);
+        border: 0;
+        margin: 0 0 1.5em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .cl-for {
+        margin-top: auto;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        color: hsl(0, 0%, 35%);
+      }
+
+      .cl-for strong {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--secondary-color);
+        margin-bottom: 0.3em;
+      }
+
+      .cl-body {
+        padding-top: 2mm;
+        font-size: 0.95rem;
+      }
+
+      .cl-body p {
+        margin: 0 0 0.85em;
+        line-height: 1.5;
+      }
+
+      .cl-date {
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--secondary-color);
+        margin-bottom: 1.4em !important;
+      }
+
+      .cl-sign-off {
+        margin-top: 1.6em;
+      }
+
+      .cl-sign-off p {
+        margin: 0;
+      }
+
+      .cl-signature {
+        display: block;
+        height: 16mm;
+        width: auto;
+        margin: 0.3em 0 0 -1mm;
+      }
+
+      .cl-sign-off .cl-name {
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-top: 0.1em;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="page">
+      <div class="container cl-container">
+        <aside>
+          <h1>Lindsay<br />Balfour</h1>
+          <p class="role-label">Community Manager</p>
+          <p class="tagline">Turning audiences into communities.</p>
+          <hr class="cl-rule" />
+          <section id="social">
+            {{ partial "resume-contact.html" . }}
+          </section>
+        </aside>
+
+        <main class="cl-body">
+          <p class="cl-date">October 2026</p>
+
+          <p>Dear Furhat team,</p>
+
+          <p>
+            The first time a robot responds to the person who built it, something
+            changes. Since 2014, I have been creating that moment for children,
+            teachers and creators, and I am applying for the Growth and Community
+            Lead role at Furhat Robotics to create it for the researchers and
+            innovators shaping how people and machines interact. At the Children's
+            Creativity Museum in San Francisco, and later at Strawbees in Sweden, I
+            taught people to turn cardboard, servo motors and a few lines of code
+            into robots that move, react and express themselves.
+          </p>
+
+          <p>
+            My work has always started with lowering the barrier to building. At
+            Strawbees, I authored more than 100 platform resources, including
+            coding and robotics guides for Arduino, MakeCode and Python, video
+            tutorials and lesson plans. I also
+            pointed builders to a library of code examples, so they could start
+            from something that works and make it their own. At international
+            conferences such as ISTE, BETT, SETT, TCEA and EduTech Asia, I led
+            talks and workshops on the programming potential of social and
+            emotional robots, showing how robots see, think, react and even feel. A button
+            press becomes the motion of a motor, and a simple build becomes a
+            character that responds to the world around it.
+          </p>
+
+          <p>
+            I have spent almost a decade in hardware startups. I joined Strawbees
+            as an early hire, built the educator community function from zero, and
+            grew into Head of Education, wearing many hats across community,
+            content, product and partnerships. I created products for new markets,
+            from a storybook series for South Korea to US go-to-market launches. I
+            worked with B2B partners to localize tools and resources so they could
+            reach their own customers. I also brought teacher feedback into our
+            learning platform, and gave sales and marketing the stories and
+            resources they needed to reach schools.
+          </p>
+
+          <p>
+            Researchers and innovation teams discover Furhat through conferences,
+            research papers, colleagues, workshops and community conversations,
+            often over months. I know how to build that journey. As a learning
+            designer at Strawbees, I connected teachers and makers learning
+            robotics with the tools and support to bring it into their classrooms,
+            and worked with researchers in programming and engineering. I grew a
+            community of 637 educators, hosted a monthly webinar series, and scaled
+            an ambassador program across 10+ countries, where members ran their own
+            workshops and brought in their colleagues. At Furhat, I would do the
+            same for your users, turning researchers into advocates and advocates
+            into ambassadors who share what they build.
+          </p>
+
+          <p>
+            In my first months, I would talk to customers about how they found
+            Furhat. I would run practical workshops where researchers build their
+            first interactions, and create a starter library of examples that make
+            the platform easy to try. I am eager to connect community work more
+            closely to measurable growth alongside your marketing team, doubling
+            down on what brings in new customers.
+          </p>
+
+          <p>
+            I am based in Stockholm, and critical thinking, creativity and
+            collaboration guide everything I build. I would love to talk about how
+            I can help grow the Furhat community.
+          </p>
+
+          <div class="cl-sign-off">
+            <p>Warm regards,</p>
+            <img class="cl-signature" src="/images/signature.png" alt="" />
+            <p class="cl-name">Lindsay Balfour</p>
+          </div>
+        </main>
+      </div>
+    </section>
+  </body>
+</html>

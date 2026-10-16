@@ -1,4 +1,4 @@
 ---
 layout: resume-community
-title: Resume — Community & Events
+title: "Resume: Community Manager"
 ---

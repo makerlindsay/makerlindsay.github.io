@@ -8,6 +8,7 @@
   --secondary-color: #6E4E6E;
 }
 @page {
+  size: A4;
   margin: 0;
 }
 
@@ -71,13 +72,18 @@ body {
   .container {
     min-height: calc(297mm - 20mm);
   }
+}
 
-  h1 {
-    color: var(--primary-color);
-  }
-  h2 {
-    color: var(--secondary-color);
-  }
+// Heading colors apply on screen and in print/PDF
+h1 {
+  color: var(--primary-color);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+h2 {
+  color: var(--secondary-color);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
 .container {
@@ -320,8 +326,19 @@ a {
 }
 
 @media print {
+  html {
+    // Slightly smaller in print so every browser (Safari included) fits each page on one A4 sheet
+    font-size: 9.7pt;
+  }
+
   body {
     background: white;
+  }
+
+  // Lock each page to exactly one A4 sheet so the sidebar never spills onto an extra page
+  .page {
+    height: 297mm;
+    overflow: hidden;
   }
 
   .page {
@@ -338,6 +355,32 @@ a {
 
   .container {
     break-inside: avoid;
-    min-height: calc(297mm - 20mm);
+    min-height: 0;
+    height: calc(297mm - 20mm);
   }
+}
+
+.tagline {
+  font-family: "Inter";
+  font-size: 1.05rem;
+  font-weight: 500;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--secondary-color);
+  margin: -0.25em 0 1.5em;
+}
+
+.role-label {
+  font-family: "Inter";
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--primary-color);
+  margin: 0 0 0.4em;
+}
+
+// No external-link arrows on resumes, so resume scanners read clean text
+a[href]::after {
+  content: none !important;
 }
