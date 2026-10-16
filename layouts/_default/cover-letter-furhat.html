@@ -54,8 +54,8 @@
       }
 
       .cl-body p {
-        margin: 0 0 0.85em;
-        line-height: 1.5;
+        margin: 0 0 0.7em;
+        line-height: 1.45;
       }
 
       .cl-date {
@@ -64,7 +64,7 @@
         text-transform: uppercase;
         font-weight: 600;
         color: var(--secondary-color);
-        margin-bottom: 1.4em !important;
+        margin-bottom: 1.1em !important;
       }
 
       .cl-sign-off {
@@ -75,9 +75,17 @@
         margin: 0;
       }
 
+      [contenteditable="true"]:focus {
+        outline: 1px dashed var(--secondary-color);
+        outline-offset: 2mm;
+      }
+      @media print {
+        [contenteditable="true"]:focus { outline: none; }
+      }
+
       .cl-signature {
         display: block;
-        height: 16mm;
+        height: 13mm;
         width: auto;
         margin: 0.3em 0 0 -1mm;
       }
@@ -102,76 +110,31 @@
           </section>
         </aside>
 
-        <main class="cl-body">
+        <main class="cl-body"{{ if hugo.IsServer }} contenteditable="true" spellcheck="true"{{ end }}>
           <p class="cl-date">October 2026</p>
 
           <p>Dear Furhat team,</p>
 
+                                        <p>
+            When a robot responds to the person who builds or programs it, a world of possibilities opens up. The real work is helping people expand beyond it. Since 2014, I have been nurturing that curiosity for builders globally, guiding them from the first interaction to richer projects. AI is changing what a robot can be, letting it listen, converse and adapt to the people around it. I am applying for the Growth and Community Lead role at Furhat Robotics to grow those possibilities with the researchers and innovators shaping how people and machines interact.
+          </p>
           <p>
-            The first time a robot responds to the person who built it, something
-            changes. Since 2014, I have been creating that moment for children,
-            teachers and creators, and I am applying for the Growth and Community
-            Lead role at Furhat Robotics to create it for the researchers and
-            innovators shaping how people and machines interact. At the Children's
-            Creativity Museum in San Francisco, and later at Strawbees in Sweden, I
-            taught people to turn cardboard, servo motors and a few lines of code
-            into robots that move, react and express themselves.
+            Some of my favorite work has been helping people give robots a voice of their own. At Strawbees, I authored more than 100 platform resources, including coding and robotics guides, video tutorials and lesson plans. At international edtech conferences such as ISTE and EduTech Asia, I led talks and workshops on the programming potential of social and emotional robots, showing students, teachers and resellers how robots see, think, react and even replicate feelings.
+          </p>
+          <p>
+            I have spent almost a decade in hardware and software startups. I joined Strawbees as an early hire, built the educator community function from zero, and grew into Head of Education, wearing many hats across community, marketing, sales, product development and partnerships. I created products for new markets, such as a storybook series for South Korea and full digital courses for US go-to-market launches. I trained B2B resellers through webinars and trainings, and localized resources so they could lead activities at fairs and support their own customers. I also brought teacher feedback into our learning platform, and gave sales and marketing the stories and resources they needed for our technology to reach B2B school districts.
+          </p>
+          <p>
+            Researchers and innovation teams discover Furhat through conferences, research papers, colleagues, workshops and community conversations, often over months. I grew a community of 637 educators, hosted a monthly webinar series, and scaled an ambassador program across 10+ countries, training teachers to lead their own workshops, including at conferences, and bring in their colleagues. Training others is how a community grows beyond any one person, and at Furhat I would do the same, turning researchers into advocates and advocates into ambassadors who share what they build.
+          </p>
+          <p>
+            Furhat already gives people a clear path into building, from Blockly to the Remote API and Kotlin Skill API. For B2C community and B2B training alike, I design resources with low floors so users can start easily, high ceilings so they can grow into complex projects, and wide walls so they can follow their own interests. I have guided learners from block coding in Blockly, MakeCode and Scratch to text programming in Arduino, Processing and Python, creating step-by-step guides and code libraries that give them a clear next step. I am also a supportive presence: someone people feel comfortable asking for help, so that being stuck becomes part of learning, not a reason to give up. Every person who moves confidently from a first Blockly skill to a full study becomes someone who renews, recommends and returns.
+          </p>
+          <p>
+            I am based in Stockholm, and critical thinking, creativity and collaboration guide everything I build. I would love to talk about how I can help grow the Furhat community, and connect it to measurable growth alongside your marketing team.
           </p>
 
-          <p>
-            My work has always started with lowering the barrier to building. At
-            Strawbees, I authored more than 100 platform resources, including
-            coding and robotics guides for Arduino, MakeCode and Python, video
-            tutorials and lesson plans. I also
-            pointed builders to a library of code examples, so they could start
-            from something that works and make it their own. At international
-            conferences such as ISTE, BETT, SETT, TCEA and EduTech Asia, I led
-            talks and workshops on the programming potential of social and
-            emotional robots, showing how robots see, think, react and even feel. A button
-            press becomes the motion of a motor, and a simple build becomes a
-            character that responds to the world around it.
-          </p>
 
-          <p>
-            I have spent almost a decade in hardware startups. I joined Strawbees
-            as an early hire, built the educator community function from zero, and
-            grew into Head of Education, wearing many hats across community,
-            content, product and partnerships. I created products for new markets,
-            from a storybook series for South Korea to US go-to-market launches. I
-            worked with B2B partners to localize tools and resources so they could
-            reach their own customers. I also brought teacher feedback into our
-            learning platform, and gave sales and marketing the stories and
-            resources they needed to reach schools.
-          </p>
-
-          <p>
-            Researchers and innovation teams discover Furhat through conferences,
-            research papers, colleagues, workshops and community conversations,
-            often over months. I know how to build that journey. As a learning
-            designer at Strawbees, I connected teachers and makers learning
-            robotics with the tools and support to bring it into their classrooms,
-            and worked with researchers in programming and engineering. I grew a
-            community of 637 educators, hosted a monthly webinar series, and scaled
-            an ambassador program across 10+ countries, where members ran their own
-            workshops and brought in their colleagues. At Furhat, I would do the
-            same for your users, turning researchers into advocates and advocates
-            into ambassadors who share what they build.
-          </p>
-
-          <p>
-            In my first months, I would talk to customers about how they found
-            Furhat. I would run practical workshops where researchers build their
-            first interactions, and create a starter library of examples that make
-            the platform easy to try. I am eager to connect community work more
-            closely to measurable growth alongside your marketing team, doubling
-            down on what brings in new customers.
-          </p>
-
-          <p>
-            I am based in Stockholm, and critical thinking, creativity and
-            collaboration guide everything I build. I would love to talk about how
-            I can help grow the Furhat community.
-          </p>
 
           <div class="cl-sign-off">
             <p>Warm regards,</p>
