@@ -11,7 +11,7 @@ disableKinds = ["taxonomy", "term"]
     render = "never"
     list = "never"
   [cascade.target]
-    path = "{/about,/work,/art,/art/**,/event,/event/**,/project,/project/**,/resume,/resume-cm,/resume-content,/resume-ld,/resume-pm,/resume-furhat,/project-manager,/cover-letter,/cover-letter-furhat}"
+    path = "{/about,/work,/art,/art/**,/event,/event/**,/project,/project/**,/resume,/resume-cm,/resume-content,/resume-ld,/resume-pm,/resume-furhat,/resume-tag,/resume-superside,/project-manager,/cover-letter,/cover-letter-furhat,/cover-letter-tag}"
 
 # Keep drafts, prototypes, the CMS login and the signature off the live site.
 [module]

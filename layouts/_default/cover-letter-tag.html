@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    {{ partial "resume-head.html" . }}
+    <title>Cover Letter - Lindsay Balfour</title>
+    <style>
+      .container.cl-container {
+        grid-template-columns: 50mm 1fr;
+        gap: 9mm;
+      }
+
+      .cl-container > aside {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cl-container > aside h1 {
+        font-size: 2.8rem;
+      }
+
+      .cl-container > aside #social {
+        font-size: 0.85rem;
+      }
+
+      .cl-rule {
+        width: 2.5rem;
+        height: 3px;
+        background: var(--primary-color);
+        border: 0;
+        margin: 0 0 1.5em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .cl-for {
+        margin-top: auto;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        color: hsl(0, 0%, 35%);
+      }
+
+      .cl-for strong {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--secondary-color);
+        margin-bottom: 0.3em;
+      }
+
+      .cl-body {
+        padding-top: 6mm;
+        font-size: 0.95rem;
+      }
+
+      .cl-body p {
+        margin: 0 0 1em;
+        line-height: 1.65;
+      }
+
+      .cl-date {
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--secondary-color);
+        margin-bottom: 1.6em !important;
+      }
+
+      .cl-sign-off {
+        margin-top: 1.6em;
+      }
+
+      .cl-sign-off p {
+        margin: 0;
+      }
+
+      [contenteditable="true"]:focus {
+        outline: 1px dashed var(--secondary-color);
+        outline-offset: 2mm;
+      }
+      @media print {
+        [contenteditable="true"]:focus { outline: none; }
+      }
+
+      .cl-signature {
+        display: block;
+        height: 17mm;
+        width: auto;
+        margin: 0.3em 0 0 -1mm;
+      }
+
+      .cl-sign-off .cl-name {
+        font-weight: 700;
+        color: var(--primary-color);
+        margin-top: 0.1em;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="page">
+      <div class="container cl-container">
+        <aside>
+          <h1>Lindsay<br />Balfour</h1>
+          <p class="role-label">Community Manager</p>
+          <p class="tagline">Turning audiences into communities.</p>
+          <hr class="cl-rule" />
+          <section id="social">
+            {{ partial "resume-contact.html" . }}
+            <ul>
+              <li class="h-stack" style="align-items: flex-start">
+                <img src="/svg/earth.svg" width="14" height="14" alt="" style="margin-top: 0.2em" />
+                <span>US and Swedish citizen,<br />Puerto Rican heritage</span>
+              </li>
+            </ul>
+          </section>
+        </aside>
+
+        <main class="cl-body"{{ if hugo.IsServer }} contenteditable="true" spellcheck="true"{{ end }}>
+          <p class="cl-date">October 2026</p>
+
+          <p>Dear Take Action Global team,</p>
+
+                                                  <p>
+            I am applying for the Global Teacher Recruitment Community Builder role because I have spent over a decade bringing educators into programs that connect them across borders and around the Global Goals. TAG&#39;s work at the intersection of education, climate action and global collaboration is exactly where I want to bring that experience. I know this work from the ground up: I began as an educator at the Children&#39;s Creativity Museum in San Francisco, teaching children and teachers in daily workshops and makeathons, and have kept teaching students directly, from schools in Ghana to online camps with Marymount School of New York.
+          </p>
+          <p>
+            At Strawbees, I recruited and grew our Ambassador program from its first version to three cohorts of 15 educators in more than ten countries. We opened applications on the Strawbees homepage and shared the call through our email newsletters and the Strawbees Educators Facebook community of 637 teachers, reaching educators who were already engaged with us. From there, I made the path from first contact to participation clear and welcoming, with onboarding and ongoing support. Then I equipped ambassadors to lead their own workshops, including at conferences, so they brought in their colleagues and the program reached far beyond what one person could.
+          </p>
+          <p>
+            I have also brought educators and students into global, goal-driven programs. I wrote full digital courses on the Global Goals with teachers, including Renewable Energy, Biome Builders and City Building, and as a teacher used City Building in online urban planning camps with Marymount School of New York, where children designed sustainable cities. Samples of these courses are linked on my resume. With the Micro:bit Educational Foundation, I created resources, promoted the Do your :bit challenge to teachers and ran sessions. I designed and ran Kids Hack the Crisis with UNICEF Sweden and the Swedish Institute, and led programs with the UN Information Centres in Ghana and Lebanon. Working with ministries of education, distributors and partners on four continents taught me to adapt outreach to each culture, including translated webinars for local communities.
+          </p>
+          <p>
+            As a Puerto Rican American and a Swedish citizen based in Stockholm, I love connecting with educators wherever they are. I would be glad to help TAG reach new communities and make every educator feel welcome from the very first conversation.
+          </p>
+
+
+
+
+          <div class="cl-sign-off">
+            <p>Warm regards,</p>
+            <img class="cl-signature" src="/images/signature.png" alt="" />
+            <p class="cl-name">Lindsay Balfour</p>
+          </div>
+        </main>
+      </div>
+    </section>
+  </body>
+</html>
